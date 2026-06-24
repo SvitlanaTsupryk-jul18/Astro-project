@@ -26,6 +26,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Install dependencies, build site, and upload artifact
         uses: withastro/action@v3
+        with:
+          node-version: 22
 
   deploy:
     needs: build
