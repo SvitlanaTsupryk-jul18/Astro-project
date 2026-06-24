@@ -1,0 +1,54 @@
+---
+import '../styles/general.css';
+
+const { title, description, ogImage, ogType = 'product', noindex = false } = Astro.props;
+const isNoindex = noindex || import.meta.env.DEV || import.meta.env.NOINDEX === 'true';
+
+const canonicalURL = Astro.site
+    ? new URL(Astro.url.pathname, Astro.site)
+    : null;
+
+const defaultOgImage = '/static/images/mainPage/og.png';
+
+const jsonLd = {
+    "@context": "http://schema.org",
+    "@type": "Organization",
+    "name": "NetHunt",
+    "url": "https://nethunt.com/",
+    "logo": "/static/images/logos/logo-text.svg",
+    "description": "NetHunt is a simple and customizable customer relationship management system (CRM) for Gmail and Google Workspace. NetHunt was designed to help small and growing businesses manage the whole range of their activities without leaving the inbox, completed with email marketing and project management features.",
+    "foundingDate": "2015",
+    "founder": { "@type": "Person", "name": "Andrei Petrik" },
+    "contactPoint": { "@type": "ContactPoint", "contactType": "Customer support", "email": "support@nethunt.com" },
+    "sameAs": [
+        "https://www.facebook.com/nethuntcrm/",
+        "https://twitter.com/nethuntcrm",
+        "https://www.linkedin.com/company/nethunt-crm",
+        "https://plus.google.com/+nethuntcrm",
+        "https://www.youtube.com/nethuntcrm"
+    ]
+};
+---
+
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>{title}</title>
+<meta name="description" content={description}>
+<meta name="og:title" property="og:title" content={title}>
+<meta name="og:type" property="og:type" content={ogType}>
+<meta name="og:description" property="og:description" content={description}>
+<meta name="og:image" property="og:image" content={ogImage || defaultOgImage}>
+{canonicalURL && <meta name="og:url" property="og:url" content={String(canonicalURL)}>}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2196f3">
+<meta name="msapplication-navbutton-color" content="#2196f3">
+<meta name="apple-mobile-web-app-status-bar-style" content="#2196f3">
+{isNoindex && <meta name="robots" content="noindex, nofollow">}
+<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+<link rel="icon" href="/favicon.ico" type="image/x-icon"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+{canonicalURL && <link rel="canonical" href={String(canonicalURL)}/>}
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="preload" as="style">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+

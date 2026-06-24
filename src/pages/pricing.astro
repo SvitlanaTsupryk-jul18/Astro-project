@@ -1,0 +1,809 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+
+interface Plan {
+	name: string;
+	price?: string;
+	period?: string;
+	tagline?: string;
+	subtitle?: string;
+	cta: string;
+	href: string;
+	external?: boolean;
+	outline?: boolean;
+	featured?: boolean;
+	features: string[];
+}
+
+const plans: Plan[] = [
+	{
+		name: 'Checkbox',
+		price: '249 гривень',
+		period: '(з ПДВ) / місяць / каса',
+		cta: 'Почніть безкоштовно',
+		href: 'https://my.checkbox.ua/auth/registration',
+		featured: true,
+		features: [
+			'До 6 000 чеків / місяць',
+			'Служба турботи 7 днів на тиждень, без обмежень по кількості запитів',
+			'Чеки та звіти доступні 3 роки в кабінеті, далі — в архіві за запитом',
+			'Брендування чеків',
+			'200+ безкоштовних інтеграцій',
+			'Ключ касира входить у вартість',
+			'Чеки постоплати для сервісів доставки',
+			'Детальна аналітика та звіти',
+		],
+	},
+	{
+		name: 'Checkbox Pro',
+		price: '294 гривні',
+		period: '(з ПДВ) / місяць / каса',
+		subtitle: 'Все, що і в базовому тарифі, а також:',
+		cta: 'Почніть безкоштовно',
+		href: 'https://my.checkbox.ua/auth/registration',
+		features: [
+			'Автоматична синхронізація суми чеку з терміналом',
+			'Чек на екрані терміналу без додаткових пристроїв',
+			'Глибока інтеграція еквайрингу, терміналу та каси',
+		],
+	},
+	{
+		name: 'Checkbox Enterprise',
+		tagline: 'Вигідні умови для солідних бізнесів з великою кількістю кас',
+		cta: 'Надішліть запит',
+		href: 'https://nethunt.com/service/automation/forms/69aade61f5895490c430c5f7',
+		external: true,
+		outline: true,
+		features: [
+			'Сплачуйте за каси чи за чеки',
+			"Персональний менеджер завжди на зв'язку",
+			'Виділені спеціалісти служби турботи',
+			'Пріоритетна лінія технічної підтримки',
+			'Допомагаємо інтегрувати в специфічні бізнес-процеси',
+		],
+	},
+];
+
+const tickerStats = [
+	'3 500 000+ чеків щодня',
+	'240 000+ активних кас',
+	'200+ готових інтеграцій',
+	'38%+ нових цифрових кас, що реєструють у податковій - Checkbox',
+	'740+ мільярдів гривень виторгу за чеками',
+];
+
+interface Addon {
+	title: string;
+	description: string;
+	list?: string[];
+	price?: string;
+	href: string;
+	linkText: string;
+}
+
+const addons: Addon[] = [
+	{
+		title: 'Приймайте оплату зручним для вас способом',
+		description: 'Підключайте еквайринг від банків-партнерів через Checkbox. Обирайте вигідні умови та керуйте прийомом оплат в одному кабінеті.',
+		list: ['Оренда терміналу: 498 гривень / місяць (з ПДВ)', 'ПРРО: 249 гривень / місяць (з ПДВ)', 'Еквайринг: 1,3% комісії з кожного платежу'],
+		href: '/acquiring/',
+		linkText: 'Дізнатися більше',
+	},
+	{
+		title: 'Отримуйте кошти для розвитку бізнесу',
+		description: 'Кредит від ПУМБ онлайн без паперової тяганини. Подайте заявку в кабінеті Checkbox та отримайте рішення без черг і зайвих документів.',
+		list: ['Сума: до 1 млн грн', 'Термін: до 36 місяців', 'Щомісячна комісія: від 1,7% до 2%', 'Разова комісія: 1%'],
+		href: '/loans-for-business/',
+		linkText: 'Дізнатися більше',
+	},
+	{
+		title: 'Доставляйте цифрові чеки власним клієнтам',
+		description: 'Підключайте доставку чеків через SMS. Клієнт одразу отримує електронний чек, а ви — додатковий рівень сервісу та відповідності вимогам.',
+		price: '1,26 гривень / доставлене повідомлення',
+		href: 'https://wiki.checkbox.ua/uk/instructions/sms',
+		linkText: 'Дізнатися більше',
+	},
+	{
+		title: 'Заведіть цифровий підпис касира за кілька хвилин',
+		description: 'Замовляйте надійні КЕП в особистому кабінеті Checkbox для всіх ваших касирів, щоб вони могли зручно та швидко підписувати чеки.',
+		price: 'Безкоштовно, ми платимо за вас.',
+		href: '/yak-otrymaty-klyuch-ecp/',
+		linkText: 'Дізнатися більше',
+	},
+	{
+		title: 'Підключайте обладнання, повністю сумісне з Checkbox',
+		description: 'Сертифіковані термопринтери й сканери, протестовані розробниками Checkbox. Підключайте та працюйте без складних інтеграцій.',
+		price: 'Обладнання не входить у вартість Checkbox.',
+		href: '/certified-partners/',
+		linkText: 'Дізнатися більше',
+	},
+];
+
+const otherProducts = [
+	{
+		logo: 'https://checkbox.ua/wp-content/uploads/2026/04/posbox-logo.svg',
+		title: 'Posbox',
+		description: 'Розумна POS-система з програмою для торгівлі, обліком, управлінням персоналом та ШІ аналітикою.',
+		href: 'https://posbox.ai/',
+		linkText: 'Спробуйте від 219 грн/міс',
+	},
+	{
+		logo: 'https://checkbox.ua/wp-content/uploads/2026/04/dubidoc-logo.svg',
+		title: 'Dubidoc',
+		description: 'Електронний документообмін з інтерактивними шаблонами, AI помічником та підписом без реєстрації.',
+		href: 'https://dubidoc.com.ua/',
+		linkText: 'Спробуйте безкоштовно',
+	},
+];
+
+const faqItems = [
+	{ q: 'Чи є безкоштовний період і чи можна скасувати підписку?', a: 'Так. Перші 30 днів ви користуєтесь Checkbox безкоштовно. Ви можете скасувати підписку в будь-який момент у своєму кабінеті.' },
+	{ q: 'Чи є додаткові комісії за використання сервісу?', a: 'Ні. Ви сплачуєте лише абонплату за касу. Комісії за еквайринг встановлюються банком або платіжним партнером окремо.' },
+	{ q: 'Чи відповідає Checkbox вимогам ДПС?', a: 'Так. Checkbox - програмний РРО, що повністю відповідає вимогам податкового законодавства України.' },
+	{ q: 'Коли кошти зараховуються на рахунок?', a: 'Зарахування коштів залежить від вашого банку або еквайрингового партнера. Зазвичай це відбувається в межах банківського дня.' },
+	{ q: 'Чи потрібно купувати обладнання?', a: 'Ні. Checkbox працює на звичайних пристроях: ноутбуках, планшетах або смартфонах. За потреби можна підключити принтери, сканери чи POS-термінали.' },
+	{ q: 'Як зв’язатися з підтримкою?', a: 'Наша Служба турботи працює 7 днів на тиждень. Ви можете звернутися через чат у кабінеті або зателефонувати за номером 0 800 330 676.' },
+	{ q: 'Як перейти з РРО або іншого ПРРО?', a: 'Зверніться будь ласка до Служби турботи - ми допоможемо вам із переходом. Ви можете протестувати Checkbox безкоштовно, навіть якщо вже оплатили інше рішення.' },
+	{ q: 'Чи можна змінити тариф?', a: 'Так. Ви можете змінити тариф у будь-який момент залежно від потреб вашого бізнесу.' },
+];
+---
+
+<BaseLayout
+	title="Вартість програмного РРО Checkbox | Ціни на тарифні плани"
+	description="Тарифні плани ПРРО Checkbox 249 грн, Checkbox Pro 294 грн, Checkbox Enterprise. 30 днів пробний період, 200+ готових інтеграцій, офлайн-режим."
+	ogType="website"
+>
+	<section class="hero">
+		<div class="container">
+			<h1>Ви контролюєте чеки,<br />а не вони вас</h1>
+			<p class="hero__sub hero__sub--desktop">Перші 30 днів безкоштовно. Оберіть тарифні плани Checkbox для свого бізнесу.</p>
+			<p class="hero__sub hero__sub--mobile">Перші 30 днів безкоштовно. 220 000+ бізнесів в Україні вже користуються касами Чекбоксу.</p>
+		</div>
+	</section>
+
+	<section class="plans">
+		<div class="container">
+			<h2 class="plans__title">Цифрова каса</h2>
+			<div class="plans__grid">
+				{plans.map((plan) => (
+					<div class:list={['plan', { 'plan--featured': plan.featured }]}>
+						<h3 class="plan__name">{plan.name}</h3>
+						{plan.price && (
+							<>
+								<div class="plan__price">{plan.price}</div>
+								<div class="plan__period">{plan.period}</div>
+							</>
+						)}
+						{plan.tagline && <div class="plan__tagline">{plan.tagline}</div>}
+						<a
+							href={plan.href}
+							target={plan.external ? '_blank' : undefined}
+							rel={plan.external ? 'noopener' : undefined}
+							class:list={['btn', plan.outline ? 'btn--outline' : 'btn--primary', 'plan__cta']}
+						>
+							{plan.cta}
+						</a>
+						{plan.subtitle && <p class="plan__subtitle">{plan.subtitle}</p>}
+						<ul class="plan__features">
+							{plan.features.map((feature) => (
+								<li>{feature}</li>
+							))}
+						</ul>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="promo">
+		<div class="container">
+			<div class="promo__banner">
+				<div class="promo__content">
+					<span class="promo__badge">Спеціальна пропозиція!</span>
+					<h2 class="promo__title">Переходьте на Checkbox із РРО чи інших ПРРО безкоштовно</h2>
+					<p class="promo__desc">Користуйтеся касами Checkbox безкоштовно весь вже оплачений час у іншого провайдера. Навіть якщо мова про декілька років. Ні, це не жарт.</p>
+				</div>
+				<div class="promo__action">
+					<a href="https://my.checkbox.ua/auth/registration" class="btn btn--dark">Почніть безкоштовно</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="ticker">
+		<div class="ticker__track">
+			{tickerStats.map((stat) => (
+				<span class="ticker__item">{stat}</span>
+			))}
+			{tickerStats.map((stat) => (
+				<span class="ticker__item" aria-hidden="true">{stat}</span>
+			))}
+		</div>
+	</div>
+
+	<section class="addons">
+		<div class="container">
+			<h2 class="addons__title">Додаткові продукти <span>Checkbox</span> та їх вартість</h2>
+			<div class="addons__grid">
+				{addons.map((addon) => (
+					<div class="addon">
+						<h3>{addon.title}</h3>
+						<p>{addon.description}</p>
+						{addon.list && (
+							<ul class="addon__list">
+								{addon.list.map((item) => (
+									<li>{item}</li>
+								))}
+							</ul>
+						)}
+						{addon.price && <div class="addon__price">{addon.price}</div>}
+						<a href={addon.href} class="addon__link">{addon.linkText}</a>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="other">
+		<div class="container">
+			<h2 class="other__title">Інші продукти <span>родини Checkbox Group</span></h2>
+			<div class="other__grid">
+				{otherProducts.map((product) => (
+					<div class="other__card">
+						<div class="other__logo"><img src={product.logo} alt={product.title} /></div>
+						<h3>{product.title}</h3>
+						<p>{product.description}</p>
+						<a href={product.href} class="other__link" target="_blank" rel="noopener">{product.linkText}</a>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="faq">
+		<div class="container">
+			<h2 class="faq__title">Часті запитання</h2>
+			<div class="faq__list">
+				{faqItems.map((item) => (
+					<details class="faq__item">
+						<summary>
+							{item.q}
+							<svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+						</summary>
+						<p>{item.a}</p>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="finalCta">
+		<div class="container">
+			<div class="finalCta__box">
+				<h2>Заведіть свій Checkbox вже сьогодні</h2>
+				<p>30 днів безкоштовно. Без ризиків. Без зайвих витрат.</p>
+				<a href="https://my.checkbox.ua/auth/registration" class="btn btn--outline">Почніть безкоштовно</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	:root {
+		--accent: #8f257d;
+		--navy: #001529;
+	}
+
+	.container {
+		max-width: 1296px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	/* Buttons */
+	.btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 14px 28px;
+		border-radius: 16px;
+		font-size: 0.95rem;
+		font-weight: 600;
+		text-decoration: none;
+		transition: opacity 0.2s ease;
+	}
+
+	.btn:hover {
+		opacity: 0.85;
+	}
+
+	.btn--primary {
+		background: var(--accent);
+		color: #fff;
+	}
+
+	.btn--outline {
+		background: transparent;
+		border: 1.5px solid var(--navy);
+		color: var(--navy);
+	}
+
+	.btn--dark {
+		background: var(--navy);
+		color: #fff;
+	}
+
+	/* Hero */
+	.hero h1 {
+		margin-top: 64px;
+		margin-bottom: 32px;
+		font-size: 60px;
+		font-weight: 800;
+		line-height: 1.2;
+		letter-spacing: -0.03em;
+	}
+
+	.hero__sub {
+		font-size: 16px;
+		font-weight: 300;
+	}
+
+	.hero__sub--mobile {
+		display: none;
+	}
+
+	@media (max-width: 767.98px) {
+		.hero h1 {
+			margin-top: 40px;
+			margin-bottom: 24px;
+			font-size: 42px;
+		}
+
+		.hero__sub--desktop {
+			display: none;
+		}
+
+		.hero__sub--mobile {
+			display: block;
+		}
+	}
+
+	/* Plans */
+	.plans__title {
+		margin-bottom: 20px;
+	}
+
+	.plans__grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+		margin-bottom: 24px;
+	}
+
+	.plan {
+		background: #fff;
+		border: 1px solid #e0e0e0;
+		border-radius: 8px;
+		padding: 28px 24px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.plan--featured {
+		border: 2px solid var(--accent);
+	}
+
+	.plan__name {
+		font-size: 24px;
+		font-weight: 500;
+		line-height: 1.2;
+		letter-spacing: -0.03em;
+		margin-bottom: 8px;
+	}
+
+	.plan__price {
+		font-size: 22px;
+		font-weight: 700;
+		margin-bottom: 4px;
+		color: #000;
+	}
+
+	.plan__period {
+		font-size: 13px;
+		color: rgba(6, 27, 49, 0.64);
+		margin-bottom: 16px;
+	}
+
+	.plan__tagline {
+		color: var(--navy);
+		font-size: 16px;
+		margin-bottom: 24px;
+	}
+
+	.plan__cta {
+		align-self: flex-start;
+		margin-bottom: 16px;
+	}
+
+	.plan__subtitle {
+		font-size: 14px;
+		color: #333;
+		font-weight: 600;
+		margin-bottom: 8px;
+	}
+
+	.plan__features {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.plan__features li {
+		padding: 6px 0 6px 24px;
+		position: relative;
+		font-size: 14px;
+		color: #333;
+	}
+
+	.plan__features li::before {
+		content: '✓';
+		position: absolute;
+		left: 0;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	@media (max-width: 768px) {
+		.plans__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* Promo banner */
+	.promo__banner {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		background: #f4e5f1;
+		border-radius: 20px;
+		border: 1px solid #e0e0e0;
+		padding: 30px 40px;
+		gap: 20px;
+		margin-top: 16px;
+	}
+
+	.promo__content {
+		flex: 2;
+	}
+
+	.promo__badge {
+		display: inline-block;
+		border: 1px solid #000;
+		border-radius: 10px;
+		background: #fff;
+		padding: 2px 8px;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 1px;
+		margin-bottom: 15px;
+		text-transform: uppercase;
+		color: #000;
+	}
+
+	.promo__title {
+		font-size: 22px;
+		font-weight: 800;
+		color: var(--navy);
+		margin: 0 0 10px;
+		line-height: 1.2;
+	}
+
+	.promo__desc {
+		font-size: 15px;
+		color: #596167;
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	.promo__action {
+		flex: 1;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	@media (max-width: 768px) {
+		.promo__banner {
+			flex-direction: column;
+			align-items: flex-start;
+			text-align: left;
+			padding: 25px;
+		}
+
+		.promo__action {
+			justify-content: flex-start;
+			width: 100%;
+		}
+
+		.promo__action .btn {
+			width: 100%;
+		}
+	}
+
+	/* Ticker */
+	.ticker {
+		width: 100%;
+		overflow: hidden;
+		padding: 15px 0;
+		mask-image: linear-gradient(to right, transparent, white 16px, white calc(100% - 16px), transparent);
+	}
+
+	.ticker__track {
+		display: flex;
+		flex-wrap: nowrap;
+		white-space: nowrap;
+		width: max-content;
+		animation: ticker-scroll 30s linear infinite;
+	}
+
+	.ticker__item {
+		padding: 20px 40px;
+		color: #bfb3bc;
+		font-weight: 600;
+		font-size: 16px;
+	}
+
+	@keyframes ticker-scroll {
+		0% {
+			transform: translateX(0);
+		}
+		100% {
+			transform: translateX(-50%);
+		}
+	}
+
+	/* Addons */
+	.addons__title {
+		text-align: center;
+		margin-bottom: 40px;
+	}
+
+	.addons__title span {
+		color: var(--accent);
+	}
+
+	.addons__grid {
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		gap: 24px;
+	}
+
+	.addon {
+		background: #fffaec;
+		border-radius: 12px;
+		padding: 28px 24px 12px;
+		display: flex;
+		flex-direction: column;
+		grid-column: span 3;
+	}
+
+	.addon:nth-child(3),
+	.addon:nth-child(4),
+	.addon:nth-child(5) {
+		grid-column: span 2;
+	}
+
+	.addon h3 {
+		font-size: 18px;
+		font-weight: 500;
+		line-height: 1.4;
+		letter-spacing: -0.03em;
+		margin: 0 0 12px;
+	}
+
+	.addon p {
+		color: #4a5568;
+		font-size: 14px;
+		line-height: 1.6;
+		margin: 0 0 16px;
+	}
+
+	.addon__price {
+		font-size: 14px;
+		color: var(--navy);
+		font-weight: 500;
+		margin-bottom: 16px;
+		padding: 8px 0;
+	}
+
+	.addon__list {
+		list-style: none;
+		padding: 0;
+		margin: 0 0 16px;
+		flex: 1;
+	}
+
+	.addon__list li {
+		font-size: 13px;
+		color: #4a5568;
+		padding: 5px 0 5px 20px;
+		position: relative;
+	}
+
+	.addon__list li::before {
+		content: '○';
+		position: absolute;
+		left: 0;
+		color: var(--accent);
+		font-size: 11px;
+	}
+
+	.addon__link {
+		display: inline-block;
+		font-size: 14px;
+		color: #1a73e8;
+		text-decoration: none;
+		font-weight: 500;
+		margin-top: auto;
+	}
+
+	@media (max-width: 900px) {
+		.addons__grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.addon,
+		.addon:nth-child(3),
+		.addon:nth-child(4),
+		.addon:nth-child(5) {
+			grid-column: span 1;
+		}
+	}
+
+	@media (max-width: 580px) {
+		.addons__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* Other products */
+	.other__title {
+		text-align: center;
+	}
+
+	.other__title span {
+		color: var(--accent);
+	}
+
+	.other__grid {
+		display: flex;
+		gap: 20px;
+		margin-top: 20px;
+	}
+
+	.other__card {
+		flex: 1;
+		background: #f5f6f7;
+		border-radius: 20px;
+		padding: 24px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.other__logo {
+		width: 160px;
+		margin-bottom: 20px;
+	}
+
+	.other__logo img {
+		width: 100%;
+		object-fit: cover;
+	}
+
+	.other__card h3 {
+		font-size: 18px;
+		letter-spacing: -0.03em;
+		line-height: 1.2;
+		font-weight: 700;
+		color: var(--navy);
+		margin: 0 0 12px;
+	}
+
+	.other__card p {
+		font-size: 14px;
+		color: #5a6472;
+		line-height: 1.6;
+		margin: 0;
+		flex: 1;
+	}
+
+	.other__link {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 15px;
+		color: var(--navy);
+		text-decoration: none;
+		font-weight: 700;
+		margin-top: 24px;
+		padding-top: 16px;
+	}
+
+	.other__link::after {
+		content: '↗';
+		font-size: 14px;
+	}
+
+	.other__link:hover {
+		color: var(--accent);
+	}
+
+	@media (max-width: 580px) {
+		.other__grid {
+			flex-direction: column;
+		}
+	}
+
+	/* FAQ */
+	.faq__title {
+		text-align: center;
+		margin-bottom: 24px;
+	}
+
+	.faq__list {
+		max-width: 760px;
+		margin: 0 auto;
+	}
+
+	.faq__item {
+		border-bottom: 1px solid #e0e0e0;
+		padding: 18px 0;
+	}
+
+	.faq__item summary {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 12px;
+		cursor: pointer;
+		font-weight: 600;
+		list-style: none;
+	}
+
+	.faq__item summary svg {
+		width: 10px;
+		height: 6px;
+		flex-shrink: 0;
+		transition: transform 0.2s ease;
+	}
+
+	.faq__item[open] summary svg {
+		transform: rotate(180deg);
+	}
+
+	.faq__item p {
+		margin: 12px 0 0;
+		color: #4a5568;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	/* Final CTA */
+	.finalCta__box {
+		background: rgb(248, 227, 244);
+		border-radius: 32px;
+		padding: 56px 0;
+		margin: 82px 0;
+		text-align: center;
+	}
+
+	.finalCta__box p {
+		margin: 8px 0 24px;
+	}
+
+	@media (max-width: 767.98px) {
+		.finalCta__box {
+			padding: 24px 20px;
+			margin: 34px 0;
+		}
+	}
+</style>

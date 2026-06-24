@@ -1,0 +1,720 @@
+---
+import { Image } from 'astro:assets';
+import promoImage from '../assets/images/cont.png';
+import logo from '../assets/icons/logo.svg';
+// Reusable line-icon paths, injected via set:html into a shared <svg> wrapper
+const icons: Record<string, string> = {
+	card: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/>',
+	browser: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>',
+	phone: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
+	monitor: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
+	scales: '<path d="M12 3v18M5 7l-3 6a3 3 0 0 0 6 0l-3-6Zm14 0l-3 6a3 3 0 0 0 6 0l-3-6ZM5 7h14M7 21h10"/>',
+	cursor: '<path d="M5 3l5.5 16 2-7 7-2L5 3Z"/>',
+	qr: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v7M17 20h4"/>',
+	terminal: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6M9 18h.01"/>',
+	key: '<circle cx="8" cy="14" r="4"/><path d="M11 11l9-9M16 4l3 3M13 7l3 3"/>',
+	wallet: '<rect x="2" y="3" width="6" height="18" rx="1"/><path d="M14 7h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z"/><circle cx="17.5" cy="13" r="1"/>',
+	box: '<path d="M21 8l-9-5-9 5 9 5 9-5Zm0 0v8l-9 5-9-5V8m9 5v8"/>',
+	eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
+	briefcase: '<rect x="2" y="7" width="20" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M2 13h20"/>',
+	building: '<rect x="4" y="2" width="16" height="20"/><path d="M9 6h.01M15 6h.01M9 10h.01M15 10h.01M9 14h.01M15 14h.01M9 18h2v4H9z"/>',
+	grid: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
+	api: '<path d="M8 3 4 7l4 4M16 3l4 4-4 4M14 3l-4 18"/>',
+	doc: '<path d="M6 2h9l3 3v17H6Z"/><path d="M6 8h12M6 12h12M6 16h8"/>',
+	video: '<rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 10l6-3v10l-6-3Z"/>',
+	blog: '<path d="M4 4h16v16H4Z"/><path d="M8 9h8M8 13h8M8 17h4"/>',
+	story: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>',
+	headset: '<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2" y="14" width="5" height="6" rx="2"/><rect x="17" y="14" width="5" height="6" rx="2"/>',
+	login: '<path d="M10 17l5-5-5-5M15 12H3M14 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/>',
+};
+
+interface ProductItem { title: string; description: string; icon: string; href: string }
+interface ProductColumn { label: string; items: ProductItem[] }
+
+const productColumns: ProductColumn[] = [
+	{
+		label: 'Робота з касою',
+		items: [
+			{ title: 'Цифрова каса', description: 'Програмний РРО для фіскалізації', icon: 'card', href: '#' },
+			{ title: 'Веб-кабінет', description: 'Управляйте касами з браузера', icon: 'browser', href: '#' },
+			{ title: 'Мобільні застосунки', description: 'Працюйте з касою на iOS та Android', icon: 'phone', href: '#' },
+			{ title: 'Десктопні застосунки', description: 'Рішення для Windows і macOS', icon: 'monitor', href: '#' },
+			{ title: 'Порівняння з аналогами', description: 'Порівняйте Чекбокс із іншими РРО та ПРРО', icon: 'scales', href: '#' },
+		],
+	},
+	{
+		label: 'Прийом платежів',
+		items: [
+			{ title: 'Еквайринг', description: 'Приймайте оплату картками онлайн та офлайн', icon: 'card', href: '#' },
+			{ title: 'POS-терміналами', description: 'Використовуйте фізичні термінали', icon: 'phone', href: '#' },
+			{ title: 'Платежі за смартфоном', description: 'Перетворіть телефон на термінал', icon: 'phone', href: '#' },
+			{ title: 'Інтернет-еквайринг', description: 'Додавайте оплату на ваш сайт чи інтернет-магазин', icon: 'cursor', href: '#' },
+			{ title: 'Платежі за QR', description: 'Приймайте платежі через сканування QR-коду', icon: 'qr', href: '#' },
+			{ title: 'Термінал', description: 'Замовляйте термінал з вбудованим принтером чеків', icon: 'terminal', href: '#' },
+		],
+	},
+	{
+		label: 'На додаток',
+		items: [
+			{ title: 'Ключ-підпис для касира', description: 'Створіть електронний підпис касира безкоштовно', icon: 'key', href: '#' },
+			{ title: 'Кредитування для бізнесу', description: 'Фінансування для підприємців від ПУМБ', icon: 'wallet', href: '#' },
+			{ title: 'Корисне обладнання', description: 'Сумісні з Чекбоксом принтери, сканери та інше обладнання', icon: 'box', href: '#' },
+		],
+	},
+	{
+		label: 'Рішення',
+		items: [
+			{ title: 'Огляд продуктів', description: 'Усі продукти Чекбокса в одному місці', icon: 'eye', href: '#' },
+			{ title: 'Рішення для ФОП', description: 'Зручна та надійна фіскалізація для підприємців', icon: 'briefcase', href: '#' },
+			{ title: 'Рішення для ентерпрайзу', description: 'Масштабована інтеграція для мереж і великого бізнесу', icon: 'building', href: '#' },
+			{ title: 'Рішення для різних сегментів', description: 'Галузеві рішення: ритейл, HoReCa, послуги та інше', icon: 'grid', href: '#' },
+		],
+	},
+];
+
+const materialsItems = [
+	{ title: 'API-документація', description: 'Технічна документація для інтеграції з Чекбоксом', icon: 'api', href: '#' },
+	{ title: 'Текстові інструкції', description: 'Покрокові гайди з налаштування та роботи з ПРРО', icon: 'doc', href: '#' },
+	{ title: 'Відео-гайди', description: 'Відеоуроки для швидкого старту та вирішення задач', icon: 'video', href: '#' },
+	{ title: 'Блог', description: 'Новини, кейси та корисні матеріали для бізнесу', icon: 'blog', href: '#' },
+	{ title: 'Історії клієнтів', description: 'Як бізнеси різних галузей працюють з Чекбоксом', icon: 'story', href: '#' },
+];
+
+const blogPosts = [
+	{ title: 'РРО vs ПРРО: софт без апаратури чи фізична каса?', date: '4 лютого 2026', href: '#' },
+	{ title: 'Інтеграція Checkbox із monobank: як приймати продажі', date: '4 лютого 2026', href: '#' },
+	{ title: 'Продажі від компанії SSI пройшли сертифікацію Checkbox', date: '21 березня 2026', href: '#' },
+	{ title: 'РРО vs ПРРО: софт без апаратури чи фізична каса?', date: '2 квітня 2026', href: '#' },
+];
+
+// Prefix internal links with the configured base path (see astro.config.mjs)
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+const navLinks = [
+	{ title: 'Ціни', href: `${base}pricing` },
+	{ title: 'Інтеграції', href: `${base}integrations` },
+	{ title: 'Партнерка', href: `${base}partners` },
+	{ title: 'Про нас', href: `${base}about` },
+];
+---
+
+<header class="header" id="header">
+	<div class="container header__bar">
+		<a href={base} class="logo" aria-label="Checkbox">
+            <Image src={logo} alt="Checkbox" />
+		</a>
+
+		<nav class="nav" id="nav" aria-label="Основна навігація">
+			<ul class="nav__list">
+				<li class="nav__item has-mega">
+					<button class="nav__trigger" aria-expanded="false">
+						Продукти
+						<svg class="chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+					</button>
+					<div class="mega">
+						<div class="container mega__grid mega__grid--products">
+							{productColumns.map((column) => (
+								<div class="mega__column">
+									<p class="mega__label"><span class="mega__bullet"></span>{column.label}</p>
+									<ul class="mega__items">
+										{column.items.map((item) => (
+											<li>
+												<a href={item.href} class="mega__link">
+													<span class="mega__icon">
+														<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[item.icon]} />
+													</span>
+													<span>
+														<span class="mega__title">{item.title}</span>
+														<span class="mega__desc">{item.description}</span>
+													</span>
+												</a>
+											</li>
+										))}
+									</ul>
+								</div>
+							))}
+						</div>
+					</div>
+				</li>
+
+				{navLinks.slice(0, 2).map((link) => (
+					<li class="nav__item">
+						<a href={link.href}>{link.title}</a>
+					</li>
+				))}
+
+				<li class="nav__item has-mega">
+					<button class="nav__trigger" aria-expanded="false">
+						База знань
+						<svg class="chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+					</button>
+					<div class="mega">
+						<div class="container mega__grid mega__grid--knowledge">
+							<div class="mega__column">
+								<p class="mega__label"><span class="mega__bullet"></span>Матеріали</p>
+								<ul class="mega__items">
+									{materialsItems.map((item) => (
+										<li>
+											<a href={item.href} class="mega__link">
+												<span class="mega__icon">
+													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[item.icon]} />
+												</span>
+												<span>
+													<span class="mega__title">{item.title}</span>
+													<span class="mega__desc">{item.description}</span>
+												</span>
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+
+							<div class="mega__column">
+								<p class="mega__label"><span class="mega__bullet"></span>Трендові статті з блогу</p>
+								<ul class="mega__posts">
+									{blogPosts.map((post) => (
+										<li>
+											<a href={post.href} class="mega__post">
+												<svg class="mega__postIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+												<span>
+													<span class="mega__postTitle">{post.title}</span>
+													<span class="mega__postDate">{post.date}</span>
+												</span>
+											</a>
+										</li>
+									))}
+								</ul>
+								<a href="#" class="mega__more">Переглянути всі →</a>
+							</div>
+
+							<a href="#" class="promo">
+								<Image src={promoImage} alt="Наші каси підходять як для маленького, так і для великого бізнесу" width={340} height={340} />
+							</a>
+						</div>
+					</div>
+				</li>
+
+				{navLinks.slice(2).map((link) => (
+					<li class="nav__item">
+						<a href={link.href}>{link.title}</a>
+					</li>
+				))}
+			</ul>
+		</nav>
+
+		<div class="actions">
+			<button class="support" aria-expanded="false">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons.headset} />
+				Підтримка
+				<svg class="chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+			</button>
+			<a href="#" class="btn btn--outline">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons.monitor} />
+				Демо
+			</a>
+			<a href="#" class="btn btn--solid">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons.login} />
+				В кабінет
+			</a>
+		</div>
+
+		<button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
+			<span></span><span></span><span></span>
+		</button>
+	</div>
+
+	<!-- Mobile menu: same data, rendered as native accordions (no JS needed for expand/collapse) -->
+	<div class="mobile-menu" id="mobile-menu">
+		<ul class="mobile-menu__list">
+			<li>
+				<details>
+					<summary>Продукти</summary>
+					{productColumns.map((column) => (
+						<div class="mobile-menu__group">
+							<p class="mega__label"><span class="mega__bullet"></span>{column.label}</p>
+							<ul>
+								{column.items.map((item) => (
+									<li><a href={item.href}>{item.title}</a></li>
+								))}
+							</ul>
+						</div>
+					))}
+				</details>
+			</li>
+			{navLinks.slice(0, 2).map((link) => (
+				<li class="mobile-menu__link"><a href={link.href}>{link.title}</a></li>
+			))}
+			<li>
+				<details>
+					<summary>База знань</summary>
+					<div class="mobile-menu__group">
+						<p class="mega__label"><span class="mega__bullet"></span>Матеріали</p>
+						<ul>
+							{materialsItems.map((item) => (
+								<li><a href={item.href}>{item.title}</a></li>
+							))}
+						</ul>
+					</div>
+					<div class="mobile-menu__group">
+						<p class="mega__label"><span class="mega__bullet"></span>Блог</p>
+						<ul>
+							{blogPosts.map((post) => (
+								<li><a href={post.href}>{post.title}</a></li>
+							))}
+						</ul>
+					</div>
+				</details>
+			</li>
+			{navLinks.slice(2).map((link) => (
+				<li class="mobile-menu__link"><a href={link.href}>{link.title}</a></li>
+			))}
+			<li class="mobile-menu__actions">
+				<a href="#" class="btn btn--outline">Демо</a>
+				<a href="#" class="btn btn--solid">В кабінет</a>
+			</li>
+		</ul>
+	</div>
+</header>
+
+<script>
+	const burger = document.getElementById('burger');
+	const mobileMenu = document.getElementById('mobile-menu');
+
+	burger?.addEventListener('click', () => {
+		const isOpen = mobileMenu?.classList.toggle('is-open');
+		burger.setAttribute('aria-expanded', String(Boolean(isOpen)));
+	});
+</script>
+
+<style>
+	.header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 100;
+		background: #fff;
+		font-family: var(--gh-font-body, 'Inter', sans-serif);
+		color: var(--color-font, #161b25);
+		border-bottom: 1px solid #ececec;
+	}
+
+	.container {
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	.header__bar {
+		display: flex;
+		align-items: center;
+		gap: 32px;
+		height: 80px;
+	}
+
+	/* Logo */
+	.logo {
+		display: flex;
+		flex-shrink: 0;
+		color: #111;
+	}
+
+	/* Desktop nav */
+	.nav {
+		flex: 1;
+	}
+
+	.nav__list {
+		display: flex;
+		align-items: center;
+		gap: 28px;
+		list-style: none;
+	}
+
+	.nav__item {
+		position: static;
+	}
+
+	.nav__item > a,
+	.nav__trigger {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		font-size: 0.95rem;
+		font-weight: 500;
+		color: #1a1a1a;
+		text-decoration: none;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 28px 0;
+	}
+
+	.nav__item > a:hover,
+	.nav__trigger:hover {
+		color: #555;
+	}
+
+	.chevron {
+		width: 10px;
+		height: 6px;
+		transition: transform 0.2s ease;
+	}
+
+	/* Mega menu: shown on hover (desktop only) */
+	.mega {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		width: 100%;
+		background: #eef0f2;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-6px);
+		transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+		box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+	}
+
+	.has-mega:hover .mega,
+	.has-mega:focus-within .mega {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+
+	.has-mega:hover .chevron {
+		transform: rotate(180deg);
+	}
+
+	.mega__grid {
+		display: grid;
+		gap: 40px;
+		padding: 40px 24px;
+	}
+
+	.mega__grid--products {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.mega__grid--knowledge {
+		grid-template-columns: 1fr 1.4fr 1.1fr;
+	}
+
+	.mega__label {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 0.75rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: #8a8f98;
+		margin-bottom: 16px;
+	}
+
+	.mega__bullet {
+		width: 6px;
+		height: 6px;
+		background: #c2c6cc;
+		flex-shrink: 0;
+	}
+
+	.mega__items {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+	}
+
+	.mega__link {
+		display: flex;
+		align-items: flex-start;
+		gap: 12px;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.mega__icon {
+		flex-shrink: 0;
+		width: 36px;
+		height: 36px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #fff;
+		border-radius: 8px;
+		color: #1a1a1a;
+	}
+
+	.mega__icon svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.mega__title {
+		display: block;
+		font-weight: 600;
+		font-size: 0.9rem;
+		color: #111;
+	}
+
+	.mega__desc {
+		display: block;
+		font-size: 0.8rem;
+		color: #8a8f98;
+		margin-top: 2px;
+		line-height: 1.4;
+	}
+
+	.mega__link:hover .mega__title {
+		text-decoration: underline;
+	}
+
+	/* Knowledge mega: blog post list */
+	.mega__posts {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+	}
+
+	.mega__post {
+		display: flex;
+		gap: 10px;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.mega__postIcon {
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
+		margin-top: 3px;
+		color: #8a8f98;
+	}
+
+	.mega__postTitle {
+		display: block;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: #111;
+		line-height: 1.35;
+	}
+
+	.mega__postDate {
+		display: block;
+		font-size: 0.75rem;
+		color: #8a8f98;
+		margin-top: 4px;
+	}
+
+	.mega__more {
+		display: inline-block;
+		margin-top: 18px;
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: #111;
+		text-decoration: none;
+	}
+
+	/* Promo card: cont.png already contains the full design (text, link, illustration) */
+	.promo {
+		display: block;
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	.promo img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* Right-side actions */
+	.actions {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		flex-shrink: 0;
+	}
+
+	.support {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		background: none;
+		border: none;
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: #1a1a1a;
+		cursor: pointer;
+	}
+
+	.support svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.btn {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 10px 18px;
+		border-radius: 8px;
+		font-size: 0.9rem;
+		font-weight: 600;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.btn svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	.btn--outline {
+		border: 1.5px solid #111;
+		color: #111;
+	}
+
+	.btn--solid {
+		background: #111;
+		color: #fff;
+	}
+
+	.btn--outline:hover {
+		background: #f5f5f5;
+	}
+
+	.btn--solid:hover {
+		background: #2a2a2a;
+	}
+
+	/* Burger (mobile only) */
+	.burger {
+		display: none;
+		flex-direction: column;
+		justify-content: center;
+		gap: 5px;
+		width: 32px;
+		height: 32px;
+		background: none;
+		border: none;
+		cursor: pointer;
+		flex-shrink: 0;
+	}
+
+	.burger span {
+		display: block;
+		height: 2px;
+		background: #111;
+		transition: transform 0.2s ease, opacity 0.2s ease;
+	}
+
+	.burger[aria-expanded='true'] span:nth-child(1) {
+		transform: translateY(7px) rotate(45deg);
+	}
+
+	.burger[aria-expanded='true'] span:nth-child(2) {
+		opacity: 0;
+	}
+
+	.burger[aria-expanded='true'] span:nth-child(3) {
+		transform: translateY(-7px) rotate(-45deg);
+	}
+
+	/* Mobile menu */
+	.mobile-menu {
+		display: none;
+		max-height: 0;
+		overflow: hidden;
+		background: #fff;
+		border-top: 1px solid #ececec;
+		transition: max-height 0.25s ease;
+	}
+
+	.mobile-menu.is-open {
+		max-height: 80vh;
+		overflow-y: auto;
+	}
+
+	.mobile-menu__list {
+		list-style: none;
+		padding: 8px 24px 24px;
+	}
+
+	.mobile-menu__list > li {
+		border-bottom: 1px solid #f0f0f0;
+	}
+
+	.mobile-menu__list summary {
+		padding: 16px 0;
+		font-weight: 600;
+		cursor: pointer;
+	}
+
+	.mobile-menu__link a {
+		display: block;
+		padding: 16px 0;
+		color: #1a1a1a;
+		text-decoration: none;
+		font-weight: 500;
+	}
+
+	.mobile-menu__group {
+		margin: 8px 0 16px;
+	}
+
+	.mobile-menu__group ul {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.mobile-menu__group a {
+		color: #444;
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+
+	.mobile-menu__actions {
+		display: flex;
+		gap: 12px;
+		padding: 20px 0 0;
+	}
+
+	.mobile-menu__actions .btn {
+		flex: 1;
+		justify-content: center;
+	}
+
+	/* Breakpoint: below 1024px collapse to burger + mobile-menu */
+	@media (max-width: 1023.98px) {
+		.nav,
+		.actions .support,
+		.actions .btn {
+			display: none;
+		}
+
+		.burger {
+			display: flex;
+			margin-left: auto;
+		}
+
+		.mobile-menu {
+			display: block;
+		}
+	}
+
+	@media (max-width: 639.98px) {
+		.header__bar {
+			height: 64px;
+		}
+
+		.container {
+			padding: 0 16px;
+		}
+	}
+</style>

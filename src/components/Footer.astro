@@ -1,0 +1,448 @@
+---
+import logoSvg from '../assets/icons/logo.svg?raw';
+
+const year = new Date().getFullYear();
+// Prefix internal links with the configured base path (see astro.config.mjs)
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+
+// Reusable line-icon paths, injected via set:html
+const icons: Record<string, string> = {
+	telegram: '<path d="M21 4 3 11l6 2.2M21 4l-3 16-7-5.4M21 4 9 13.2v5l3-3.4"/>',
+	instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/>',
+	youtube: '<rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10.5 9.5v5l4.5-2.5-4.5-2.5Z" fill="currentColor" stroke="none"/>',
+	facebook: '<path d="M16 8h-2a2 2 0 0 0-2 2v2H9v3h3v6h3v-6h2.5l.5-3H15v-1.5a.5.5 0 0 1 .5-.5H16V8Z"/>',
+};
+
+const socialLinks = [
+	{ icon: 'telegram', href: '#', label: 'Telegram' },
+	{ icon: 'instagram', href: '#', label: 'Instagram' },
+	{ icon: 'youtube', href: '#', label: 'YouTube' },
+	{ icon: 'facebook', href: '#', label: 'Facebook' },
+];
+
+const groupLogoCount = 7;
+
+const footerColumns = [
+	{
+		groups: [
+			{ title: 'Продукти', items: ['Цифрова каса', 'Еквайринг', 'КЕП для касира', 'Кредитування для бізнесу', 'Обладнання'] },
+			{ title: 'Інтеграції', items: ['Облікові системи', 'CRM-системи', 'CMS та eCommerce', 'Маркетплейси', 'Банки', 'Платіжні системи', 'Служби доставки', 'POS-обладнання'] },
+		],
+	},
+	{
+		groups: [
+			{ title: 'Рішення для бізнесу', items: ['Малому бізнесу', 'Ентерпрайзу', 'Класичному рітейлу', 'Мережам', 'Торговцям на маркетплейсах', 'Інтернет-магазинам', 'Ресторанам і готелям', 'Медичним центрам', 'Краса та догляд', 'Спортивним клубам', 'Ломбардам', 'Обмінникам валют', 'Франшизам', 'Вендінг', 'ТРЦ', 'Платформам (доставка, таксі)'] },
+		],
+	},
+	{
+		groups: [
+			{ title: 'Порівняння', items: ['Вчасно.Каса', 'Приват Каса', 'Poster', 'ПРРО від Податкової', 'Cashalot', 'CashDesk', 'є-Чек', 'Вебчек', 'ПРРО від Skyservice'] },
+			{ title: 'Матеріали', items: ['API документація', 'Текстові інструкції', 'Відеогайди', 'Блог', 'Історії клієнтів'] },
+		],
+	},
+	{
+		groups: [
+			{ title: 'Компанія', items: ['Про нас', 'Клієнти', 'Для преси', 'Вакансії', 'Новини'] },
+		],
+	},
+];
+
+const contactLinks = ['Служба турботи', 'Відділ продажів', 'Ставайте партнером Чекбокса', 'Запишіться на демо'];
+const contactPhone = '0 800 330 676';
+const legalLinks = ['Політика конфіденційності', 'Публічна оферта', 'Посередництво'];
+---
+
+<footer class="footer">
+	<div class="container">
+		<div class="footer__top">
+			<div class="footer__brand">
+				<a href={base} class="footer__logo" aria-label="Checkbox">
+					<Fragment set:html={logoSvg} />
+					Чекбокс
+				</a>
+				<p class="footer__desc">
+					<strong>Чекбокс — турботливий провайдер цифрових кас.</strong>
+					 Допомагаємо сотням тисяч українських бізнесів впевнено торгувати, не відволікаючись на зайву бюрократію та страх перед податковою.
+				</p>
+				<div class="footer__social">
+					{socialLinks.map((social) => (
+						<a href={social.href} aria-label={social.label} class="footer__socialLink">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[social.icon]} />
+						</a>
+					))}
+				</div>
+				<div class="footer__payments">
+					<span class="payment payment--visa">VISA</span>
+					<span class="payment payment--mc"><span class="payment__circle payment__circle--red"></span><span class="payment__circle payment__circle--yellow"></span></span>
+					<span class="payment payment--dark"> Pay</span>
+					<span class="payment payment--light">G Pay</span>
+				</div>
+			</div>
+
+			<div class="footer__group">
+				<p class="footer__groupTitle">Ми є частиною <strong>checkbox</strong> <span class="footer__pill">GROUP</span></p>
+				<p class="footer__groupDesc">українська група FinTech-компаній та бізнес-екосистема, що швидко зростає:</p>
+				<div class="footer__logos">
+					{Array.from({ length: groupLogoCount }).map(() => (
+						<span class="footer__logoPlaceholder" aria-hidden="true">
+							<svg viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="1"><rect x="1" y="1" width="62" height="34" rx="2"/><path d="M3 3l58 30M61 3 3 33"/></svg>
+						</span>
+					))}
+				</div>
+			</div>
+		</div>
+
+		<div class="footer__nav">
+			{footerColumns.map((column) => (
+				<div class="footer__col">
+					{column.groups.map((group) => (
+						<div class="footer__navGroup">
+							<p class="footer__navTitle">{group.title}</p>
+							<ul>
+								{group.items.map((item) => (
+									<li><a href="#">{item}</a></li>
+								))}
+							</ul>
+						</div>
+					))}
+					{column.groups[0].title === 'Компанія' && (
+						<div class="footer__navGroup">
+							<p class="footer__navTitle">Контакти</p>
+							<ul>
+								{contactLinks.map((item) => (
+									<li><a href="#">{item}</a></li>
+								))}
+							</ul>
+							<div class="footer__phoneDivider"></div>
+							<a href={`tel:${contactPhone.replace(/\s/g, '')}`} class="footer__phone">
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5c0 8 7 15 15 15l3-4-6-3-2 2c-2-1-4-3-5-5l2-2-3-6-4 3Z"/></svg>
+								{contactPhone}
+							</a>
+						</div>
+					)}
+				</div>
+			))}
+		</div>
+
+		<div class="footer__bottom">
+			<p class="footer__legalInfo">
+				Copyright © {year} Checkbox. Всі права захищені.
+				<span class="footer__legalSep">ТОВ «Чекбокс»</span>
+				<span class="footer__legalSep">ЄДРПОУ 43721744</span>
+			</p>
+			<div class="footer__legalLinks">
+				{legalLinks.map((label) => (
+					<a href="#">{label}</a>
+				))}
+			</div>
+		</div>
+	</div>
+</footer>
+
+<style>
+	.footer {
+		background: #000;
+		color: #fff;
+		padding: 64px 0 32px;
+		font-family: var(--gh-font-body, 'Inter', sans-serif);
+	}
+
+	.container {
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+
+	/* Top: brand + group card */
+	.footer__top {
+		display: grid;
+		grid-template-columns: 1.4fr 1fr;
+		gap: 48px;
+		padding-bottom: 56px;
+	}
+
+	.footer__logo {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		color: #fff;
+		text-decoration: none;
+		font-size: 1.25rem;
+		font-weight: 700;
+	}
+
+	.footer__logo :global(svg) {
+		width: 30px;
+		height: 30px;
+	}
+
+	.footer__desc {
+		margin-top: 20px;
+		max-width: 480px;
+		font-size: 0.95rem;
+		line-height: 1.55;
+		color: #9a9a9a;
+	}
+
+	.footer__desc strong {
+		color: #fff;
+		font-weight: 600;
+	}
+
+	.footer__social {
+		display: flex;
+		gap: 10px;
+		margin-top: 24px;
+	}
+
+	.footer__socialLink {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		border-radius: 8px;
+		background: #1a1a1a;
+		color: #fff;
+	}
+
+	.footer__socialLink svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	.footer__payments {
+		display: flex;
+		gap: 10px;
+		margin-top: 20px;
+	}
+
+	.payment {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 3px;
+		height: 28px;
+		padding: 0 10px;
+		border-radius: 6px;
+		font-size: 0.7rem;
+		font-weight: 700;
+	}
+
+	.payment--visa {
+		background: #fff;
+		color: #1a1f71;
+		font-style: italic;
+	}
+
+	.payment--mc {
+		background: #fff;
+		width: 44px;
+	}
+
+	.payment__circle {
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+	}
+
+	.payment__circle--red {
+		background: #eb001b;
+		margin-right: -5px;
+	}
+
+	.payment__circle--yellow {
+		background: #f79e1b;
+		mix-blend-mode: multiply;
+	}
+
+	.payment--dark {
+		background: #000;
+		border: 1px solid #333;
+		color: #fff;
+	}
+
+	.payment--light {
+		background: #fff;
+		color: #1a1a1a;
+	}
+
+	/* Group card */
+	.footer__group {
+		background: #161616;
+		border-radius: 12px;
+		padding: 24px;
+	}
+
+	.footer__groupTitle {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 1rem;
+		color: #fff;
+		flex-wrap: wrap;
+	}
+
+	.footer__pill {
+		background: #fff;
+		color: #111;
+		font-size: 0.65rem;
+		font-weight: 700;
+		padding: 2px 8px;
+		border-radius: 999px;
+		letter-spacing: 0.04em;
+	}
+
+	.footer__groupDesc {
+		margin-top: 8px;
+		font-size: 0.85rem;
+		color: #9a9a9a;
+		max-width: 380px;
+	}
+
+	.footer__logos {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 10px;
+		margin-top: 20px;
+	}
+
+	.footer__logoPlaceholder {
+		display: flex;
+		color: #4a4a4a;
+	}
+
+	.footer__logoPlaceholder svg {
+		width: 100%;
+		height: auto;
+	}
+
+	/* Bottom nav links */
+	.footer__nav {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 32px;
+		padding: 40px 0;
+	}
+
+	.footer__navGroup + .footer__navGroup {
+		margin-top: 32px;
+	}
+
+	.footer__navTitle {
+		font-size: 1rem;
+		font-weight: 600;
+		margin-bottom: 16px;
+	}
+
+	.footer__navGroup ul {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.footer__navGroup a {
+		color: #9a9a9a;
+		text-decoration: none;
+		font-size: 0.9rem;
+	}
+
+	.footer__navGroup a:hover {
+		color: #fff;
+	}
+
+	.footer__phoneDivider {
+		width: 24px;
+		height: 1px;
+		background: #333;
+		margin: 16px 0;
+	}
+
+	.footer__phone {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		color: #fff;
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 1rem;
+		letter-spacing: 0.02em;
+	}
+
+	.footer__phone svg {
+		width: 18px;
+		height: 18px;
+	}
+
+	/* Bottom legal bar */
+	.footer__bottom {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 12px;
+		padding-top: 24px;
+		border-top: 1px solid #222;
+		font-size: 0.8rem;
+		color: #777;
+	}
+
+	.footer__legalSep {
+		margin-left: 16px;
+	}
+
+	.footer__legalLinks {
+		display: flex;
+		gap: 24px;
+	}
+
+	.footer__legalLinks a {
+		color: #777;
+		text-decoration: none;
+	}
+
+	.footer__legalLinks a:hover {
+		color: #fff;
+	}
+
+	/* Responsive */
+	@media (max-width: 1023.98px) {
+		.footer__top {
+			grid-template-columns: 1fr;
+		}
+
+		.footer__nav {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 32px 24px;
+		}
+	}
+
+	@media (max-width: 639.98px) {
+		.footer {
+			padding: 48px 0 24px;
+		}
+
+		.footer__nav {
+			grid-template-columns: 1fr;
+		}
+
+		.footer__navGroup + .footer__navGroup {
+			margin-top: 24px;
+		}
+
+		.footer__logos {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.footer__bottom {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.footer__legalLinks {
+			flex-wrap: wrap;
+			gap: 16px;
+		}
+	}
+</style>

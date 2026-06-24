@@ -1,0 +1,41 @@
+---
+import Head from '@components/Head.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+const { title, description, ogImage, ogType = 'website', noindex = false } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <Head
+            title={title}
+            description={description}
+            ogImage={ogImage}
+            ogType={ogType}
+            noindex={noindex}
+        />
+    </head>
+    <body>
+        <Header />
+        <main>
+            <slot />
+        </main>
+        <Footer />
+        <script is:inline src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script is:inline>document.addEventListener('DOMContentLoaded', function () { if (window.AOS) AOS.init({ once: true }); });</script>
+    </body>
+</html>
+
+<style>
+	/* Offset for the fixed header in Header2.astro (80px desktop / 64px mobile) */
+	main {
+		padding-top: 80px;
+	}
+
+	@media (max-width: 639.98px) {
+		main {
+			padding-top: 64px;
+		}
+	}
+</style>
