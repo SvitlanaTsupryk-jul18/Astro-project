@@ -1,0 +1,23 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="84" height="64" viewBox="0 0 84 64" fill="none">
+  <style>
+    /* Shared 11.9s cycle, each icon starting 2s after the previous one:
+       st-2 is second — the little dark square scales in at 2.0-2.6s. */
+    .pop {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: st2-pop 11.9s cubic-bezier(0.34, 1.56, 0.64, 1) infinite both;
+    }
+    @keyframes st2-pop {
+      0%, 16.81% { transform: scale(0); }
+      21.85%, 100% { transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pop { animation: none; }
+    }
+    </style>
+  <rect width="84" height="64" fill="#F9F9FB"/>
+  <path d="M79.7628 41.1596L77.9582 49.2721C77.5719 51.0166 76.3372 52.42 74.6972 52.984L55.5617 59.575C50.3821 61.3588 44.6769 59.8636 40.9346 55.7516L23.6038 36.6738C21.9321 34.8375 19.317 34.3194 17.1134 35.3818L14.3527 36.7197C11.5096 37.4739 8.53986 36.1098 7.17214 33.4209L3.84781 26.6004C2.45476 23.7476 2.60038 20.3439 4.22772 17.6222L9.17943 9.37202M9.17943 9.37202L42.8279 1.78418L78.5217 36.8181C80.9089 39.1659 80.0351 43.2976 76.9197 44.3928L56.2519 51.6789C52.2374 53.0955 47.7922 51.9478 44.8858 48.7474L9.17943 9.37202Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path d="M44.6453 9.54907L22.4451 14.9662L47.5074 42.5499L70.8853 35.2966L44.6453 9.54907Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path class="pop" d="M47.6277 21.5571L40.3268 23.623L45.1455 28.7515L52.535 26.4627L47.6277 21.5571Z" fill="black" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+</svg>

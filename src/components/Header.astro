@@ -1,720 +1,1072 @@
 ---
-import { Image } from 'astro:assets';
-import promoImage from '../assets/images/cont.png';
-import logo from '../assets/icons/logo.svg';
-// Reusable line-icon paths, injected via set:html into a shared <svg> wrapper
-const icons: Record<string, string> = {
-	card: '<rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/>',
-	browser: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>',
-	phone: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
-	monitor: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',
-	scales: '<path d="M12 3v18M5 7l-3 6a3 3 0 0 0 6 0l-3-6Zm14 0l-3 6a3 3 0 0 0 6 0l-3-6ZM5 7h14M7 21h10"/>',
-	cursor: '<path d="M5 3l5.5 16 2-7 7-2L5 3Z"/>',
-	qr: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM20 14v7M17 20h4"/>',
-	terminal: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 6h6M9 18h.01"/>',
-	key: '<circle cx="8" cy="14" r="4"/><path d="M11 11l9-9M16 4l3 3M13 7l3 3"/>',
-	wallet: '<rect x="2" y="3" width="6" height="18" rx="1"/><path d="M14 7h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z"/><circle cx="17.5" cy="13" r="1"/>',
-	box: '<path d="M21 8l-9-5-9 5 9 5 9-5Zm0 0v8l-9 5-9-5V8m9 5v8"/>',
-	eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
-	briefcase: '<rect x="2" y="7" width="20" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M2 13h20"/>',
-	building: '<rect x="4" y="2" width="16" height="20"/><path d="M9 6h.01M15 6h.01M9 10h.01M15 10h.01M9 14h.01M15 14h.01M9 18h2v4H9z"/>',
-	grid: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
-	api: '<path d="M8 3 4 7l4 4M16 3l4 4-4 4M14 3l-4 18"/>',
-	doc: '<path d="M6 2h9l3 3v17H6Z"/><path d="M6 8h12M6 12h12M6 16h8"/>',
-	video: '<rect x="2" y="5" width="14" height="14" rx="2"/><path d="M16 10l6-3v10l-6-3Z"/>',
-	blog: '<path d="M4 4h16v16H4Z"/><path d="M8 9h8M8 13h8M8 17h4"/>',
-	story: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/>',
-	headset: '<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2" y="14" width="5" height="6" rx="2"/><rect x="17" y="14" width="5" height="6" rx="2"/>',
-	login: '<path d="M10 17l5-5-5-5M15 12H3M14 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3"/>',
-};
+import { Image } from "astro:assets";
+import promoImage from "@assets/images/cont.png";
+import ArrowRight from "@assets/icons/arrow-right.svg";
 
-interface ProductItem { title: string; description: string; icon: string; href: string }
-interface ProductColumn { label: string; items: ProductItem[] }
+interface ProductItem {
+  title: string;
+  description: string;
+  href: string;
+}
+
+interface ProductColumn {
+  label: string;
+  items: ProductItem[];
+}
 
 const productColumns: ProductColumn[] = [
-	{
-		label: 'Робота з касою',
-		items: [
-			{ title: 'Цифрова каса', description: 'Програмний РРО для фіскалізації', icon: 'card', href: '#' },
-			{ title: 'Веб-кабінет', description: 'Управляйте касами з браузера', icon: 'browser', href: '#' },
-			{ title: 'Мобільні застосунки', description: 'Працюйте з касою на iOS та Android', icon: 'phone', href: '#' },
-			{ title: 'Десктопні застосунки', description: 'Рішення для Windows і macOS', icon: 'monitor', href: '#' },
-			{ title: 'Порівняння з аналогами', description: 'Порівняйте Чекбокс із іншими РРО та ПРРО', icon: 'scales', href: '#' },
-		],
-	},
-	{
-		label: 'Прийом платежів',
-		items: [
-			{ title: 'Еквайринг', description: 'Приймайте оплату картками онлайн та офлайн', icon: 'card', href: '#' },
-			{ title: 'POS-терміналами', description: 'Використовуйте фізичні термінали', icon: 'phone', href: '#' },
-			{ title: 'Платежі за смартфоном', description: 'Перетворіть телефон на термінал', icon: 'phone', href: '#' },
-			{ title: 'Інтернет-еквайринг', description: 'Додавайте оплату на ваш сайт чи інтернет-магазин', icon: 'cursor', href: '#' },
-			{ title: 'Платежі за QR', description: 'Приймайте платежі через сканування QR-коду', icon: 'qr', href: '#' },
-			{ title: 'Термінал', description: 'Замовляйте термінал з вбудованим принтером чеків', icon: 'terminal', href: '#' },
-		],
-	},
-	{
-		label: 'На додаток',
-		items: [
-			{ title: 'Ключ-підпис для касира', description: 'Створіть електронний підпис касира безкоштовно', icon: 'key', href: '#' },
-			{ title: 'Кредитування для бізнесу', description: 'Фінансування для підприємців від ПУМБ', icon: 'wallet', href: '#' },
-			{ title: 'Корисне обладнання', description: 'Сумісні з Чекбоксом принтери, сканери та інше обладнання', icon: 'box', href: '#' },
-		],
-	},
-	{
-		label: 'Рішення',
-		items: [
-			{ title: 'Огляд продуктів', description: 'Усі продукти Чекбокса в одному місці', icon: 'eye', href: '#' },
-			{ title: 'Рішення для ФОП', description: 'Зручна та надійна фіскалізація для підприємців', icon: 'briefcase', href: '#' },
-			{ title: 'Рішення для ентерпрайзу', description: 'Масштабована інтеграція для мереж і великого бізнесу', icon: 'building', href: '#' },
-			{ title: 'Рішення для різних сегментів', description: 'Галузеві рішення: ритейл, HoReCa, послуги та інше', icon: 'grid', href: '#' },
-		],
-	},
+  {
+    label: "Робота з касою",
+    items: [
+      {
+        title: "Цифрова каса",
+        description: "Програмний РРО для фіскалізації",
+        href: "#",
+      },
+      {
+        title: "Веб-кабінет",
+        description: "Управляйте касами з браузера",
+        href: "#",
+      },
+      {
+        title: "Мобільні застосунки",
+        description: "Працюйте з касою на iOS та Android",
+        href: "#",
+      },
+      {
+        title: "Десктопні застосунки",
+        description: "Рішення для Windows і macOS",
+        href: "#",
+      },
+      {
+        title: "Порівняння з аналогами",
+        description: "Порівняйте Чекбокс із іншими РРО та ПРРО",
+        href: "#",
+      },
+    ],
+  },
+  {
+    label: "Прийом платежів",
+    items: [
+      {
+        title: "Еквайринг",
+        description: "Приймайте оплату картками онлайн та офлайн",
+        href: "#",
+      },
+      {
+        title: "POS-терміналами",
+        description: "Використовуйте фізичні термінали",
+        href: "#",
+      },
+      {
+        title: "Платежі за смартфоном",
+        description: "Перетворіть телефон на термінал",
+        href: "#",
+      },
+      {
+        title: "Інтернет-еквайринг",
+        description: "Додавайте оплату на ваш сайт чи інтернет-магазин",
+        href: "#",
+      },
+      {
+        title: "Платежі за QR",
+        description: "Приймайте платежі через сканування QR-коду",
+        href: "#",
+      },
+      {
+        title: "Термінал",
+        description: "Замовляйте термінал з вбудованим принтером чеків",
+        href: "#",
+      },
+    ],
+  },
+  {
+    label: "На додаток",
+    items: [
+      {
+        title: "Ключ-підпис для касира",
+        description: "Створіть електронний підпис касира безкоштовно",
+        href: "#",
+      },
+      {
+        title: "Кредитування для бізнесу",
+        description: "Фінансування для підприємців від ПУМБ",
+        href: "#",
+      },
+      {
+        title: "Корисне обладнання",
+        description: "Сумісні з Чекбоксом принтери, сканери та інше обладнання",
+        href: "#",
+      },
+    ],
+  },
+  {
+    label: "Рішення",
+    items: [
+      {
+        title: "Огляд продуктів",
+        description: "Усі продукти Чекбокса в одному місці",
+        href: "#",
+      },
+      {
+        title: "Рішення для ФОП",
+        description: "Зручна та надійна фіскалізація для підприємців",
+        href: "#",
+      },
+      {
+        title: "Рішення для ентерпрайзу",
+        description: "Масштабована інтеграція для мереж і великого бізнесу",
+        href: "#",
+      },
+      {
+        title: "Рішення для різних сегментів",
+        description: "Галузеві рішення: ритейл, HoReCa, послуги та інше",
+        href: "#",
+      },
+    ],
+  },
 ];
 
 const materialsItems = [
-	{ title: 'API-документація', description: 'Технічна документація для інтеграції з Чекбоксом', icon: 'api', href: '#' },
-	{ title: 'Текстові інструкції', description: 'Покрокові гайди з налаштування та роботи з ПРРО', icon: 'doc', href: '#' },
-	{ title: 'Відео-гайди', description: 'Відеоуроки для швидкого старту та вирішення задач', icon: 'video', href: '#' },
-	{ title: 'Блог', description: 'Новини, кейси та корисні матеріали для бізнесу', icon: 'blog', href: '#' },
-	{ title: 'Історії клієнтів', description: 'Як бізнеси різних галузей працюють з Чекбоксом', icon: 'story', href: '#' },
+  {
+    title: "API-документація",
+    description: "Технічна документація для інтеграції з Чекбоксом",
+    href: "#",
+  },
+  {
+    title: "Текстові інструкції",
+    description: "Покрокові гайди з налаштування та роботи з ПРРО",
+    href: "#",
+  },
+  {
+    title: "Відео-гайди",
+    description: "Відеоуроки для швидкого старту та вирішення задач",
+    href: "#",
+  },
+  {
+    title: "Блог",
+    description: "Новини, кейси та корисні матеріали для бізнесу",
+    href: "#",
+  },
+  {
+    title: "Історії клієнтів",
+    description: "Як бізнеси різних галузей працюють з Чекбоксом",
+    href: "#",
+  },
 ];
 
 const blogPosts = [
-	{ title: 'РРО vs ПРРО: софт без апаратури чи фізична каса?', date: '4 лютого 2026', href: '#' },
-	{ title: 'Інтеграція Checkbox із monobank: як приймати продажі', date: '4 лютого 2026', href: '#' },
-	{ title: 'Продажі від компанії SSI пройшли сертифікацію Checkbox', date: '21 березня 2026', href: '#' },
-	{ title: 'РРО vs ПРРО: софт без апаратури чи фізична каса?', date: '2 квітня 2026', href: '#' },
+  {
+    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
+    date: "4 лютого 2026",
+    href: "#",
+  },
+  {
+    title: "Інтеграція Checkbox із monobank: як приймати продажі",
+    date: "4 лютого 2026",
+    href: "#",
+  },
+  {
+    title: "Продажі від компанії SSI пройшли сертифікацію Checkbox",
+    date: "21 березня 2026",
+    href: "#",
+  },
+  {
+    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
+    date: "2 квітня 2026",
+    href: "#",
+  },
 ];
 
 // Prefix internal links with the configured base path (see astro.config.mjs)
-const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
-
-const navLinks = [
-	{ title: 'Ціни', href: `${base}pricing` },
-	{ title: 'Інтеграції', href: `${base}integrations` },
-	{ title: 'Партнерка', href: `${base}partners` },
-	{ title: 'Про нас', href: `${base}about` },
-];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 
 <header class="header" id="header">
-	<div class="container header__bar">
-		<a href={base} class="logo" aria-label="Checkbox">
-            <Image src={logo} alt="Checkbox" />
-		</a>
+  <div class="container">
+    <div class="header-top">
+      <a href={base} class="logo" aria-label="Checkbox">
+        <svg
+          class="logo-mark"
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style="overflow: visible;"
+        >
+          <g class="logo-icon">
+            <path
+              fill="black"
+              d="M31.9404 31.9404H0V0H31.9404V31.9404ZM5.32422 5.32324V26.6172H26.6172V5.32324H5.32422Z"
+            ></path>
+            <path
+              fill="black"
+              d="M9.31641 9.31598H22.625V22.6245L9.31641 9.31598Z"></path>
+          </g>
+        </svg>
+        <svg
+          class="logo-word"
+          width="118"
+          height="32"
+          viewBox="40 0 118 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill="black"
+            d="M47.3514 23.2302C43.4254 23.2302 40.7214 20.4222 40.7214 16.5482V15.8202C40.7214 11.9982 43.5294 9.19021 47.2474 9.19021H47.4814C49.8474 9.19021 51.8234 10.2562 53.1494 12.1802L50.4194 14.1302C49.6394 12.7522 48.7814 12.1542 47.6114 12.1542H47.4554C45.7654 12.1542 44.7254 13.5322 44.7254 15.9762V16.4442C44.7254 18.7842 45.8434 20.1882 47.5594 20.1882H47.7934C48.8854 20.1882 49.7954 19.5382 50.5494 18.2122L53.2534 20.2922C51.9014 22.2162 50.0034 23.2302 47.5854 23.2302H47.3514ZM55.1634 22.9702V4.25021H59.0374V10.9842C60.1814 9.84021 61.7414 9.16421 63.4574 9.16421C66.3694 9.16421 68.0594 11.0622 68.0594 14.3122V22.9702H64.1854V15.1442C64.1854 13.2982 63.4574 12.4142 61.8974 12.4142C60.1034 12.4142 59.0374 13.5842 59.0374 15.5342V22.9702H55.1634ZM77.0627 23.2562C72.9807 23.2562 70.2507 20.5522 70.2507 16.4962V16.0022C70.2507 11.9982 73.0067 9.19021 76.9067 9.19021H77.2447C80.8847 9.19021 83.4327 11.7642 83.4327 15.3522V17.2762H74.0207C74.2027 19.0702 75.4767 20.1622 77.3227 20.1622H77.5567C79.0647 20.1622 80.2867 19.4342 81.0927 18.5502L83.0167 20.9682C81.7167 22.2942 79.5587 23.2562 77.4787 23.2562H77.0627ZM74.1247 14.9102H79.7667V14.8322C79.7147 13.0642 78.6747 12.0242 77.1927 12.0242H76.9327C75.4247 12.0242 74.4107 13.0902 74.1247 14.9102ZM91.7088 23.2302C87.7828 23.2302 85.0788 20.4222 85.0788 16.5482V15.8202C85.0788 11.9982 87.8868 9.19021 91.6048 9.19021H91.8388C94.2048 9.19021 96.1808 10.2562 97.5068 12.1802L94.7768 14.1302C93.9968 12.7522 93.1388 12.1542 91.9688 12.1542H91.8128C90.1228 12.1542 89.0828 13.5322 89.0828 15.9762V16.4442C89.0828 18.7842 90.2008 20.1882 91.9168 20.1882H92.1508C93.2428 20.1882 94.1528 19.5382 94.9068 18.2122L97.6108 20.2922C96.2588 22.2162 94.3608 23.2302 91.9428 23.2302H91.7088ZM99.5208 22.9702V4.25021H103.395V15.0142H103.629L108.075 9.45021H112.313L106.957 15.6642L112.365 22.9702H107.867L103.655 16.7042H103.395V22.9702H99.5208ZM121.841 23.2562C120.099 23.2562 118.617 22.6062 117.577 21.4622C117.499 22.0082 117.395 22.5802 117.239 22.9702H114.171V4.25021H118.045V10.5422C119.033 9.65821 120.333 9.16421 121.841 9.16421H122.049C125.611 9.16421 128.003 11.8682 128.003 15.8202V16.6002C128.003 20.5522 125.611 23.2562 122.049 23.2562H121.841ZM120.879 20.3702H121.139C122.855 20.3702 123.999 18.8102 123.999 16.4442V15.8462C123.999 13.5322 122.855 12.0502 121.139 12.0502H120.879C119.163 12.0502 118.019 13.5322 118.019 15.8462V16.4442C118.019 18.8102 119.163 20.3702 120.879 20.3702ZM136.427 23.2562C132.371 23.2562 129.563 20.5262 129.563 16.6002V15.8202C129.563 11.8942 132.371 9.16421 136.427 9.16421H136.687C140.743 9.16421 143.551 11.8942 143.551 15.8202V16.6002C143.551 20.5262 140.743 23.2562 136.687 23.2562H136.427ZM136.427 20.3702H136.687C138.403 20.3702 139.547 18.8102 139.547 16.4442V15.8462C139.547 13.5322 138.403 12.0502 136.687 12.0502H136.427C134.711 12.0502 133.567 13.5322 133.567 15.8462V16.4442C133.567 18.8102 134.711 20.3702 136.427 20.3702ZM143.896 22.9702L148.29 16.0022V15.8982L144.078 9.45021H148.342L150.786 13.7922H150.942L153.308 9.45021H157.52L153.334 15.8982V16.0022L157.702 22.9702H153.438L150.838 18.1862H150.682L148.082 22.9702H143.896Z"
+          ></path>
+        </svg>
+      </a>
 
-		<nav class="nav" id="nav" aria-label="Основна навігація">
-			<ul class="nav__list">
-				<li class="nav__item has-mega">
-					<button class="nav__trigger" aria-expanded="false">
-						Продукти
-						<svg class="chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-					</button>
-					<div class="mega">
-						<div class="container mega__grid mega__grid--products">
-							{productColumns.map((column) => (
-								<div class="mega__column">
-									<p class="mega__label"><span class="mega__bullet"></span>{column.label}</p>
-									<ul class="mega__items">
-										{column.items.map((item) => (
-											<li>
-												<a href={item.href} class="mega__link">
-													<span class="mega__icon">
-														<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[item.icon]} />
-													</span>
-													<span>
-														<span class="mega__title">{item.title}</span>
-														<span class="mega__desc">{item.description}</span>
-													</span>
-												</a>
-											</li>
-										))}
-									</ul>
-								</div>
-							))}
-						</div>
-					</div>
-				</li>
+      <button
+        class="burger"
+        id="burger"
+        aria-label="Меню"
+        aria-expanded="false"
+      >
+        <div></div>
+      </button>
+    </div>
 
-				{navLinks.slice(0, 2).map((link) => (
-					<li class="nav__item">
-						<a href={link.href}>{link.title}</a>
-					</li>
-				))}
+    <nav class="nav" aria-label="Основна навігація">
+      <div class="header-nav">
+        <div class="header-extra">
+          <button class="list" aria-expanded="false">
+            Продукти
+            <svg
+              class="chevron"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M9.99857 10.9761L14.1234 6.85138L15.3019 8.02989L9.99857 13.3332L4.69531 8.02989L5.87382 6.85138L9.99857 10.9761Z"
+                fill="black"></path>
+            </svg>
+          </button>
+          <div class="innerList">
+            <div class="innerList-grid innerList-grid--products">
+              {
+                productColumns.map((column) => (
+                  <div class="innerList-column">
+                    <p class="subtitle innerList-label">{column.label}</p>
+                    <ul class="innerList-items">
+                      {column.items.map((item) => (
+                        <li>
+                          <a href={item.href} class="innerList-link">
+                            {item.title}
+                            <span>{item.description}</span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
 
-				<li class="nav__item has-mega">
-					<button class="nav__trigger" aria-expanded="false">
-						База знань
-						<svg class="chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-					</button>
-					<div class="mega">
-						<div class="container mega__grid mega__grid--knowledge">
-							<div class="mega__column">
-								<p class="mega__label"><span class="mega__bullet"></span>Матеріали</p>
-								<ul class="mega__items">
-									{materialsItems.map((item) => (
-										<li>
-											<a href={item.href} class="mega__link">
-												<span class="mega__icon">
-													<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons[item.icon]} />
-												</span>
-												<span>
-													<span class="mega__title">{item.title}</span>
-													<span class="mega__desc">{item.description}</span>
-												</span>
-											</a>
-										</li>
-									))}
-								</ul>
-							</div>
+        <a href={`${base}pricing`}>Ціни</a>
+        <a href={`${base}integrations`}>Інтеграції</a>
 
-							<div class="mega__column">
-								<p class="mega__label"><span class="mega__bullet"></span>Трендові статті з блогу</p>
-								<ul class="mega__posts">
-									{blogPosts.map((post) => (
-										<li>
-											<a href={post.href} class="mega__post">
-												<svg class="mega__postIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-												<span>
-													<span class="mega__postTitle">{post.title}</span>
-													<span class="mega__postDate">{post.date}</span>
-												</span>
-											</a>
-										</li>
-									))}
-								</ul>
-								<a href="#" class="mega__more">Переглянути всі →</a>
-							</div>
+        <div class="header-extra">
+          <button class="list" aria-expanded="false">
+            База знань
+            <svg
+              class="chevron"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M9.99857 10.9761L14.1234 6.85138L15.3019 8.02989L9.99857 13.3332L4.69531 8.02989L5.87382 6.85138L9.99857 10.9761Z"
+                fill="black"></path>
+            </svg>
+          </button>
+          <div class="innerList">
+            <div class="innerList-grid innerList-grid--knowledge">
+              <div class="innerList-column">
+                <p class="subtitle innerList-label">Матеріали</p>
+                <ul class="innerList-items">
+                  {
+                    materialsItems.map((item) => (
+                      <li>
+                        <a href={item.href} class="innerList-link">
+                          {item.title}
+                          <span>{item.description}</span>
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+              </div>
 
-							<a href="#" class="promo">
-								<Image src={promoImage} alt="Наші каси підходять як для маленького, так і для великого бізнесу" width={340} height={340} />
-							</a>
-						</div>
-					</div>
-				</li>
+              <div class="innerList-column posts">
+                <p class="subtitle innerList-label">Трендові статті з блогу</p>
+                <ul class="innerList-posts">
+                  {
+                    blogPosts.map((post) => (
+                      <li>
+                        <a href={post.href} class="innerList-post">
+                          <span>
+                            <span class="innerList-postTitle">
+                              {post.title}
+                            </span>
+                            <span class="innerList-postDate">{post.date}</span>
+                          </span>
+                        </a>
+                      </li>
+                    ))
+                  }
+                </ul>
+                <a href="#" class="innerList-more">Переглянути всі →</a>
+              </div>
 
-				{navLinks.slice(2).map((link) => (
-					<li class="nav__item">
-						<a href={link.href}>{link.title}</a>
-					</li>
-				))}
-			</ul>
-		</nav>
+              <a href="#" class="promo">
+                <Image
+                  src={promoImage}
+                  alt="Наші каси підходять як для маленького, так і для великого бізнесу"
+                  width={340}
+                  height={340}
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <a href={`${base}partners`}>Партнерка</a>
+      </div>
 
-		<div class="actions">
-			<button class="support" aria-expanded="false">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons.headset} />
-				Підтримка
-				<svg class="chevron" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-			</button>
-			<a href="#" class="btn btn--outline">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons.monitor} />
-				Демо
-			</a>
-			<a href="#" class="btn btn--solid">
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={icons.login} />
-				В кабінет
-			</a>
-		</div>
+      <div class="nav-actions">
+        <div class="support">
+          <button class="btn support-btn" aria-expanded="false">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M4.17 12.5V7.5a5.83 5.83 0 0 1 11.66 0v5a5.83 5.83 0 0 1-5.83 5.83"
+                stroke="black"
+                stroke-width="1.67"></path>
+              <path d="M2.08 6.67v6.66" stroke="black" stroke-width="2.5"
+              ></path>
+              <path d="M17.92 6.67v6.66" stroke="black" stroke-width="2.5"
+              ></path>
+              <path
+                class="support-mouth"
+                d="M7.5 12.55Q10 14.1 12.5 12.55"
+                stroke="black"
+                stroke-width="1.67"></path>
+            </svg>
+            Підтримка
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M9.99857 10.9761L14.1234 6.85138L15.3019 8.02989L9.99857 13.3332L4.69531 8.02989L5.87382 6.85138L9.99857 10.9761Z"
+                fill="black"></path>
+            </svg>
+          </button>
+          <div class="support-panel">
+            <a href="viber://chat?number=%2B380800330676" class="support-link">
+              <span class="support-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"
+                  ><path
+                    d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2Z"
+                  ></path></svg
+                >
+              </span>
+              Написати в Viber
+            </a>
+            <a
+              href="https://t.me/checkbox_ua"
+              target="_blank"
+              rel="noopener"
+              class="support-link"
+            >
+              <span class="support-icon">
+                <svg viewBox="0 0 24 24" fill="currentColor"
+                  ><path d="M2 21l21-9L2 3v7l15 2-15 2v7Z"></path></svg
+                >
+              </span>
+              Написати в Telegram
+            </a>
+            <div class="support-divider" aria-hidden="true"></div>
+            <a href="tel:0800330676" class="support-phone"
+              >0 800 330 676 <span>(7:00-23:00)</span></a
+            >
+          </div>
+        </div>
 
-		<button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
-			<span></span><span></span><span></span>
-		</button>
-	</div>
-
-	<!-- Mobile menu: same data, rendered as native accordions (no JS needed for expand/collapse) -->
-	<div class="mobile-menu" id="mobile-menu">
-		<ul class="mobile-menu__list">
-			<li>
-				<details>
-					<summary>Продукти</summary>
-					{productColumns.map((column) => (
-						<div class="mobile-menu__group">
-							<p class="mega__label"><span class="mega__bullet"></span>{column.label}</p>
-							<ul>
-								{column.items.map((item) => (
-									<li><a href={item.href}>{item.title}</a></li>
-								))}
-							</ul>
-						</div>
-					))}
-				</details>
-			</li>
-			{navLinks.slice(0, 2).map((link) => (
-				<li class="mobile-menu__link"><a href={link.href}>{link.title}</a></li>
-			))}
-			<li>
-				<details>
-					<summary>База знань</summary>
-					<div class="mobile-menu__group">
-						<p class="mega__label"><span class="mega__bullet"></span>Матеріали</p>
-						<ul>
-							{materialsItems.map((item) => (
-								<li><a href={item.href}>{item.title}</a></li>
-							))}
-						</ul>
-					</div>
-					<div class="mobile-menu__group">
-						<p class="mega__label"><span class="mega__bullet"></span>Блог</p>
-						<ul>
-							{blogPosts.map((post) => (
-								<li><a href={post.href}>{post.title}</a></li>
-							))}
-						</ul>
-					</div>
-				</details>
-			</li>
-			{navLinks.slice(2).map((link) => (
-				<li class="mobile-menu__link"><a href={link.href}>{link.title}</a></li>
-			))}
-			<li class="mobile-menu__actions">
-				<a href="#" class="btn btn--outline">Демо</a>
-				<a href="#" class="btn btn--solid">В кабінет</a>
-			</li>
-		</ul>
-	</div>
+        <a href="#" class="btn btn--outline">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+          >
+            <path
+              d="M3.33464 12.5H5.0013V16.6667H15.0013V3.33335H5.0013V7.50002H3.33464V2.50002C3.33464 2.03979 3.70774 1.66669 4.16797 1.66669H15.8346C16.2949 1.66669 16.668 2.03979 16.668 2.50002V17.5C16.668 17.9603 16.2949 18.3334 15.8346 18.3334H4.16797C3.70774 18.3334 3.33464 17.9603 3.33464 17.5V12.5ZM8.33464 9.16669V6.66669L12.5013 10L8.33464 13.3334V10.8334H1.66797V9.16669H8.33464Z"
+              fill="black"></path>
+          </svg> В кабінет
+        </a>
+        <a href="#" class="btn btn--solid">Зареєструватися<ArrowRight /></a>
+      </div>
+    </nav>
+  </div>
 </header>
 
 <script>
-	const burger = document.getElementById('burger');
-	const mobileMenu = document.getElementById('mobile-menu');
+  const header = document.getElementById("header");
+  const burger = document.getElementById("burger");
 
-	burger?.addEventListener('click', () => {
-		const isOpen = mobileMenu?.classList.toggle('is-open');
-		burger.setAttribute('aria-expanded', String(Boolean(isOpen)));
-	});
+  burger?.addEventListener("click", () => {
+    const open = header?.classList.toggle("active");
+    burger.setAttribute("aria-expanded", String(Boolean(open)));
+    document.body.style.overflow = open ? "hidden" : "";
+  });
+
+  // Mobile only: clicking a trigger toggles its parent accordion (.show);
+  // on desktop the same dropdowns open on hover via CSS instead.
+  function bindMobileAccordion(trigger: HTMLElement) {
+    trigger.addEventListener("click", () => {
+      if (window.innerWidth >= 1024) return;
+      const shown = trigger.parentElement?.classList.toggle("show");
+      trigger.setAttribute("aria-expanded", String(Boolean(shown)));
+    });
+  }
+
+  document
+    .querySelectorAll<HTMLElement>(".header .list, .header .support-btn")
+    .forEach(bindMobileAccordion);
 </script>
 
 <style>
-	.header {
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		z-index: 100;
-		background: #fff;
-		font-family: var(--gh-font-body, 'Inter', sans-serif);
-		color: var(--color-font, #161b25);
-		border-bottom: 1px solid #ececec;
-	}
+  /* ── Bar ──────────────────────────── ────────────────── */
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--color-bg);
+  }
 
-	.container {
-		max-width: 1400px;
-		margin: 0 auto;
-		padding: 0 24px;
-	}
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    background: var(--border-dotted-bottom);
+    background-color: var(--color-bg);
+  }
 
-	.header__bar {
-		display: flex;
-		align-items: center;
-		gap: 32px;
-		height: 80px;
-	}
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    text-decoration: none;
+  }
 
-	/* Logo */
-	.logo {
-		display: flex;
-		flex-shrink: 0;
-		color: #111;
-	}
+  .logo-icon {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(1);
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 
-	/* Desktop nav */
-	.nav {
-		flex: 1;
-	}
+  .logo:hover .logo-icon {
+    transform: scale(1.07);
+  }
 
-	.nav__list {
-		display: flex;
-		align-items: center;
-		gap: 28px;
-		list-style: none;
-	}
+  .logo-word {
+    display: none;
+  }
 
-	.nav__item {
-		position: static;
-	}
+  .burger {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
 
-	.nav__item > a,
-	.nav__trigger {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		font-size: 0.95rem;
-		font-weight: 500;
-		color: #1a1a1a;
-		text-decoration: none;
-		background: none;
-		border: none;
-		cursor: pointer;
-		padding: 28px 0;
-	}
+  .burger div {
+    position: absolute;
+    top: 50%;
+    left: 3px;
+    width: 22px;
+    height: 3px;
+    background: var(--color-black);
+    transition: background 0.18s ease;
+  }
 
-	.nav__item > a:hover,
-	.nav__trigger:hover {
-		color: #555;
-	}
+  .burger div::before,
+  .burger div::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-black);
+    transition:
+      transform 0.18s ease,
+      top 0.18s ease,
+      bottom 0.18s ease;
+    transform-origin: center;
+  }
 
-	.chevron {
-		width: 10px;
-		height: 6px;
-		transition: transform 0.2s ease;
-	}
+  .burger div::before {
+    top: -8px;
+  }
+  .burger div::after {
+    bottom: -8px;
+  }
 
-	/* Mega menu: shown on hover (desktop only) */
-	.mega {
-		position: absolute;
-		top: 100%;
-		left: 0;
-		width: 100%;
-		background: #eef0f2;
-		opacity: 0;
-		visibility: hidden;
-		transform: translateY(-6px);
-		transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
-		box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
-	}
+  .header.active .burger div {
+    background: transparent;
+  }
+  .header.active .burger div::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+  .header.active .burger div::after {
+    bottom: 0;
+    transform: rotate(-45deg);
+  }
 
-	.has-mega:hover .mega,
-	.has-mega:focus-within .mega {
-		opacity: 1;
-		visibility: visible;
-		transform: translateY(0);
-	}
+  .nav {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    padding: 84px 24px 40px;
+    overflow-y: auto;
+    transform: translateY(-100%);
+    transition: transform 0.35s ease;
+  }
 
-	.has-mega:hover .chevron {
-		transform: rotate(180deg);
-	}
+  .nav::-webkit-scrollbar {
+    width:4px;
+  }
+  .nav::-webkit-scrollbar-thumb {
+    background: rgb(0, 0, 0);
+    /* border-radius: 2px; */
+  }
+  .nav::-webkit-scrollbar-track {
+    background: transparent;
+    margin: 16px 0px;
+  }
 
-	.mega__grid {
-		display: grid;
-		gap: 40px;
-		padding: 40px 24px;
-	}
+  .header.active .nav {
+    transform: none;
+  }
 
-	.mega__grid--products {
-		grid-template-columns: repeat(4, 1fr);
-	}
+  .header-nav {
+    display: flex;
+    flex-direction: column;
+  }
 
-	.mega__grid--knowledge {
-		grid-template-columns: 1fr 1.4fr 1.1fr;
-	}
+  .header-nav > a,
+  .list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    width: 100%;
+    padding: 16px 0;
+    font-weight: 600;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+  }
 
-	.mega__label {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		font-size: 0.75rem;
-		font-weight: 600;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: #8a8f98;
-		margin-bottom: 16px;
-	}
+  .chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.25s ease;
+  }
 
-	.mega__bullet {
-		width: 6px;
-		height: 6px;
-		background: #c2c6cc;
-		flex-shrink: 0;
-	}
+  .header-extra.show .chevron {
+    transform: rotate(180deg);
+  }
 
-	.mega__items {
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		gap: 14px;
-	}
+  .innerList {
+    display: none;
+  }
 
-	.mega__link {
-		display: flex;
-		align-items: flex-start;
-		gap: 12px;
-		text-decoration: none;
-		color: inherit;
-	}
+  .header-extra.show .innerList {
+    display: block;
+    padding: 4px 0 20px;
+  }
 
-	.mega__icon {
-		flex-shrink: 0;
-		width: 36px;
-		height: 36px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background: #fff;
-		border-radius: 8px;
-		color: #1a1a1a;
-	}
+  .innerList-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
 
-	.mega__icon svg {
-		width: 18px;
-		height: 18px;
-	}
+  .innerList-label {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
 
-	.mega__title {
-		display: block;
-		font-weight: 600;
-		font-size: 0.9rem;
-		color: #111;
-	}
+  .innerList-label::before {
+    width: 16px;
+    height: 16px;
+  }
 
-	.mega__desc {
-		display: block;
-		font-size: 0.8rem;
-		color: #8a8f98;
-		margin-top: 2px;
-		line-height: 1.4;
-	}
+  .innerList-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 16px 24px;
+  }
 
-	.mega__link:hover .mega__title {
-		text-decoration: underline;
-	}
+  .innerList-items li {
+    opacity: 0;
+    animation: fadeInRight 0.4s ease forwards;
+  }
 
-	/* Knowledge mega: blog post list */
-	.mega__posts {
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		gap: 14px;
-	}
+  .innerList-items li:nth-of-type(1) {
+    animation-delay: 0.075s;
+  }
+  .innerList-items li:nth-of-type(2) {
+    animation-delay: 0.15s;
+  }
+  .innerList-items li:nth-of-type(3) {
+    animation-delay: 0.225s;
+  }
+  .innerList-items li:nth-of-type(4) {
+    animation-delay: 0.3s;
+  }
+  .innerList-items li:nth-of-type(5) {
+    animation-delay: 0.375s;
+  }
+  .innerList-items li:nth-of-type(6) {
+    animation-delay: 0.45s;
+  }
 
-	.mega__post {
-		display: flex;
-		gap: 10px;
-		text-decoration: none;
-		color: inherit;
-	}
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 
-	.mega__postIcon {
-		width: 16px;
-		height: 16px;
-		flex-shrink: 0;
-		margin-top: 3px;
-		color: #8a8f98;
-	}
+  .innerList-link {
+    display: flex;
+    flex-direction: column;
+    /* color: var(--color-black); */
+    gap: 4px;
+    font-weight: 600;
+    text-decoration: none;
+  }
 
-	.mega__postTitle {
-		display: block;
-		font-size: 0.875rem;
-		font-weight: 500;
-		color: #111;
-		line-height: 1.35;
-	}
+  .innerList-link span {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-grey);
+    line-height: 1.45;
+  }
 
-	.mega__postDate {
-		display: block;
-		font-size: 0.75rem;
-		color: #8a8f98;
-		margin-top: 4px;
-	}
+  .innerList-link:hover {
+    text-decoration: underline;
+  }
 
-	.mega__more {
-		display: inline-block;
-		margin-top: 18px;
-		font-size: 0.875rem;
-		font-weight: 600;
-		color: #111;
-		text-decoration: none;
-	}
+  .innerList-column.posts,
+  .promo {
+    display: none;
+  }
 
-	/* Promo card: cont.png already contains the full design (text, link, illustration) */
-	.promo {
-		display: block;
-		border-radius: 12px;
-		overflow: hidden;
-	}
+  /* ── Actions ─────────────────────────────────────────── */
+  .nav-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 28px;
+  }
 
-	.promo img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
+  /* Support: full-width accordion on mobile, hover dropdown on desktop */
+  .support {
+    position: relative;
+    flex: 1 1 100%;
+  }
 
-	/* Right-side actions */
-	.actions {
-		display: flex;
-		align-items: center;
-		gap: 12px;
-		flex-shrink: 0;
-	}
+  .support-btn {
+    width: 100%;
+    border: transparent;
+    background: none;
+    color: var(--color-black);
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
 
-	.support {
-		display: flex;
-		align-items: center;
-		gap: 6px;
-		background: none;
-		border: none;
-		font-size: 0.9rem;
-		font-weight: 500;
-		color: #1a1a1a;
-		cursor: pointer;
-	}
+  /* Cancel the .btn:hover svg slide (general.css) — support icons stay put */
+  .support-btn:hover svg {
+    transform: none;
+  }
 
-	.support svg {
-		width: 18px;
-		height: 18px;
-	}
+  /* Headset mouth "talks" while the support button is hovered */
+  .support-mouth {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
 
-	.btn {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-		padding: 10px 18px;
-		border-radius: 8px;
-		font-size: 0.9rem;
-		font-weight: 600;
-		text-decoration: none;
-		white-space: nowrap;
-	}
+  .support-btn:hover .support-mouth {
+    animation: mouth-stretch 0.5s ease-in-out forwards;
+  }
 
-	.btn svg {
-		width: 18px;
-		height: 18px;
-	}
+  @keyframes mouth-stretch {
+    0% {
+      transform: scaleX(1);
+    }
+    40% {
+      transform: scaleX(0.7);
+    }
+    100% {
+      transform: scaleX(1.3);
+    }
+  }
 
-	.btn--outline {
-		border: 1.5px solid #111;
-		color: #111;
-	}
+  .support-panel {
+    display: none;
+    background: #fff;
+    border: 1px solid #e6e7ea;
+    border-radius: 20px;
+    padding: 24px;
+    margin-top: 12px;
+  }
 
-	.btn--solid {
-		background: #111;
-		color: #fff;
-	}
+  .support.show .support-panel {
+    display: block;
+  }
 
-	.btn--outline:hover {
-		background: #f5f5f5;
-	}
+  .support-link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+  }
 
-	.btn--solid:hover {
-		background: #2a2a2a;
-	}
+  .support-link:hover {
+    text-decoration: underline;
+  }
 
-	/* Burger (mobile only) */
-	.burger {
-		display: none;
-		flex-direction: column;
-		justify-content: center;
-		gap: 5px;
-		width: 32px;
-		height: 32px;
-		background: none;
-		border: none;
-		cursor: pointer;
-		flex-shrink: 0;
-	}
+  .support-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #f3f4f5;
+    color: #44484f;
+  }
 
-	.burger span {
-		display: block;
-		height: 2px;
-		background: #111;
-		transition: transform 0.2s ease, opacity 0.2s ease;
-	}
+  .support-icon svg {
+    width: 22px;
+    height: 22px;
+  }
 
-	.burger[aria-expanded='true'] span:nth-child(1) {
-		transform: translateY(7px) rotate(45deg);
-	}
+  .support-divider {
+    height: 1px;
+    background: #e6e7ea;
+    margin: 14px 0;
+  }
 
-	.burger[aria-expanded='true'] span:nth-child(2) {
-		opacity: 0;
-	}
+  .support-phone {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: 800;
+    /* color: #111; */
+    text-decoration: none;
+    white-space: nowrap;
+  }
 
-	.burger[aria-expanded='true'] span:nth-child(3) {
-		transform: translateY(-7px) rotate(-45deg);
-	}
+  .support-phone span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6f737b;
+  }
 
-	/* Mobile menu */
-	.mobile-menu {
-		display: none;
-		max-height: 0;
-		overflow: hidden;
-		background: #fff;
-		border-top: 1px solid #ececec;
-		transition: max-height 0.25s ease;
-	}
+  .nav-actions .btn {
+    width: 100%;
+    max-width: 460px;
+  }
 
-	.mobile-menu.is-open {
-		max-height: 80vh;
-		overflow-y: auto;
-	}
+  @media (min-width: 1024px) {
+    .header-top {
+      height: 80px;
+      background: none;
+    }
 
-	.mobile-menu__list {
-		list-style: none;
-		padding: 8px 24px 24px;
-	}
+    .logo-word {
+      display: block;
+    }
 
-	.mobile-menu__list > li {
-		border-bottom: 1px solid #f0f0f0;
-	}
+    .nav {
+      padding-top: 104px;
+    }
 
-	.mobile-menu__list summary {
-		padding: 16px 0;
-		font-weight: 600;
-		cursor: pointer;
-	}
+    .burger {
+      display: none;
+    }
 
-	.mobile-menu__link a {
-		display: block;
-		padding: 16px 0;
-		color: #1a1a1a;
-		text-decoration: none;
-		font-weight: 500;
-	}
+    .header .container {
+      display: flex;
+      align-items: center;
+      gap: clamp(24px, 3vw, 48px);
+      height: 80px;
+    }
 
-	.mobile-menu__group {
-		margin: 8px 0 16px;
-	}
+    .header-top {
+      height: auto;
+      flex-shrink: 0;
+    }
 
-	.mobile-menu__group ul {
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-	}
+    /* Nav becomes an inline row */
+    .nav {
+      position: static;
+      z-index: auto;
+      flex: 1;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding: 0;
+      overflow: visible;
+      transform: none;
+      transition: none;
+      background: none;
+    }
 
-	.mobile-menu__group a {
-		color: #444;
-		text-decoration: none;
-		font-size: 0.9rem;
-	}
+    .header-nav {
+      flex-direction: row;
+      align-items: center;
+      gap: 28px;
+    }
 
-	.mobile-menu__actions {
-		display: flex;
-		gap: 12px;
-		padding: 20px 0 0;
-	}
+    .header-nav > a,
+    .list {
+      width: auto;
+    }
 
-	.mobile-menu__actions .btn {
-		flex: 1;
-		justify-content: center;
-	}
+    /* .header-nav > a:hover,
+    .list:hover {
+      color: #555;
+    } */
 
-	/* Breakpoint: below 1024px collapse to burger + mobile-menu */
-	@media (max-width: 1023.98px) {
-		.nav,
-		.actions .support,
-		.actions .btn {
-			display: none;
-		}
+    .header-extra:hover .chevron {
+      transform: rotate(180deg);
+    }
 
-		.burger {
-			display: flex;
-			margin-left: auto;
-		}
+    /* innerList: white rounded dropdown card on hover */
+    .innerList {
+      display: block;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 16px;
+      right: 16px;
+      max-width: 1416px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.16);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition:
+        opacity 0.18s ease,
+        transform 0.18s ease,
+        visibility 0.18s;
+      padding: 0;
+    }
 
-		.mobile-menu {
-			display: block;
-		}
-	}
+    /* Invisible bridge so hover survives the gap between bar and card */
+    .innerList::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 0;
+      right: 0;
+      height: 12px;
+    }
 
-	@media (max-width: 639.98px) {
-		.header__bar {
-			height: 64px;
-		}
+    .header-extra:hover .innerList,
+    .header-extra:focus-within .innerList {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
 
-		.container {
-			padding: 0 16px;
-		}
-	}
+    .innerList-grid {
+      display: grid;
+      gap: 40px;
+      padding: 40px;
+    }
+
+    .innerList-grid--products {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .innerList-grid--knowledge {
+      grid-template-columns: 1fr 1.4fr 1.1fr;
+    }
+
+    .innerList-items li {
+      opacity: 1;
+      animation: none;
+    }
+
+    /* Desktop-only extras become visible */
+    .innerList-column.posts {
+      display: block;
+    }
+
+    .promo {
+      display: block;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .promo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .nav-actions {
+      flex: 0 0 auto;
+      flex-wrap: nowrap;
+      margin: 0;
+    }
+
+    .nav-actions .btn {
+      flex: none;
+      width: auto;
+      padding: 10px 18px;
+    }
+
+    /* Support becomes a hover dropdown card (innerList style) */
+    .support {
+      flex: none;
+    }
+
+    .support-panel {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      width: 320px;
+      margin: 0;
+      border: none;
+      border-radius: 24px;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.16);
+    }
+
+    /* Invisible bridge so hover survives the gap between button and card */
+    .support-panel::before {
+      content: "";
+      position: absolute;
+      top: -14px;
+      left: 0;
+      right: 0;
+      height: 14px;
+    }
+
+    .support:hover .support-panel,
+    .support:focus-within .support-panel {
+      display: block;
+    }
+  }
+
+  /* ── Blog posts list (desktop dropdown) ──────────────── */
+  .innerList-posts {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .innerList-post {
+    display: flex;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .innerList-postIcon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    color: #8a8f98;
+  }
+
+  .innerList-postTitle {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #111;
+    line-height: 1.35;
+  }
+
+  .innerList-postDate {
+    display: block;
+    font-size: 0.75rem;
+    color: #8a8f98;
+    margin-top: 4px;
+  }
+
+  .innerList-more {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #111;
+    text-decoration: none;
+  }
 </style>

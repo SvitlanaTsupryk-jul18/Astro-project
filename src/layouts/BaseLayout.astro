@@ -28,14 +28,14 @@ const { title, description, ogImage, ogType = 'website', noindex = false } = Ast
 </html>
 
 <style>
-	/* Offset for the fixed header in Header2.astro (80px desktop / 64px mobile) */
+	/* Offset for the fixed header (64px mobile / 80px from 640px) */
 	main {
-		padding-top: 80px;
+		padding-top: 64px;
 	}
 
-	@media (max-width: 639.98px) {
+	@media (min-width: 640px) {
 		main {
-			padding-top: 64px;
+			padding-top: 80px;
 		}
 	}
 </style>

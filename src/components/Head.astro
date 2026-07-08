@@ -43,15 +43,10 @@ const jsonLd = {
 <meta name="og:image" property="og:image" content={ogImage || defaultOgImage}>
 {canonicalURL && <meta name="og:url" property="og:url" content={String(canonicalURL)}>}
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#2196f3">
-<meta name="msapplication-navbutton-color" content="#2196f3">
-<meta name="apple-mobile-web-app-status-bar-style" content="#2196f3">
+<meta name="theme-color" content="#3f18a0">
+<meta name="apple-mobile-web-app-status-bar-style" content="#3f18a0">
 {isNoindex && <meta name="robots" content="noindex, nofollow">}
 <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
 <link rel="icon" href="/favicon.ico" type="image/x-icon"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 {canonicalURL && <link rel="canonical" href={String(canonicalURL)}/>}
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="preload" as="style">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-

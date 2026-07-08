@@ -6,12 +6,17 @@ export default defineConfig({
 	output: 'static',
 	site: 'https://SvitlanaTsupryk-jul18.github.io',
 	base: '/Astro-project',
+	vite: {
+		css: {
+			devSourcemap: true,
+		},
+	},
     fonts: [{
         provider: fontProviders.google(),
         name: "JetBrains Mono",
         cssVariable: "--font-jetbrains-mono",
         weights: [300, 700],
-        subsets: ["cyrillic"],
+        subsets: ["cyrillic", "latin"],
       },
       {
         provider: fontProviders.local(),

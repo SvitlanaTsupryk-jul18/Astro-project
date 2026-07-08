@@ -143,7 +143,7 @@ const legalLinks = ['Політика конфіденційності', 'Пуб
 	.footer {
 		background: #000;
 		color: #fff;
-		padding: 64px 0 32px;
+		padding: 48px 0 24px;
 		font-family: var(--gh-font-body, 'Inter', sans-serif);
 	}
 
@@ -156,7 +156,7 @@ const legalLinks = ['Політика конфіденційності', 'Пуб
 	/* Top: brand + group card */
 	.footer__top {
 		display: grid;
-		grid-template-columns: 1.4fr 1fr;
+		grid-template-columns: 1fr;
 		gap: 48px;
 		padding-bottom: 56px;
 	}
@@ -302,7 +302,7 @@ const legalLinks = ['Політика конфіденційності', 'Пуб
 
 	.footer__logos {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		gap: 10px;
 		margin-top: 20px;
 	}
@@ -320,13 +320,13 @@ const legalLinks = ['Політика конфіденційності', 'Пуб
 	/* Bottom nav links */
 	.footer__nav {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
+		grid-template-columns: 1fr;
 		gap: 32px;
 		padding: 40px 0;
 	}
 
 	.footer__navGroup + .footer__navGroup {
-		margin-top: 32px;
+		margin-top: 24px;
 	}
 
 	.footer__navTitle {
@@ -379,7 +379,8 @@ const legalLinks = ['Політика конфіденційності', 'Пуб
 	.footer__bottom {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
+		flex-direction: column;
+		align-items: flex-start;
 		flex-wrap: wrap;
 		gap: 12px;
 		padding-top: 24px;
@@ -394,7 +395,8 @@ const legalLinks = ['Політика конфіденційності', 'Пуб
 
 	.footer__legalLinks {
 		display: flex;
-		gap: 24px;
+		flex-wrap: wrap;
+		gap: 16px;
 	}
 
 	.footer__legalLinks a {
@@ -406,43 +408,44 @@ const legalLinks = ['Політика конфіденційності', 'Пуб
 		color: #fff;
 	}
 
-	/* Responsive */
-	@media (max-width: 1023.98px) {
-		.footer__top {
-			grid-template-columns: 1fr;
+	/* Responsive (mobile-first) */
+	@media (min-width: 640px) {
+		.footer {
+			padding: 64px 0 32px;
 		}
 
 		.footer__nav {
 			grid-template-columns: repeat(2, 1fr);
 			gap: 32px 24px;
 		}
-	}
-
-	@media (max-width: 639.98px) {
-		.footer {
-			padding: 48px 0 24px;
-		}
-
-		.footer__nav {
-			grid-template-columns: 1fr;
-		}
 
 		.footer__navGroup + .footer__navGroup {
-			margin-top: 24px;
+			margin-top: 32px;
 		}
 
 		.footer__logos {
-			grid-template-columns: repeat(2, 1fr);
+			grid-template-columns: repeat(4, 1fr);
 		}
 
 		.footer__bottom {
-			flex-direction: column;
-			align-items: flex-start;
+			flex-direction: row;
+			align-items: center;
 		}
 
 		.footer__legalLinks {
-			flex-wrap: wrap;
-			gap: 16px;
+			flex-wrap: nowrap;
+			gap: 24px;
+		}
+	}
+
+	@media (min-width: 1024px) {
+		.footer__top {
+			grid-template-columns: 1.4fr 1fr;
+		}
+
+		.footer__nav {
+			grid-template-columns: repeat(4, 1fr);
+			gap: 32px;
 		}
 	}
 </style>
