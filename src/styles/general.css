@@ -16,6 +16,10 @@
   --color-black: #000000;
   --color-grey: #595959;
   --color-grey-light: #818081;
+  /* --color-accent-rgb: 158 39 138; */
+  --color-accent-rgb: 63 24 160;
+    /* Non transparent color: background: color-mix(in srgb, rgb(var(--color-accent-rgb)) 32%, var(--color-bg)); */
+
   --border-dotted-bottom: repeating-linear-gradient(
       90deg,
       #000 0,
@@ -24,10 +28,33 @@
       transparent 5px
     )
     0 100% / 5px 1px repeat-x;
+  /* Same dotted line, pinned to the TOP edge instead of the bottom
+     (position 0 0 vs 0 100%) — a top border. */
+  --border-dotted-top: repeating-linear-gradient(
+      90deg,
+      #000 0,
+      #000 1px,
+      transparent 1px,
+      transparent 5px
+    )
+    0 0 / 5px 1px repeat-x;
+  /* Same dash pattern, rotated: 0deg makes the dashes stack vertically,
+     the tile is now 1px wide / 5px tall, and it repeats down the y-axis.
+     Pinned to the right edge (position: 100% 0) — swap to "0 0" for the left. */
+  --border-dotted-right: repeating-linear-gradient(
+      0deg,
+      #000 0,
+      #000 1px,
+      transparent 1px,
+      transparent 5px
+    )
+    100% 0 / 1px 5px repeat-y;
   --radius-btn: 4px;
   --radius-card: 16px;
   --grid-gap: clamp(16px, 4vw, 32px);
   --border-solid: 2px solid #000;
+
+  --border-dotted-svg: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%23000000' stroke-width='1' stroke-dasharray='1%2c4' stroke-linecap='square' vector-effect='non-scaling-stroke'/%3e%3c/svg%3e");
 
   /* @custom-media --mobile (min-width: 768px);
       @custom-media --tablet (min-width: 1024px);
@@ -105,7 +132,7 @@ section {
 }
 
 h2 {
-  font-size: clamp(36px, 6vw, 70px);
+  font-size: clamp(36px, 5vw, 70px);
   letter-spacing: -0.36px;
   line-height: 1;
 }
@@ -159,8 +186,7 @@ p{
   gap: 12px;
   font-family: var(--font-mono);
   font-size: 14px;
-  font-weight: 300;
-  letter-spacing: 0.08em;
+  letter-spacing: -3%;
   text-transform: uppercase;
 }
 
@@ -175,6 +201,12 @@ p{
   background-repeat: no-repeat;
 }
 
+/* Dashed rounded frame. Parameters are CSS custom properties, so they can
+   be tuned from the svg itself, its parent, or a modifier class:
+     --sb-radius — corner radius of the FRAME's box (0.5px stroke inset is
+                   subtracted automatically)
+     --sb-gap    — space between the 1px dashes
+     --sb-color  — stroke color */
 .svg-border {
   position: absolute;
   inset: 0;
@@ -189,19 +221,23 @@ p{
   y: 0.5px;
   width: calc(100% - 1px);
   height: calc(100% - 1px);
-  rx: 15.5px;
-  ry: 15.5px;
+  rx: calc(var(--sb-radius, 16px) - 0.5px);
+  ry: calc(var(--sb-radius, 16px) - 0.5px);
   fill: none;
-  stroke: #000;
+  stroke:  var(--color-black);
   stroke-width: 1px;
-  stroke-dasharray: 1 8; /* 1px штрих, 8px проміжок */
+  stroke-dasharray: 1 var(--sb-gap, 8);
   stroke-linecap: butt;
 }
 
-.svg-border-4 rect{
-  stroke-dasharray: 1 4;
-  rx: 3.5px;
-  ry: 3.5px;
+/* Presets kept for the existing markup — now just variable overrides */
+.svg-border-4 {
+  --sb-gap: 4;
+}
+
+.svg-border-4-small-radius {
+  --sb-gap: 4;
+  --sb-radius: 4px;
 }
 
 @media (min-width: 1024px) {

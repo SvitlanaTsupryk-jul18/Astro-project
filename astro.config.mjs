@@ -25,6 +25,7 @@ export default defineConfig({
         options: {
           variants: [
             { weight: 400, style: "normal", src: ["./src/assets/fonts/FixelText-Regular.woff2"] },
+            { weight: 500, style: "normal", src: ["./src/assets/fonts/FixelText-Medium.woff2"] },
             { weight: 600, style: "normal", src: ["./src/assets/fonts/FixelText-SemiBold.woff2"] },
             { weight: 700, style: "normal", src: ["./src/assets/fonts/FixelText-Bold.woff2"] },
           ],
