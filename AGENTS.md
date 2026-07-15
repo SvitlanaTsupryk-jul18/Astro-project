@@ -1,12 +1,18 @@
 ## Development
 
-When starting the dev server, use background mode:
+Start the dev server with:
 
 ```
-astro dev --background
+npx astro dev
 ```
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+It runs on http://localhost:4321 and reloads on file changes; stop it with Ctrl+C.
+
+Astro CLI v6 has NO `stop`, `status`, or `logs` subcommands and NO `--background`
+flag — passing them is silently ignored and just starts another server, leaving
+stray processes on ports 4321, 4322, 4323… To run it detached, background the
+shell process yourself (`npx astro dev &`) and stop it by killing that PID or
+freeing the port (`lsof -nP -iTCP:4321 -sTCP:LISTEN`).
 
 ## Documentation
 

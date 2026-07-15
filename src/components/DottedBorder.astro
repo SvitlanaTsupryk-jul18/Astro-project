@@ -1,0 +1,23 @@
+---
+// Dashed rounded frame drawn as an absolutely-positioned SVG overlay.
+// Styling lives in general.css (.svg-border / .svg-border rect); this component
+// only tunes the three knobs via CSS custom properties:
+//   gap    — space between the dashes (default 8)
+//   radius — corner radius in px (default 16)
+//   color  — stroke color, e.g. "rgba(255,255,255,0.4)" (default --color-black)
+interface Props {
+  gap?: number;
+  radius?: number;
+  color?: string;
+}
+const { gap, radius, color } = Astro.props;
+const style = [
+  gap != null && `--sb-gap:${gap}`,
+  radius != null && `--sb-radius:${radius}px`,
+  color != null && `--sb-color:${color}`,
+]
+  .filter(Boolean)
+  .join(";");
+---
+
+<svg class="svg-border" style={style || undefined} aria-hidden="true"><rect></rect></svg>

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import DottedBorder from "@components/DottedBorder.astro";
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import girlImage from "@assets/images/girl@2x.png";
@@ -19,7 +20,32 @@ import LogoSquare from "@assets/icons/logo-square.svg";
 import IconUpdate from "@assets/icons/reason-update.svg";
 import IconWarningBadge from "@assets/icons/warning-badge.svg";
 import SupportIllustration from "@assets/icons/support-illustration.svg";
+import SupportOperator from "@assets/icons/support-operator.svg";
+import IconTelegram from "@assets/icons/telegram.svg";
+import ApiScheme from "@assets/images/scheme.svg";
+import IconViber from "@assets/icons/viber.svg";
 import reason1Image from "@assets/images/reason-1.png";
+import IconCategoryRetail from "@assets/icons/category-retail.svg";
+import IconCategoryNetwork from "@assets/icons/category-network.svg";
+import IconCategoryMarketplace from "@assets/icons/category-marketplace.svg";
+import IconCategoryEcommerce from "@assets/icons/category-ecommerce.svg";
+import IconCategoryHospitality from "@assets/icons/category-hospitality.svg";
+import IconCategoryMedical from "@assets/icons/category-medical.svg";
+import IconCategoryBeauty from "@assets/icons/category-beauty.svg";
+import IconCategorySport from "@assets/icons/category-sport.svg";
+import IconCategoryPawnshop from "@assets/icons/category-pawnshop.svg";
+import IconCategoryExchange from "@assets/icons/category-exchange.svg";
+import IconCategoryFranchise from "@assets/icons/category-franchise.svg";
+import IconCategoryVending from "@assets/icons/category-vending.svg";
+import IconCategoryMall from "@assets/icons/category-mall.svg";
+import IconCategoryCourier from "@assets/icons/category-courier.svg";
+import Quotes from "@assets/icons/quotes.svg";
+import FaqBoy from "@assets/images/boy.svg";
+import FaqCup from "@assets/images/cup.svg";
+import blog1Image from "@assets/images/blog-1.png";
+import blog2Image from "@assets/images/blog-2.png";
+import blog3Image from "@assets/images/blog-3.png";
+import blog4Image from "@assets/images/blog-4.png";
 
 import { $image } from "@utils/assets";
 import "@styles/pages/index.css";
@@ -284,16 +310,17 @@ const stepSetupFields = [
   { label: "Тип", value: "Програмний РРО" },
 ];
 const stepCatalogItems = [
-  { name: "Кава", price: "75 ₴", dot: "#8a5a44" },
-  { name: "Піца Маргарита", price: "180 ₴", dot: "#e0a100" },
-  { name: "Вода 0.5л", price: "25 ₴", dot: "#3f6fd1" },
+  { name: "Кава", price: "75 ₴", dot: "#B2667C" },
+  { name: "Піца Маргарита", price: "180 ₴", dot: "#F79E1B" },
+  { name: "Вода 0.5л", price: "25 ₴", dot: "#315AFF" },
+  { name: "Вода 0.5л", price: "25 ₴", dot: "#315AFF" },
 ];
 const stepReceiptItems = [
   { name: "Кава", qty: "1 шт", price: "75 ₴" },
   { name: "Круасан", qty: "2 шт", price: "90 ₴" },
 ];
 
-// Client cases slider. A slide is either a quote (author + role) or a
+// Client cases testimonials. A slide is either a quote (author + role) or a
 // note — a short highlight in a dashed box (see the INTERTOP card).
 interface Slide {
   image: ImageMetadata;
@@ -304,41 +331,188 @@ interface Slide {
   note?: boolean;
 }
 
-const slides: Slide[] = [
+const testimonials: Slide[] = [
   {
-    image: $image("/slide-1.png"),
+    image: $image("/test-0.png"),
     label: "Glovo",
     text: "Поки процес внесення товарів в чек був неавтоматизованим, виникала маса розбіжностей між замовленням і товарами, які вносилися в фіскальний чек вручну. Система, побудована з Checkbox, забезпечує 100% відповідність замовлення і товарів, внесених в чек.",
     author: "Катерина Нестеренко",
     role: "Glovo Accounting Lead",
   },
   {
-    image: $image("/slide-2.png"),
+    image: $image("/test-1.png"),
     label: "Фокстрот",
     text: "Важливо, що керування кількістю кас дуже зручне і швидке. Процес зняття з реєстрації та реєстрація нової каси займає кілька хвилин. Це нам дозволило вчасно реагувати на нові виклики, оскільки з початку війни дуже швидко змінювалась кількість працюючих магазинів.",
     author: "Василь Гриб",
     role: "Начальник відділу технічної підтримки продажів мережі Фокстрот",
   },
   {
-    image: $image("/slide-3.png"),
+    image: $image("/test-2.png"),
     label: "ЛЮКСОПТИКА",
     text: "Ми дуже вдячні компанії Checkbox за крутий експірієнс, який зараз маємо. Ми завжди прагнемо надавати найкраще нашим клієнтам, завжди прагнемо інновацій. І коли можемо щось спростити для кінцевого споживача, для наших співробітників, ще й зекономивши гроші – це кайфово.",
     author: "Дмитро Сергієнко",
     role: "ІТ-директор (CIO) компанії Люксоптика",
   },
   {
-    image: $image("/slide-4.png"),
+    image: $image("/test-3.png"),
     label: "HappyTime",
     text: "Вивчала, багато читала, дивилася на досвід колег-підприємців і вирішила спробувати Checkbox, адже було зрозуміло, що це найзручніша програма.",
     author: "Тетяна Полікарпова",
     role: "Власниця магазину HappyTime",
   },
   {
-    image: $image("/slide-5.png"),
+    image: $image("/test-4.png"),
     label: "INTERTOP",
     text: "Мережа INTERTOP стала першим великим бізнесом України, який відмовився від усіх залізних кас і перейшов на ПРРО Checkbox.",
     note: true,
   },
+];
+
+// Category slider: left-hand tabs cycle automatically and the right-hand
+// panel (photo + quote + client logos) fades to match. Every category
+// currently points at the same placeholder slide — swap in a per-category
+// `content` object once real photos/quotes for each vertical are ready.
+const categoryPlaceholder = {
+  image: $image("/category-1.png"),
+  quote:
+    "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+  author: "Наталія",
+  role: "бухгалтер, MD Fashion",
+  logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
+};
+
+const categories = [
+  { icon: IconCategoryRetail, label: "Класичний рітейл" },
+  { icon: IconCategoryNetwork, label: "Мережам магазинам" },
+  { icon: IconCategoryMarketplace, label: "Торговцям на маркетплейсах" },
+  { icon: IconCategoryEcommerce, label: "Інтернет-магазинам" },
+  { icon: IconCategoryHospitality, label: "Кафе, ресторанам і готелям" },
+  { icon: IconCategoryMedical, label: "Медичним центрам" },
+  { icon: IconCategoryBeauty, label: "Салонам краси, перукарням" },
+  { icon: IconCategorySport, label: "Спортивним клубам" },
+  { icon: IconCategoryPawnshop, label: "Ломбардам" },
+  { icon: IconCategoryExchange, label: "Обмінникам валют" },
+  { icon: IconCategoryFranchise, label: "Франшизам" },
+  { icon: IconCategoryVending, label: "Вендінгу" },
+  { icon: IconCategoryMall, label: "ТРЦ" },
+  { icon: IconCategoryCourier, label: "Кур'єрам і водіям на платформах" },
+].map((category) => ({ ...category, content: categoryPlaceholder }));
+
+const activeCategoryIndex = 3; // "Інтернет-магазинам" — matches the design mock
+
+// FAQ section: answers hold inline HTML (paragraphs/lists), rendered with set:html
+const faqItems = [
+  {
+    q: "Що таке PPO та ПРРО?",
+    a: `<p>РРО (реєстратор розрахункових операцій) — це класичний фізичний касовий апарат або фіскальний принтер, що потребує купівлі обладнання та сервісного обслуговування, тоді як ПРРО (програмний РРО) — це сучасна цифрова альтернатива у вигляді програми або додатка на смартфон, планшет чи комп'ютер. Основна різниця полягає у форматі: РРО друкує паперові чеки за допомогою вбудованого заліза, а ПРРО реєструє операції на серверах податкової онлайн і видає електронні чеки (через QR-код або месенджери), що є значно дешевшим і швидшим рішенням для сучасного бізнесу.</p>`,
+  },
+  {
+    q: "Кому потрібен касовий апарат?",
+    a: `<p>До 01.01.2022 було не потрібно застосувати РРО (ПРРО) ФОП-єдинникам 1 групи у будь-якому випадку та II-IV групи, обсяг доходу яких протягом календарного року не перевищує 220 розмірів мінімальної заробітної плати (у 2021 році – 1 320 000 грн), * крім видів діяльності у сферах з істотними ризиками ухилення від оподаткування, для яких РРО (ПРРО) вже було обов'язковим:</p>
+<ul>
+<li>реалізація технічно складних побутових товарів, що підлягають гарантійному ремонту;</li>
+<li>реалізація лікарських засобів, виробів медичного призначення;</li>
+<li>надання платних послуг у сфері охорони здоров'я;</li>
+<li>реалізація ювелірних та побутових виробів з дорогоцінних металів, дорогоцінного каміння, дорогоцінного каміння органогенного утворення та напівдорогоцінного каміння.</li>
+</ul>
+<p>З 01.01.2022 використання РРО (ПРРО) обов'язкове для всіх ФОП 2-4 груп на єдиному податку.</p>`,
+  },
+  {
+    q: "Коли треба видавати чек?",
+    a: `<p>Коли є факт розрахункової операції: оплата платіжною карткою (на сайті чи через pos-термінал), готівкою, оплата та отримання товару на пошті.</p>`,
+  },
+  {
+    q: "Який штраф, якщо немає касового апарату?",
+    a: `<p>За роботу без РРО або ПРРО штраф складає 100% вартості проданих товарів чи послуг — якщо це перше порушення, і 150% вартості — за кожне наступне. З 1 серпня 2025 року штрафні санкції відновлено у повному розмірі.</p>`,
+  },
+  {
+    q: "Що краще для бізнесу: придбати класичний РРО (касовий апарат) чи купити програмний РРО (ПРРО)?",
+    a: `<p>Для більшості бізнесів вигідніший ПРРО. Класична каса коштує близько 15 000 грн і потребує обслуговування, опломбування та заміни щороку. ПРРО — це програма, яка встановлюється на будь-який смартфон, планшет чи комп'ютер: реєстрація займає один робочий день, щомісячна абонплата значно менша, а оновлення — безкоштовні. Крім того, ПРРО легко інтегрується з платіжними сервісами, CRM та іншими системами, видає електронні чеки й автоматично переходить в офлайн-режим під час відключення інтернету.</p>`,
+  },
+  {
+    q: "Як правильно зняти з реєстрації РРО відповідно до чинного законодавства?",
+    a: `<p>Зняття з реєстрації РРО відбувається у три кроки. Спочатку потрібно звернутися до ЦСО, з яким укладено договір на обслуговування, — вони проведуть розпломбування та нададуть довідку за формою № 1-ЦСО. Після цього подається Заява про зняття з реєстрації за формою № 4-РРО в Електронному кабінеті разом із реєстраційним посвідченням. Протягом п'яти календарних днів ДПС надішле довідку про скасування реєстрації за формою № 6-РРО у спосіб, зазначений у заяві.</p>`,
+  },
+  {
+    q: "Як зареєструвати програмний РРО?",
+    a: `<p>Зареєструвати ПРРО можна через електронний кабінет на сайті ДПС або через платформу провайдера — наприклад, Checkbox. Для цього потрібні паспорт, ІПН, КЕП (електронний підпис), дані про торгову точку та касирів. Після реєстрації на сайті провайдера достатньо завантажити програмне забезпечення на будь-який пристрій — смартфон, планшет або комп'ютер — і каса готова до роботи.</p>`,
+  },
+  {
+    q: "Чи можна встановити програмний РРО на декілька пристроїв?",
+    a: `<p>Так, але працювати в один момент часу можна тільки на одному пристрої.</p>`,
+  },
+  {
+    q: "Чи потрібно знімати з реєстрації апаратний РРО для використання програмного РРО?",
+    a: `<p>Законодавчих обмежень немає – класичний і програмний РРО можуть працювати паралельно. Якщо ж ви вирішили використовувати лише програмну касу, реєстрацію звичайної каси треба скасувати.</p>`,
+  },
+  {
+    q: "Можна при роботі з ПРРО видавати чеки тільки в електронному вигляді?",
+    a: `<p>Так, але, якщо клієнт попросить паперовий чек, його необхідно надати.</p>`,
+  },
+  {
+    q: "Скільки електронних печаток для підпису чеків треба реєструвати?",
+    a: `<p>За допомогою одного сертифікату електронної печатки можна працювати одночасно тільки на одному ПРРО. У випадку одночасного використання кількох програмних кас, треба відповідна кількість зареєстрованих касирів і сертифікатів електронних печаток.</p>`,
+  },
+  {
+    q: "У випадку відключення електроенергії чи інтернету, чи можна продовжувати роботу з програмною касою?",
+    a: `<p>Якщо пропав тільки інтернет – ПРРО переходить в офлайн-режим і ви можете продовжити роботу.</p>
+<p>Якщо немає світла – ви можете видавати чеки за допомогою мобільного додатку Checkbox.</p>`,
+  },
+];
+
+// Blog section: placeholder posts until the real feed is wired up
+const blogPosts = [blog1Image, blog2Image, blog3Image, blog4Image].map(
+  (image) => ({
+    image,
+    category: "Фіскалізація",
+    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
+    author: "Ярослав Демидюк",
+    date: "4 лютого 2026",
+    readTime: "5 хвилин на читання",
+  })
+);
+
+// News section: placeholder posts until the real feed is wired up
+const newsPosts = [
+  {
+    category: "Фіскалізація",
+    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
+    author: "Ярослав Демидюк",
+    date: "4 лютого 2026",
+    readTime: "5 хвилин на читання",
+  },
+  {
+    category: "Фіскалізація",
+    title:
+      "Як режим Aircheck допомагає бізнесам працювати швидше, спокійніше і без помилок",
+    author: "Ярослав Демидюк",
+    date: "4 лютого 2026",
+    readTime: "5 хвилин на читання",
+  },
+  {
+    category: "Фіскалізація",
+    title: "Кредит для бізнесу в Checkbox? Підприємці діляться досвідом",
+    author: "Ярослав Демидюк",
+    date: "4 лютого 2026",
+    readTime: "5 хвилин на читання",
+  },
+  {
+    category: "Фіскалізація",
+    title: "Posbox – зручна альтернатива 1С та BAS",
+    author: "Ярослав Демидюк",
+    date: "4 лютого 2026",
+    readTime: "5 хвилин на читання",
+  },
+];
+
+// Support section: checkmark points; bold fragments are inline HTML,
+// so each item is rendered with set:html
+const supportPoints = [
+  "Працюємо <strong>з 7 до 23</strong> години",
+  "Відповідаємо в середньому <strong>за 2 хвилини</strong>",
+  "Вирішуємо питання <strong>будь-якої</strong> складності",
+  "Обробляємо <strong>40+ тисяч</strong> звернень щомісяця",
+  "<strong>99,7%</strong> звернень отримують позитивні відгуки",
 ];
 ---
 
@@ -378,7 +552,8 @@ const slides: Slide[] = [
           src={girlImage}
           width={952}
           height={575}
-          densities={[1, 2]}
+          widths={[400, 800, 1200, 1904]}
+          sizes="(min-width: 1024px) min(50vw, 700px), calc(100vw - 48px)"
           alt="Клієнтка Checkbox у футболці з логотипом компанії"
           fetchpriority="high"
           loading="eager"
@@ -439,9 +614,7 @@ const slides: Slide[] = [
           {
             features.map((feature, i) => (
               <div class={`feature feature--${feature.theme}`} data-card={i}>
-                <svg class="svg-border" aria-hidden="true">
-                  <rect />
-                </svg>
+                <DottedBorder />
                 <Image
                   src={feature.image}
                   width={feature.width}
@@ -504,9 +677,7 @@ const slides: Slide[] = [
           {
             [1.05, 1.1, 1.15].map((scale) => (
               <div class="reason-scale-slot" style={`--scale: ${scale}`}>
-                <svg class="svg-border svg-border-4" aria-hidden="true">
-                  <rect />
-                </svg>
+                <DottedBorder gap={4} />
                 <div class="reason-scale">
                   <Image
                     src={reason1Image}
@@ -550,12 +721,7 @@ const slides: Slide[] = [
                 { ttn: "01245789053", state: "", badge: "У черзі" },
               ].map((item) => (
                 <li class={item.state}>
-                  <svg
-                    class="svg-border svg-border-4 svg-border-4-small-radius"
-                    aria-hidden="true"
-                  >
-                    <rect />
-                  </svg>
+                  <DottedBorder gap={4} radius={4} />
                   <span>#&nbsp;{item.ttn}</span>
                   <span class="reasons-badge">{item.badge}</span>
                 </li>
@@ -568,12 +734,12 @@ const slides: Slide[] = [
       <!-- Row 1 · Col 3: three short callouts -->
       <div class="reason reason-3">
         <div class="reason-mini">
-          <svg class="svg-border" aria-hidden="true"><rect></rect></svg>
+          <DottedBorder />
           <IconReliable />
           <p><strong>Працюємо надійно</strong> під час пікових навантажень.</p>
         </div>
         <div class="reason-mini">
-          <svg class="svg-border" aria-hidden="true"><rect></rect></svg>
+          <DottedBorder />
           <IconFast />
           <p>
             <strong>Працюємо швидко.</strong> Реєструємо чеки в середньому за 300
@@ -581,7 +747,7 @@ const slides: Slide[] = [
           </p>
         </div>
         <div class="reason-mini">
-          <svg class="svg-border" aria-hidden="true"><rect></rect></svg>
+          <DottedBorder />
           <IconUpdate />
           <p>
             <strong>Миттєво оновлюємо продукт</strong> під зміни законів, щоб ви спали
@@ -619,12 +785,7 @@ const slides: Slide[] = [
           {
             courierStops.map((stop) => (
               <li>
-                <svg
-                  class="svg-border svg-border-4 svg-border-4-small-radius"
-                  aria-hidden="true"
-                >
-                  <rect />
-                </svg>
+                <DottedBorder gap={4} radius={4} />
                 <span class="reason-timeline-dot">
                   <IconTimelineDot />
                 </span>
@@ -641,7 +802,7 @@ const slides: Slide[] = [
       <!-- Row 3 · Col 1: three short callouts -->
       <div class="reason reason-3">
         <div class="reason-mini">
-          <svg class="svg-border" aria-hidden="true"><rect></rect></svg>
+          <DottedBorder />
           <IconPlatforms />
           <p>
             <strong>Працюємо у вебі</strong> та на інших платформах: iOS, Android,
@@ -649,7 +810,7 @@ const slides: Slide[] = [
           </p>
         </div>
         <div class="reason-mini">
-          <svg class="svg-border" aria-hidden="true"><rect></rect></svg>
+          <DottedBorder />
           <IconBackup />
           <p>
             <strong>Безкоштовно назавжди</strong> зберігаємо всі ваші дані в безпеці
@@ -657,7 +818,7 @@ const slides: Slide[] = [
           </p>
         </div>
         <div class="reason-mini">
-          <svg class="svg-border" aria-hidden="true"><rect></rect></svg>
+          <DottedBorder />
           <IconApi />
           <p>
             <strong>Потужне відкрите API</strong> для унікальних інтеграцій під ваш
@@ -686,12 +847,7 @@ const slides: Slide[] = [
             {
               postShipments.map((item) => (
                 <li class:list={{ "is-done": item.status === "Доставлено" }}>
-                  <svg
-                    class="svg-border svg-border-4 svg-border-4-small-radius"
-                    aria-hidden="true"
-                  >
-                    <rect />
-                  </svg>
+                  <DottedBorder gap={4} radius={4} />
                   <div>
                     <p>{item.ttn}</p>
                     <p class="reason-post-carrier">
@@ -743,7 +899,7 @@ const slides: Slide[] = [
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
-                  height="16"
+                  
                   viewBox="0 0 16 16"
                   fill="none"
                 >
@@ -774,16 +930,13 @@ const slides: Slide[] = [
               </div>
 
               <div class="compare-cells">
-                <svg class="svg-border" aria-hidden="true">
-                  {" "}
-                  <rect />
-                </svg>
+                <DottedBorder />
                 <div class="compare-cell">
                   <span class="compare-cell-head">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
-                      height="16"
+                      
                       viewBox="0 0 16 16"
                       fill="none"
                     >
@@ -804,7 +957,7 @@ const slides: Slide[] = [
                             <span class="compare-list-label">{r.label}</span>
                           )}
                           <span class="compare-list-value">
-                            <IconNo class="compare-mark compare-mark--no"/>
+                            <IconNo class="compare-mark compare-mark--no" />
                             {r.value}
                           </span>
                         </li>
@@ -824,9 +977,7 @@ const slides: Slide[] = [
                     <ul class="compare-list">
                       {row.cb.rows?.map((r) => (
                         <li>
-                          {r.label && (
-                            <span>{r.label}</span>
-                          )}
+                          {r.label && <span>{r.label}</span>}
                           <span class="compare-list-value">
                             <IconOk />
                             {r.value}
@@ -850,13 +1001,9 @@ const slides: Slide[] = [
       <h2 class="steps-title">
         Кілька хвилин —<br />і ви готові продавати<br />впевнено
       </h2>
-
       <div class="steps-grid">
-        {/* Card 1 — register form */}
         <div class="step-card" data-card="1">
-          <svg class="svg-border" aria-hidden="true">
-            <rect />
-          </svg>
+          <DottedBorder />
           <span class="step-badge">Крок 01</span>
           <h3 class="step-card-title">
             <a href="#">Зареєструйтеся <ArrowRight /></a>
@@ -868,6 +1015,7 @@ const slides: Slide[] = [
             {
               stepRegisterFields.map((f) => (
                 <label class="step-input" data-fill>
+                  <DottedBorder gap={4} radius={4} />
                   <span class="step-input-label">{f.label}</span>
                   <span class="step-input-value">{f.value}</span>
                 </label>
@@ -877,11 +1025,8 @@ const slides: Slide[] = [
           </div>
         </div>
 
-        {/* Card 2 — set up the register */}
         <div class="step-card" data-card="2">
-          <svg class="svg-border" aria-hidden="true">
-            <rect />
-          </svg>
+          <DottedBorder />
           <span class="step-badge">Крок 02</span>
           <h3 class="step-card-title">Налаштуйте касу</h3>
           <p class="step-card-text">
@@ -892,6 +1037,7 @@ const slides: Slide[] = [
             {
               stepSetupFields.map((f) => (
                 <label class="step-input" data-fill>
+                  <DottedBorder gap={4} radius={4} />
                   <span class="step-input-label">{f.label}</span>
                   <span class="step-input-value">{f.value}</span>
                 </label>
@@ -900,11 +1046,8 @@ const slides: Slide[] = [
           </div>
         </div>
 
-        {/* Card 3 — fill the catalog */}
         <div class="step-card" data-card="3">
-          <svg class="svg-border" aria-hidden="true">
-            <rect />
-          </svg>
+          <DottedBorder />
           <span class="step-badge">Крок 03</span>
           <h3 class="step-card-title">Наповніть каталог</h3>
           <p class="step-card-text">
@@ -917,6 +1060,7 @@ const slides: Slide[] = [
               {
                 stepCatalogItems.map((it) => (
                   <li class="step-catalog-item" data-fill>
+                    <DottedBorder gap={4} radius={4} />
                     <span class="step-dot" style={`--dot: ${it.dot}`} />
                     <span class="step-catalog-name">{it.name}</span>
                     <span class="step-catalog-price">{it.price}</span>
@@ -927,11 +1071,8 @@ const slides: Slide[] = [
           </div>
         </div>
 
-        {/* Card 4 — issue the receipt */}
         <div class="step-card" data-card="4">
-          <svg class="svg-border" aria-hidden="true">
-            <rect />
-          </svg>
+          <DottedBorder />
           <span class="step-badge">Крок 04</span>
           <h3 class="step-card-title">Видавайте чеки</h3>
           <p class="step-card-text">
@@ -941,10 +1082,10 @@ const slides: Slide[] = [
           <div class="step-ui" aria-hidden="true">
             <p class="step-receipt-num">Чек #12547</p>
             <div class="step-receipt">
+              <DottedBorder gap={4} radius={4} />
               {
                 stepReceiptItems.map((it) => (
                   <div class="step-receipt-row" data-fill>
-                     <svg class="svg-border svg-border-4 svg-border-4-small-radius" aria-hidden="true"><rect /></svg>
                     <span class="step-receipt-name">
                       {it.name}
                       <small>{it.qty}</small>
@@ -976,15 +1117,102 @@ const slides: Slide[] = [
     </div>
   </section>
 
-  <section class="slider">
-    <div class="container slider-head">
-      <h2 class="slider-title">
-        Вам буде зручно з нами
-        <span>незалежно від того, маєте 1&nbsp;касу чи 10&nbsp;000</span>
+  <section class="category">
+    <div class="container category-inner">
+      <p class="subtitle">Касова дисципліна без зусиль</p>
+      <h2>
+        Чекбокс обирають<br> бізнеси різного<br> штибу та напрямку
       </h2>
-      <div class="slider-nav">
+
+      <div class="category-nav">
         <button
-          class="slider-arrow slider-arrow--prev"
+          type="button"
+          class="slider-btn slider-btn--prev"
+          aria-label="Попередня категорія"
+        >
+          <ArrowRightWhite />
+        </button>
+        <button
+          type="button"
+          class="slider-btn slider-btn--next"
+          aria-label="Наступна категорія"
+        >
+          <ArrowRightWhite />
+        </button>
+      </div>
+
+      <div class="category-slider">
+        <div class="category-tabs" role="tablist">
+          {
+            categories.map(({ icon: Icon, label, content }, i) => (
+              <button
+                type="button"
+                class:list={[
+                  "category-tab",
+                  { "is-active": i === activeCategoryIndex },
+                ]}
+                role="tab"
+                aria-selected={i === activeCategoryIndex}
+                data-index={i}
+                data-quote={content.quote}
+                data-author={content.author}
+                data-role={content.role}
+                data-image={content.image.src}
+                data-image-w={content.image.width}
+                data-image-h={content.image.height}
+                data-logos={content.logos.join("|")}
+              >
+                <DottedBorder color="white" />
+                <Icon class="category-tab-icon" aria-hidden="true" />
+                <span class="category-tab-label">{label}</span>
+              </button>
+            ))
+          }
+        </div>
+
+        <div class="category-panel">
+            <img
+              class="category-panel-image"
+              src={categories[activeCategoryIndex].content.image.src}
+              width={categories[activeCategoryIndex].content.image.width}
+              height={categories[activeCategoryIndex].content.image.height}
+              alt=""
+              loading="lazy"
+            />
+            <div class="category-panel-quote">
+              <p class="category-panel-text">
+                {categories[activeCategoryIndex].content.quote}
+              </p>
+              <p class="category-panel-author">
+                <span class="category-panel-author-name">
+                  {categories[activeCategoryIndex].content.author}
+                </span>
+                <span class="category-panel-role">
+                  {categories[activeCategoryIndex].content.role}
+                </span>
+              </p>
+            </div>
+            <ul class="category-panel-logos">
+              {
+                categories[activeCategoryIndex].content.logos.map((logo) => (
+                  <li>{logo}</li>
+                ))
+              }
+            </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container testimonials-head">
+      <h2>
+        Вам буде зручно з нами
+        <span>незалежно від того, маєте 1 касу чи 10 000</span>
+      </h2>
+      <div class="testimonials-nav">
+        <button
+          class="slider-btn slider-btn--prev"
           type="button"
           aria-label="Попередній кейс"
           disabled
@@ -992,7 +1220,7 @@ const slides: Slide[] = [
           <ArrowRightWhite />
         </button>
         <button
-          class="slider-arrow slider-arrow--next"
+          class="slider-btn slider-btn--next"
           type="button"
           aria-label="Наступний кейс"
         >
@@ -1002,52 +1230,50 @@ const slides: Slide[] = [
     </div>
 
     <div class="container">
-      <ul class="slider-track">
+      <ul class="testimonials-track">
         {
-          slides.map((slide) => (
-            <li class="slider-card">
-              <div class="slider-body">
+          testimonials.map((slide) => (
+            <li class="testimonials-card">
+              <DottedBorder color="white" />
+              <div class="testimonials-body">
                 {slide.note ? (
-                  <div class="slider-note">
+                  <div class="testimonials-note">
+                    <DottedBorder />
                     <svg
-                      class="slider-heart"
-                      viewBox="0 0 32 32"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="113"
+                      height="73"
+                      viewBox="0 0 113 73"
                       fill="none"
-                      aria-hidden="true"
                     >
+                      <path d="M0 9H73V73H0V36.8641V32.5751V9Z" fill="black" />
                       <path
-                        d="M16 27.5C13 24.9 4 18.6 4 11.9 4 7.8 7.1 4.9 10.7 4.9c2.2 0 4.2 1.1 5.3 2.9 1.1-1.8 3.1-2.9 5.3-2.9 3.6 0 6.7 2.9 6.7 7 0 6.7-9 13-12 15.6Z"
-                        stroke="currentColor"
-                        stroke-width="1.8"
-                        stroke-linejoin="round"
+                        d="M0 9H73V73H0V36.8641C0.207104 37.3296 0.298684 38.2798 0.44123 38.8254C2.88847 48.191 10.5118 54.3052 18.4632 59.2749C21.3593 61.0924 24.341 62.77 27.3978 64.3019C27.99 64.5984 28.5793 64.8638 29.1805 65.1389C32.6253 66.7153 36.0187 68.3847 39.4726 69.9418C41.4251 70.822 43.3128 71.885 45.3273 72.6394C46.2013 71.8412 46.9423 70.7242 47.7699 69.8621C48.7533 68.8377 49.6153 67.6947 50.5523 66.6314C52.5339 64.3965 54.4909 62.1399 56.423 59.8621C57.3231 58.8088 58.2626 57.7629 59.1302 56.6855C60.7793 54.6344 62.3391 52.5133 63.805 50.3278C69.8037 41.5515 75.98 30.0119 71.0788 19.3109C69.1344 15.0665 65.4444 11.6935 61.0109 10.1941C56.2132 8.61176 50.9841 8.99534 46.4688 11.2608C41.9021 13.5168 38.9086 16.6969 36.4396 21.1599C35.9026 22.1306 35.4144 23.0825 35.0573 24.1371C33.5324 22.6202 29.6632 19.9888 27.7137 19.1348C22.0259 16.6433 16.7533 16.3143 10.916 18.5837C6.38419 20.3805 2.83468 24.0261 1.15957 28.6043C0.779538 29.6322 0.454774 30.6753 0.235326 31.7496C0.180847 32.0163 0.115536 32.3301 0 32.5751V9Z"
+                        fill="#F5F5F5"
+                      />
+                      <path
+                        d="M53.9767 11.9013C54.6044 11.778 56.5559 11.8887 57.2145 11.9551C60.8431 12.3206 64.3667 14.4198 66.6735 17.2146C69.9435 21.1749 70.5666 25.4782 70.0198 30.4294C69.6466 33.8076 68.486 36.643 67.0254 39.6917C64.8954 44.0588 62.3419 48.2064 59.402 52.0751C55.551 57.1649 51.1332 61.9168 46.9623 66.7497C46.1559 67.6841 45.5365 68.6527 44.5491 69.4349C42.29 68.4889 39.9273 67.2775 37.6923 66.2296C35.4036 65.177 33.1225 64.1083 30.849 63.0234C29.8743 62.565 28.788 62.1073 27.8404 61.6184C25.6008 60.463 23.4376 59.1523 21.2276 57.9339C20.349 57.4413 19.421 56.7861 18.5583 56.2335C15.3898 54.1749 12.1236 51.8091 9.4929 49.0982C5.62956 45.117 2.58172 40.3599 2.70063 34.624C2.79129 30.2504 4.23362 26.9124 7.4239 23.8386C10.4396 20.9331 14.8136 19.6893 18.9253 19.6331C23.9683 19.684 28.8619 22.2343 32.5733 25.5096C33.8116 26.6023 34.8287 27.6643 35.9811 28.8553C38.9829 20.1005 43.9783 12.7799 53.9767 11.9013Z"
+                        fill="#F5F5F5"
                       />
                     </svg>
-                    <p class="slider-text">{slide.text}</p>
+                    <p class="testimonials-text">{slide.text}</p>
                   </div>
                 ) : (
                   <>
-                    <svg
-                      class="slider-quote-mark"
-                      viewBox="0 0 44 32"
-                      aria-hidden="true"
-                    >
-                      <path d="M0 32V14L10 0h8l-7 14h7v18H0Z" fill="currentColor" />
-                      <path d="M26 32V14L36 0h8l-7 14h7v18H26Z" fill="currentColor" />
-                    </svg>
-                    <p class="slider-text">{slide.text}</p>
-                    <p class="slider-author">
+                    <Quotes />
+                    <p class="testimonials-text">{slide.text}</p>
+                    <p class="testimonials-author">
                       {slide.author}
-                      <span class="slider-role">{slide.role}</span>
+                      <span class="testimonials-role">{slide.role}</span>
                     </p>
                   </>
                 )}
-                <a href="#" class="slider-link">
+                <a href="#" class="testimonials-link">
                   Прочитайте кейс <ArrowRight />
                 </a>
               </div>
-              <div class="slider-media">
+              <div class="testimonials-media">
                 <Image src={slide.image} alt={slide.label} loading="lazy" />
-                <span class="slider-brand">{slide.label}</span>
               </div>
             </li>
           ))
@@ -1059,8 +1285,8 @@ const slides: Slide[] = [
   <section class="api">
     <div class="container api-inner">
       <p class="subtitle">API</p>
-      <h2 class="api-title">
-        Потужне відкрите API<br />для унікальних інтеграцій
+      <h2>
+        Потужне відкрите API<br />для унікальних<br> інтеграцій
       </h2>
       <p class="api-text">
         Ми розуміємо, що ваш бізнес-процес наче сніжинка, іншого такого не
@@ -1068,37 +1294,109 @@ const slides: Slide[] = [
         Ми допоможемо вашій команді вбудувати Чекбокс, щоб усе працювало як слід.
       </p>
       <a href="#" class="api-link">Перегляньте документацію <ArrowRightWhite /></a>
-
+      <ApiScheme class="api-scheme" aria-hidden="true" />
       <div class="api-flow" aria-hidden="true">
         <div class="api-node">
+          <DottedBorder color="#7A7A7A" gap={4}/>
           <span class="api-badge api-badge--power">
-            <svg viewBox="0 0 16 16" fill="none"><path d="M8 2v6M4.2 4.5a5.4 5.4 0 1 0 7.6 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none"
+              ><path
+                d="M8 2v6M4.2 4.5a5.4 5.4 0 1 0 7.6 0"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"></path></svg
+            >
           </span>
           <span class="api-ic">
-            <svg viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.7 2c.72 0 1.3.58 1.3 1.3v13.4c0 .72-.58 1.3-1.3 1.3H3.3A1.3 1.3 0 0 1 2 16.7V3.3C2 2.58 2.58 2 3.3 2h13.4ZM4.67 4.67v10.66h10.66V4.67H4.67Z" fill="currentColor"/><path d="M6.67 6.67h6.66v6.66L6.67 6.67Z" fill="currentColor"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M16 16H0V0H16V16ZM2.66679 2.66671V13.3334H13.3335V2.66671H2.66679Z" fill="white"/>
+              <path d="M4.66689 4.66668H11.3336V11.3333L4.66689 4.66668Z" fill="white"/>
+            </svg>
           </span>
           Каса Checkbox
         </div>
-
         <div class="api-node">
+          <DottedBorder color="#7A7A7A" gap={4}/>
           <span class="api-ic api-ic--num">1</span>
           Авторизація
         </div>
-
         <div class="api-node">
+          <DottedBorder color="#7A7A7A" gap={4}/>
           <span class="api-badge api-badge--spark">
-            <svg viewBox="0 0 16 16" fill="none"><path d="M8 1.5 9.6 6 14 8l-4.4 2L8 14.5 6.4 10 2 8l4.4-2L8 1.5Z" fill="currentColor"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <g clip-path="url(#clip0_10679_7104)">
+                <path d="M7.49142 7.49142L6.35048 10.6292C6.32384 10.701 6.27588 10.7629 6.21303 10.8066C6.15019 10.8503 6.07547 10.8737 5.99892 10.8737C5.92237 10.8737 5.84765 10.8503 5.78481 10.8066C5.72196 10.7629 5.674 10.701 5.64736 10.6292L4.50829 7.49142L1.37048 6.35048C1.29872 6.32384 1.23682 6.27588 1.19311 6.21303C1.1494 6.15019 1.12598 6.07547 1.12598 5.99892C1.12598 5.92237 1.1494 5.84765 1.19311 5.78481C1.23682 5.72196 1.29872 5.674 1.37048 5.64736L4.50829 4.50829L5.64923 1.37048C5.67587 1.29872 5.72383 1.23682 5.78668 1.19311C5.84953 1.1494 5.92424 1.12598 6.00079 1.12598C6.07735 1.12598 6.15206 1.1494 6.21491 1.19311C6.27775 1.23682 6.32572 1.29872 6.35236 1.37048L7.49329 4.50829L10.6311 5.64923C10.7029 5.67587 10.7648 5.72383 10.8085 5.78668C10.8522 5.84953 10.8756 5.92424 10.8756 6.00079C10.8756 6.07735 10.8522 6.15206 10.8085 6.21491C10.7648 6.27775 10.7029 6.32572 10.6311 6.35236L7.49142 7.49142Z" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_10679_7104">
+                  <rect width="12" height="12" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>
           </span>
           <span class="api-ic api-ic--num">2</span>
           Відкриття зміни
         </div>
-
         <div class="api-node api-node--branch">
+          <DottedBorder color="#7A7A7A" gap={4}/>
           <span class="api-ic api-ic--num">3</span>
           Створення чека
           <div class="api-card api-error">
+            <DottedBorder color="#7A7A7A" gap={4}/>
+            <svg
+              class="api-line api-line--to-error"
+              width="167"
+              height="22"
+              viewBox="0 0 167 22"
+              fill="none"
+              ><defs
+                ><mask id="apiLineToError"
+                  ><path
+                    class="api-line-draw"
+                    d="M0 .5H154.5Q166.5.5 166.5 12.5V22"
+                    pathLength="1"
+                    stroke="#fff"
+                    stroke-width="4"
+                    fill="none"></path></mask
+                ></defs
+              ><path
+                d="M0 .5H154.5Q166.5.5 166.5 12.5V22"
+                stroke="white"
+                stroke-opacity="0.4"
+                stroke-dasharray="1 4"
+                mask="url(#apiLineToError)"></path></svg
+            >
+            <svg
+              class="api-line api-line--from-error"
+              width="167"
+              height="44"
+              viewBox="0 0 167 44"
+              fill="none"
+              ><defs
+                ><mask id="apiLineFromError"
+                  ><path
+                    class="api-line-draw"
+                    d="M166.5 0V31.5Q166.5 43.5 154.5 43.5H0"
+                    pathLength="1"
+                    stroke="#fff"
+                    stroke-width="4"
+                    fill="none"></path></mask
+                ></defs
+              ><path
+                d="M166.5 0V31.5Q166.5 43.5 154.5 43.5H0"
+                stroke="white"
+                stroke-opacity="0.4"
+                stroke-dasharray="1 4"
+                mask="url(#apiLineFromError)"></path></svg
+            >
             <span class="api-ic">
-              <svg viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6.4" stroke="currentColor" stroke-width="1.4"/><path d="M6 6l4 4M10 6l-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <g clip-path="url(#clip0_10679_7067)">
+                  <path d="M15 9L9 15" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M9 9L15 15" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
+                </g>
+              </svg>
             </span>
             <span class="api-card-body">
               <span class="api-card-label">Помилка?</span>
@@ -1106,19 +1404,87 @@ const slides: Slide[] = [
             </span>
           </div>
         </div>
-
         <div class="api-node">
+          <DottedBorder color="#7A7A7A" gap={4}/>
           <span class="api-badge api-badge--check">
-            <svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5 6.8 11.8 12.5 4.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none"
+              ><path
+                d="M3.5 8.5 6.8 11.8 12.5 4.8"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"></path></svg>
           </span>
           <span class="api-ic api-ic--num">4</span>
           Чек готовий
         </div>
-
         <div class="api-row">
+          <svg
+            class="api-line api-line--fork"
+            width="657"
+            height="24"
+            viewBox="0 0 657 24"
+            fill="none"
+            ><defs
+              ><mask id="apiLineFork"
+                ><path
+                  class="api-line-draw"
+                  d="M328.5.5H12.5Q.5.5.5 12.5V24"
+                  pathLength="1"
+                  stroke="#fff"
+                  stroke-width="4"
+                  fill="none"></path><path
+                  class="api-line-draw"
+                  d="M328.5.5H644.5Q656.5.5 656.5 12.5V24"
+                  pathLength="1"
+                  stroke="#fff"
+                  stroke-width="4"
+                  fill="none"></path></mask
+              ></defs
+            ><path
+              d="M.5 24V12.5Q.5.5 12.5.5H644.5Q656.5.5 656.5 12.5V24"
+              stroke="white"
+              stroke-opacity="0.4"
+              stroke-dasharray="1 4"
+              mask="url(#apiLineFork)"></path></svg
+          >
+          <svg
+            class="api-line api-line--merge"
+            width="657"
+            height="24"
+            viewBox="0 0 657 24"
+            fill="none"
+            ><defs
+              ><mask id="apiLineMerge"
+                ><path
+                  class="api-line-draw"
+                  d="M.5 0V11.5Q.5 23.5 12.5 23.5H328.5"
+                  pathLength="1"
+                  stroke="#fff"
+                  stroke-width="4"
+                  fill="none"></path><path
+                  class="api-line-draw"
+                  d="M656.5 0V11.5Q656.5 23.5 644.5 23.5H328.5"
+                  pathLength="1"
+                  stroke="#fff"
+                  stroke-width="4"
+                  fill="none"></path></mask
+              ></defs
+            ><path
+              d="M.5 0V11.5Q.5 23.5 12.5 23.5H644.5Q656.5 23.5 656.5 11.5V0"
+              stroke="white"
+              stroke-opacity="0.4"
+              stroke-dasharray="1 4"
+              mask="url(#apiLineMerge)"></path></svg
+          >
           <div class="api-card">
+            <DottedBorder color="#7A7A7A" gap={4}/>
             <span class="api-ic">
-              <svg viewBox="0 0 16 16" fill="none"><path d="M4 12V7M8 12V4M12 12V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M16.875 16.875H3.125" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+                  <path d="M16 5.625H12V13.75H16V5.625Z" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M8 2.5H4V13.75H8V2.5Z" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              </svg>
             </span>
             <span class="api-card-body">
               <span class="api-card-label">Звіти</span>
@@ -1126,8 +1492,15 @@ const slides: Slide[] = [
             </span>
           </div>
           <div class="api-card">
+            <DottedBorder color="#7A7A7A" gap={4}/>
             <span class="api-ic">
-              <svg viewBox="0 0 16 16" fill="none"><path d="M3 5h10M5 8h6M6.5 11h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M4.6875 3.4375H17.1875" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+                  <path d="M3.4375 6.875H12.8125" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+                  <path d="M5.9375 10.3125H12.8125" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+                  <path d="M10.3125 13.75H13.4375" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+                  <path d="M9.6875 17.1875H10.9375" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+              </svg>
             </span>
             <span class="api-card-body">
               <span class="api-card-label">Сервісні чеки</span>
@@ -1135,8 +1508,12 @@ const slides: Slide[] = [
             </span>
           </div>
           <div class="api-card">
+            <DottedBorder color="#7A7A7A" gap={4}/>
             <span class="api-ic">
-              <svg viewBox="0 0 16 16" fill="none"><path d="M8.7 1.8 3.6 9h3.2l-.8 5.2L11.2 7H7.9l.8-5.2Z" fill="currentColor"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M15.625 4.375L4.375 15.625" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M15.625 15.625L4.375 4.375" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
             </span>
             <span class="api-card-body">
               <span class="api-card-label">Webhook</span>
@@ -1144,17 +1521,166 @@ const slides: Slide[] = [
             </span>
           </div>
         </div>
-
         <div class="api-node">
+          <DottedBorder color="#7A7A7A" gap={4}/>
           <span class="api-ic">
-            <svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            <svg viewBox="0 0 16 16" fill="none"
+              ><path
+                d="M4 4l8 8M12 4l-8 8"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"></path></svg
+            >
           </span>
           Закриття зміни
         </div>
-
         <div class="api-logo">
-          <svg viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M16.7 2c.72 0 1.3.58 1.3 1.3v13.4c0 .72-.58 1.3-1.3 1.3H3.3A1.3 1.3 0 0 1 2 16.7V3.3C2 2.58 2.58 2 3.3 2h13.4ZM4.67 4.67v10.66h10.66V4.67H4.67Z" fill="currentColor"/><path d="M6.67 6.67h6.66v6.66L6.67 6.67Z" fill="currentColor"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="32 32 64 64" fill="none">
+            <g filter="url(#filter0_d_10679_3904)">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M96 96H32V32H96V96ZM42.6671 42.6668V85.3335H85.3338V42.6668H42.6671Z" fill="white"/>
+              <path d="M50.6676 50.6667H77.3342V77.3334L50.6676 50.6667Z" fill="white"/>
+            </g>
+            <defs>
+              <filter id="filter0_d_10679_3904" x="0" y="0" width="128" height="128" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                <feOffset/>
+                <feGaussianBlur stdDeviation="16"/>
+                <feComposite in2="hardAlpha" operator="out"/>
+                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0"/>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_10679_3904"/>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_10679_3904" result="shape"/>
+              </filter>
+            </defs>
+          </svg>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="support">
+    <div class="container">
+      <p class="subtitle">Підтримка</p>
+      <h2>Наша служба турботи<br />завжди допоможе</h2>
+      <div class="support-card">
+        <DottedBorder radius={16}/>
+        <div class="support-info">
+          <a class="support-phone" href="tel:0800330676">0 800 330 676</a>
+          <div class="support-actions">
+            <a
+              class="support-btn"
+              href="https://t.me/checkbox_help"
+              target="_blank"
+              rel="noopener"
+            >
+              <IconTelegram />
+              Зверніться у Telegram
+            </a>
+            <a
+              class="support-btn"
+              href="viber://pa?chatURI=checkbox"
+              target="_blank"
+              rel="noopener"
+            >
+              <IconViber />
+              Зверніться у Viber
+            </a>
+          </div>
+
+          <ul class="support-list">
+            {
+              supportPoints.map((point) => (
+                <li>
+                  <IconOk />
+                  <span set:html={point} />
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <div class="support-media">
+          <SupportOperator />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog">
+    <div class="container">
+      <p class="subtitle">Корисне з цікавим</p>
+      <h2>Корисні статті в блозі</h2>
+      <ul class="blog-list">
+        {
+          blogPosts.map((post) => (
+            <li>
+              <a class="blog-card" href="/blog/">
+                <Image
+                  class="blog-image"
+                  src={post.image}
+                  alt={post.title}
+                  loading="lazy"
+                />
+                <span class="blog-tag">{post.category}</span>
+                <h3 class="blog-card-title">{post.title}</h3>
+                <p class="blog-author">{post.author}</p>
+                <p class="blog-meta">
+                  {post.date}
+                  <span class="blog-read">{post.readTime}</span>
+                </p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="news">
+    <div class="container">
+      <p class="subtitle">Актуальне</p>
+      <h2 class="news-title">Новини компанії</h2>
+      <ul class="news-list">
+        {
+          newsPosts.map((post) => (
+            <li>
+              <a class="news-card" href="/blog/">
+                <span class="news-tag">{post.category}</span>
+                <h3 class="news-card-title">{post.title}</h3>
+                <p class="news-author">{post.author}</p>
+                <p class="news-meta">
+                  {post.date}
+                  <span class="news-read">{post.readTime}</span>
+                </p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="container faq-inner">
+      <p class="subtitle">FAQ</p>
+      <h2>Відповідаємо на часті питання</h2>
+      <FaqBoy class="faq-boy" aria-hidden="true" />
+      <FaqCup class="faq-cup" aria-hidden="true" />
+      <div class="faq-list">
+        {
+          faqItems.map((item) => (
+            <div class="faq-item-wrap">
+              <DottedBorder/>
+              <details class="faq-item">
+                <summary>
+                  {item.q}
+                  <span class="faq-icon" />
+                </summary>
+                <div class="faq-content" set:html={item.a} />
+              </details>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -1166,14 +1692,7 @@ const slides: Slide[] = [
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
-
-  // Every looping mock registers its timeline here (element → timeline);
-  // one shared IntersectionObserver at the bottom plays/pauses them, so a
-  // loop never runs while its block is off screen.
   const loops = new Map<Element, gsap.core.Timeline>();
-
-  // Reasons mocks: one infinite GSAP timeline — the terminals pop into the
-  // slots, then the offline queue syncs row by row, hold, repeat.
   const scaleBlock = document.querySelector(".reason-wrapper");
   const queueItems = [...document.querySelectorAll(".reason-offline-list li")];
 
@@ -1184,7 +1703,6 @@ const slides: Slide[] = [
       li.querySelector(".reasons-badge")!.textContent = badgeText;
     };
 
-    // Frame 1 of the mock: first row already sent, second one syncing
     const resetQueue = () => {
       setQueueState(queueItems[0], "is-done", "Відправлено");
       setQueueState(queueItems[1], "is-syncing", "Синхронізація");
@@ -1312,8 +1830,6 @@ const slides: Slide[] = [
     }
   }
 
-  // Post shipments mock: rows flip to "Доставлено" one by one, hold, then
-  // reset to the original statuses (kept in data-status) and repeat.
   const postList = document.querySelector(".reason-post-list");
   if (postList) {
     const rows = [...postList.querySelectorAll("li")];
@@ -1346,13 +1862,9 @@ const slides: Slide[] = [
     }
   }
 
-  // Onboarding steps: ONE master timeline. Each card fills its own mini-UI in
-  // turn, and — because everything sits on a single sequential timeline — a
-  // card only starts once the previous card has finished.
   const stepsGrid = document.querySelector(".steps-grid");
   if (stepsGrid) {
     const cards = [...stepsGrid.querySelectorAll<HTMLElement>(".step-card")];
-    // per card: the elements it fills, in order
     const fillsOf = (card: HTMLElement) => [
       ...card.querySelectorAll<HTMLElement>("[data-fill], [data-activate]"),
     ];
@@ -1415,30 +1927,94 @@ const slides: Slide[] = [
     }
   }
 
-  // Cases slider: arrows (and swipe) tween the track between card positions.
-  const sliderSection = document.querySelector<HTMLElement>(".slider");
-  if (sliderSection) {
-    const track = sliderSection.querySelector<HTMLElement>(".slider-track")!;
-    const cards = [...track.querySelectorAll<HTMLElement>(".slider-card")];
-    const prevBtn = sliderSection.querySelector<HTMLButtonElement>(
-      ".slider-arrow--prev"
+  // Slider testimonials
+
+  const testimonialsSection =
+    document.querySelector<HTMLElement>(".testimonials");
+  if (testimonialsSection) {
+    const track = testimonialsSection.querySelector<HTMLElement>(
+      ".testimonials-track"
     )!;
-    const nextBtn = sliderSection.querySelector<HTMLButtonElement>(
-      ".slider-arrow--next"
+    const cards = [
+      ...track.querySelectorAll<HTMLElement>(".testimonials-card"),
+    ];
+    const bodies = cards.map(
+      (card) => card.querySelector<HTMLElement>(".testimonials-body")!
+    );
+    const prevBtn = testimonialsSection.querySelector<HTMLButtonElement>(
+      ".slider-btn--prev"
+    )!;
+    const nextBtn = testimonialsSection.querySelector<HTMLButtonElement>(
+      ".slider-btn--next"
     )!;
 
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const PAD_ACTIVE = 16;
+    const BODY_MARGIN = { top: 24, right: 40, bottom: 24, left: 24 };
+    const ACTIVE_SHARE = 0.65;
     let index = 0;
+    let bodyW = 0;
+    let step = 0;
+    const cardProps = (active: boolean) => ({
+      padding: active ? PAD_ACTIVE : 16,
+      backgroundColor: active ? "#ffffff" : "rgba(255,255,255,0)",
+      borderColor: active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0.35)",
+    });
+    const bodyProps = (active: boolean) => ({
+      width: active ? bodyW : 0,
+      marginTop: active ? BODY_MARGIN.top : 0,
+      marginRight: active ? BODY_MARGIN.right : 0,
+      marginBottom: active ? BODY_MARGIN.bottom : 0,
+      marginLeft: active ? BODY_MARGIN.left : 0,
+      autoAlpha: active ? 1 : 0,
+    });
 
-    const goTo = (i: number, animate = true) => {
-      index = Math.max(0, Math.min(cards.length - 1, i));
-      // offsetLeft is measured against the same parent for every card, so
-      // the delta to the first card is the track shift — gap included
-      const x = -(cards[index].offsetLeft - cards[0].offsetLeft);
+    const measure = () => {
+      if (!desktop.matches) return;
+      const mediaW = cards[0].querySelector<HTMLElement>(
+        ".testimonials-media"
+      )!.offsetWidth;
+      // size against the .container, not the track: the track is as wide
+      // as all its cards together, the container is the visible column
+      const containerW = track.parentElement!.clientWidth;
+      bodyW = Math.max(
+        240,
+        Math.round(containerW * ACTIVE_SHARE) -
+          (PAD_ACTIVE * 2 + BODY_MARGIN.left + BODY_MARGIN.right + mediaW)
+      );
+      testimonialsSection.style.setProperty("--body-w", `${bodyW}px`);
+      for (let k = 0; k < cards.length - 1; k++) {
+        if (k !== index && k + 1 !== index) {
+          step = cards[k + 1].offsetLeft - cards[k].offsetLeft;
+          break;
+        }
+      }
+    };
 
-      if (reducedMotion || !animate) {
-        gsap.set(track, { x });
+    const apply = (animate: boolean) => {
+      const instant = reducedMotion || !animate;
+      const tween: gsap.TweenVars = {
+        duration: 1,
+        ease: "expo.inOut",
+        overwrite: "auto",
+      };
+
+      if (desktop.matches) {
+        cards.forEach((card, k) => {
+          const active = k === index;
+          if (instant) {
+            gsap.set(card, cardProps(active));
+            gsap.set(bodies[k], bodyProps(active));
+          } else {
+            gsap.to(card, { ...cardProps(active), ...tween });
+            gsap.to(bodies[k], { ...bodyProps(active), ...tween });
+          }
+        });
+        const x = -index * step;
+        instant ? gsap.set(track, { x }) : gsap.to(track, { x, ...tween });
       } else {
-        gsap.to(track, { x, duration: 1, ease: "expo.inOut", overwrite: true });
+        const x = -(cards[index].offsetLeft - cards[0].offsetLeft);
+        instant ? gsap.set(track, { x }) : gsap.to(track, { x, ...tween });
       }
 
       prevBtn.disabled = index === 0;
@@ -1448,10 +2024,26 @@ const slides: Slide[] = [
       );
     };
 
+    const goTo = (i: number, animate = true) => {
+      index = Math.max(0, Math.min(cards.length - 1, i));
+      apply(animate);
+    };
+
+    const init = () => {
+      apply(false);
+      measure();
+      apply(false);
+    };
+
     prevBtn.addEventListener("click", () => goTo(index - 1));
     nextBtn.addEventListener("click", () => goTo(index + 1));
 
-    // swipe: a quick horizontal drag of 40px+ flips one card
+    cards.forEach((card, k) =>
+      card.addEventListener("click", () => {
+        if (desktop.matches && k !== index) goTo(k);
+      })
+    );
+
     let touchX = 0;
     track.addEventListener(
       "touchstart",
@@ -1467,12 +2059,17 @@ const slides: Slide[] = [
       { passive: true }
     );
 
-    // card widths change across breakpoints — re-align without animating
-    window.addEventListener("resize", () => goTo(index, false));
+    let testimonialsResizeTimer: number;
+    window.addEventListener("resize", () => {
+      clearTimeout(testimonialsResizeTimer);
+      testimonialsResizeTimer = window.setTimeout(() => {
+        gsap.set([track, ...cards, ...bodies], { clearProps: "all" });
+        init();
+      }, 200);
+    });
 
-    goTo(0, false);
+    init();
 
-    // entrance: cards rise in one after another the first time they appear
     if (!reducedMotion) {
       gsap.set(cards, { y: 48, autoAlpha: 0 });
       const introObserver = new IntersectionObserver(
@@ -1493,11 +2090,11 @@ const slides: Slide[] = [
     }
   }
 
-  // API flow: the glow sweeps down the chain node by node, holds, resets.
+  // API //
   const apiFlow = document.querySelector(".api-flow");
   if (apiFlow) {
     const apiNodes = [
-      ...apiFlow.querySelectorAll(".api-node, .api-card, .api-logo"),
+      ...apiFlow.querySelectorAll(".api-node, .api-card, .api-row, .api-logo"),
     ];
     const clearApi = () =>
       apiNodes.forEach((n) => n.classList.remove("is-active"));
@@ -1505,13 +2102,125 @@ const slides: Slide[] = [
     if (reducedMotion) {
       apiNodes.forEach((n) => n.classList.add("is-active"));
     } else {
-      const apiTl = gsap.timeline({ repeat: -1, repeatDelay: 1.8, paused: true });
+      const apiTl = gsap.timeline({
+        repeat: -1,
+        repeatDelay: 1.8,
+        paused: true,
+      });
       apiTl.call(clearApi);
       apiNodes.forEach((n) => {
-        apiTl.call(() => n.classList.add("is-active"), [], "+=0.45");
+        apiTl.call(() => n.classList.add("is-active"), [], "+=1.0");
       });
 
       loops.set(apiFlow, apiTl);
+    }
+  }
+
+  // Category slider: tabs auto-advance one by one (paused via loops/
+  // loopObserver below, same as the API flow); any manual click on a tab or
+  // arrow jumps straight to that slide and stops the autoplay for good.
+  const categorySection = document.querySelector<HTMLElement>(".category");
+  if (categorySection) {
+    const tabs = [
+      ...categorySection.querySelectorAll<HTMLButtonElement>(".category-tab"),
+    ];
+    const panelMedia = categorySection.querySelector<HTMLElement>(
+      ".category-panel-media"
+    )!;
+    const panelImage = categorySection.querySelector<HTMLImageElement>(
+      ".category-panel-image"
+    )!;
+    const panelText = categorySection.querySelector<HTMLElement>(
+      ".category-panel-text"
+    )!;
+    const panelAuthorName = categorySection.querySelector<HTMLElement>(
+      ".category-panel-author-name"
+    )!;
+    const panelRole = categorySection.querySelector<HTMLElement>(
+      ".category-panel-role"
+    )!;
+    const panelLogos = categorySection.querySelector<HTMLElement>(
+      ".category-panel-logos"
+    )!;
+    const prevBtn = categorySection.querySelector<HTMLButtonElement>(
+      ".slider-btn--prev"
+    )!;
+    const nextBtn = categorySection.querySelector<HTMLButtonElement>(
+      ".slider-btn--next"
+    )!;
+
+    let index = Math.max(
+      0,
+      tabs.findIndex((tab) => tab.classList.contains("is-active"))
+    );
+    let categoryTl: gsap.core.Timeline | undefined;
+
+    const render = () => {
+      const tab = tabs[index];
+      const { image, imageW, imageH, quote, author, role, logos } = tab.dataset;
+      panelImage.src = image!;
+      panelImage.width = Number(imageW);
+      panelImage.height = Number(imageH);
+      panelText.textContent = quote!;
+      panelAuthorName.textContent = author!;
+      panelRole.textContent = role!;
+      panelLogos.innerHTML = "";
+      logos!.split("|").forEach((label) => {
+        const li = document.createElement("li");
+        li.textContent = label;
+        panelLogos.append(li);
+      });
+    };
+
+    const activate = (next: number, userTriggered = false) => {
+      index = (next + tabs.length) % tabs.length;
+      tabs.forEach((tab, k) => {
+        const active = k === index;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", String(active));
+      });
+      tabs[index].scrollIntoView({
+        behavior: reducedMotion ? "auto" : "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+
+      if (reducedMotion) {
+        render();
+      } else {
+        gsap.to(panelMedia, {
+          autoAlpha: 0,
+          duration: 0.25,
+          ease: "power1.in",
+          overwrite: "auto",
+          onComplete: () => {
+            render();
+            gsap.to(panelMedia, {
+              autoAlpha: 1,
+              duration: 0.35,
+              ease: "power1.out",
+              overwrite: "auto",
+            });
+          },
+        });
+      }
+
+      if (userTriggered) {
+        categoryTl?.pause();
+        loops.delete(categorySection);
+      }
+    };
+
+    tabs.forEach((tab, i) =>
+      tab.addEventListener("click", () => activate(i, true))
+    );
+    prevBtn.addEventListener("click", () => activate(index - 1, true));
+    nextBtn.addEventListener("click", () => activate(index + 1, true));
+
+    if (!reducedMotion) {
+      categoryTl = gsap.timeline({ repeat: -1, paused: true });
+      categoryTl.call(() => activate(index + 1), [], 4);
+      loops.set(categorySection, categoryTl);
     }
   }
 
@@ -1528,4 +2237,62 @@ const slides: Slide[] = [
     );
     loops.forEach((_, el) => loopObserver.observe(el));
   }
+
+  // FAQ: <details> can't animate natively, so the summary click is
+  // intercepted and the answer is tweened by GSAP (it can animate height to
+  // "auto"); [open] is only removed after the collapse finishes
+  document
+    .querySelectorAll<HTMLDetailsElement>(".faq-item")
+    .forEach((details) => {
+      const summary = details.querySelector("summary")!;
+      const content = details.querySelector<HTMLElement>(".faq-content")!;
+      const wrap = details.closest(".faq-item-wrap");
+
+      summary.addEventListener("click", (e) => {
+        e.preventDefault();
+        // is-open (not details.open) drives the toggle: [open] stays set
+        // until the collapse tween finishes, so a click mid-collapse should
+        // reopen, tweening from the current height
+        const isOpen = details.classList.contains("is-open");
+
+        if (!isOpen) {
+          wrap?.classList.add("is-open");
+          details.classList.add("is-open");
+          if (!details.open) {
+            details.open = true;
+            gsap.set(content, {
+              height: 0,
+              opacity: 0,
+              marginTop: 0,
+              overflow: "hidden",
+            });
+          }
+          gsap.to(content, {
+            height: "auto",
+            opacity: 1,
+            marginTop: 16,
+            duration: 0.2,
+            ease: "power1.out",
+            overwrite: true,
+            clearProps: "all",
+          });
+        } else {
+          wrap?.classList.remove("is-open");
+          details.classList.remove("is-open");
+          gsap.to(content, {
+            height: 0,
+            opacity: 0,
+            marginTop: 0,
+            overflow: "hidden",
+            duration: 0.2,
+            ease: "power1.in",
+            overwrite: true,
+            onComplete: () => {
+              details.open = false;
+              gsap.set(content, { clearProps: "all" });
+            },
+          });
+        }
+      });
+    });
 </script>

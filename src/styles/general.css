@@ -137,6 +137,10 @@ h2 {
   line-height: 1;
 }
 
+.subtitle + h2 {
+  padding: 24px 0 clamp(40px, 4.5vw, 64px);
+}
+
 p{
   letter-spacing: -0.18px;
   line-height: 1.4;
@@ -178,6 +182,43 @@ p{
 
 .btn--outline:hover svg {
   transform: scale(1.05);
+}
+
+.slider-btn {
+  cursor: pointer;
+  background: transparent;
+  padding: 10px;
+  border: 2px solid var(--color-white);
+  border-radius: 4px;
+  transition:
+    background-color 0.3s,
+    opacity 0.3s,
+    transform 0.15s;
+
+  svg {
+    transition: all 0.3s;
+  }
+}
+
+.slider-btn--prev svg {
+  transform: rotate(180deg);
+}
+
+.slider-btn:active {
+  transform: scale(0.92);
+}
+
+.slider-btn:hover:not(:disabled) svg {
+  transform: scale(1.2);
+}
+
+.slider-btn--prev:hover:not(:disabled) svg {
+  transform: rotate(180deg) scale(1.2);
+}
+
+.slider-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
 }
 
 .subtitle {
@@ -224,7 +265,7 @@ p{
   rx: calc(var(--sb-radius, 16px) - 0.5px);
   ry: calc(var(--sb-radius, 16px) - 0.5px);
   fill: none;
-  stroke:  var(--color-black);
+  stroke: var(--sb-color, var(--color-black));
   stroke-width: 1px;
   stroke-dasharray: 1 var(--sb-gap, 8);
   stroke-linecap: butt;
