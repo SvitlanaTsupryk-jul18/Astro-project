@@ -346,7 +346,21 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
               </div>
 
               <div class="innerList-column posts">
-                <p class="subtitle innerList-label">Трендові статті з блогу</p>
+                <button class="subtitle innerList-label" aria-expanded="false">
+                  Трендові статті з блогу
+                  <svg
+                    class="chevron"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      d="M9.99857 10.9761L14.1234 6.85138L15.3019 8.02989L9.99857 13.3332L4.69531 8.02989L5.87382 6.85138L9.99857 10.9761Z"
+                      fill="black"></path>
+                  </svg>
+                </button>
                 <ul class="innerList-posts">
                   {
                     blogPosts.map((post) => (
@@ -365,15 +379,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
                 </ul>
                 <a href="#" class="innerList-more">Переглянути всі →</a>
               </div>
-
-              <a href="#" class="promo">
-                <Image
-                  src={promoImage}
-                  alt="Наші каси підходять як для маленького, так і для великого бізнесу"
-                  width={340}
-                  height={340}
-                />
-              </a>
             </div>
           </div>
         </div>
@@ -685,43 +690,55 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     transform: rotate(180deg);
   }
 
-  .innerList-column > .innerList-items {
+  .innerList-column > .innerList-items,
+  .innerList-column > .innerList-posts,
+  .innerList-column > .innerList-more {
     display: none;
   }
 
-  .innerList-column.show > .innerList-items {
+  .innerList-column.show > .innerList-items,
+  .innerList-column.show > .innerList-posts {
     display: flex;
+  }
+
+  .innerList-column.show > .innerList-posts {
+    padding: 16px 24px;
+  }
+
+  .innerList-column.show > .innerList-more {
+    display: inline-block;
+    margin: 0 24px 16px;
   }
 
   .innerList-items {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 32px;
     padding: 16px 24px;
   }
 
-  .innerList-items li {
+  :is(.innerList-items, .innerList-posts) li {
+    border-radius: 8px;
     opacity: 0;
     animation: fadeInRight 0.4s ease forwards;
   }
 
-  .innerList-items li:nth-of-type(1) {
+  :is(.innerList-items, .innerList-posts) li:nth-of-type(1) {
     animation-delay: 0.075s;
   }
-  .innerList-items li:nth-of-type(2) {
+  :is(.innerList-items, .innerList-posts) li:nth-of-type(2) {
     animation-delay: 0.15s;
   }
-  .innerList-items li:nth-of-type(3) {
+  :is(.innerList-items, .innerList-posts) li:nth-of-type(3) {
     animation-delay: 0.225s;
   }
-  .innerList-items li:nth-of-type(4) {
+  :is(.innerList-items, .innerList-posts) li:nth-of-type(4) {
     animation-delay: 0.3s;
   }
-  .innerList-items li:nth-of-type(5) {
+  :is(.innerList-items, .innerList-posts) li:nth-of-type(5) {
     animation-delay: 0.375s;
   }
-  .innerList-items li:nth-of-type(6) {
+  :is(.innerList-items, .innerList-posts) li:nth-of-type(6) {
     animation-delay: 0.45s;
   }
 
@@ -744,6 +761,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     font-weight: 600;
     text-decoration: none;
     position: relative;
+    border-radius: 8px;
 
     .svg-border {
       transition: all 0.2s;
@@ -752,7 +770,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
   }
 
   .innerList-link:hover {
-    background: #eeecee;
+    background: #F5F5F5;
+    text-decoration: none;
+    
     .svg-border {
       display: block;
     }
@@ -948,7 +968,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     .header-nav {
       flex-direction: row;
       align-items: center;
-      gap: clamp(16px, 1.25vw, 28px);
+      gap: clamp(16px, 1.75vw, 28px);
       font-size: 14px;
     }
 
@@ -973,8 +993,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       display: none;
     }
 
-    .innerList-column > .innerList-items {
+    .innerList-column > .innerList-items,
+    .innerList-column > .innerList-posts {
       display: flex;
+    }
+
+    .innerList-column > .innerList-more {
+      display: inline-block;
     }
 
     /* .header-nav > a:hover,
@@ -1039,7 +1064,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       grid-template-columns: 1fr 1.4fr 1.1fr;
     }
 
-    .innerList-items li {
+    :is(.innerList-items, .innerList-posts) li {
       opacity: 1;
       animation: none;
     }

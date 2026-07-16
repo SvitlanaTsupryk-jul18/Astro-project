@@ -19,26 +19,26 @@
 .arrow { animation-name: st4-arrow; }
 /* bars grow 0.5s each, staggered: 6.1s / 6.25s / 6.4s */
 @keyframes st4-bar-1 {
-  0%, 51.26% { transform: scaleY(0); }
-  55.46%, 100% { transform: scaleY(1); }
+  0%, 11.26% { transform: scaleY(0); }
+  15.46%, 100% { transform: scaleY(1); }
 }
 @keyframes st4-bar-2 {
-  0%, 52.52% { transform: scaleY(0); }
-  56.72%, 100% { transform: scaleY(1); }
+  0%, 12.52% { transform: scaleY(0); }
+  16.72%, 100% { transform: scaleY(1); }
 }
 @keyframes st4-bar-3 {
-  0%, 53.78% { transform: scaleY(0); }
-  57.98%, 100% { transform: scaleY(1); }
+  0%, 13.78% { transform: scaleY(0); }
+  17.98%, 100% { transform: scaleY(1); }
 }
 /* curve draws 6.5s-7.2s */
 @keyframes st4-curve {
-  0%, 54.62% { stroke-dashoffset: 1; }
-  60.5%, 100% { stroke-dashoffset: 0; }
+  0%, 14.62% { stroke-dashoffset: 1; }
+  20.5%, 100% { stroke-dashoffset: 0; }
 }
 /* arrowhead draws 7.1s-7.4s */
 @keyframes st4-arrow {
-  0%, 59.66% { stroke-dashoffset: 1; }
-  62.18%, 100% { stroke-dashoffset: 0; }
+  0%, 19.66% { stroke-dashoffset: 1; }
+  22.18%, 100% { stroke-dashoffset: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .bar, .curve, .arrow { animation: none; stroke-dashoffset: 0; }

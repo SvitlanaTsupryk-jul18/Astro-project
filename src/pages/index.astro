@@ -369,17 +369,43 @@ const testimonials: Slide[] = [
 ];
 
 // Category slider: left-hand tabs cycle automatically and the right-hand
-// panel (photo + quote + client logos) fades to match. Every category
-// currently points at the same placeholder slide — swap in a per-category
-// `content` object once real photos/quotes for each vertical are ready.
-const categoryPlaceholder = {
-  image: $image("/category-1.png"),
-  quote:
-    "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
-  author: "Наталія",
-  role: "бухгалтер, MD Fashion",
-  logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
-};
+// panel (photo + quote + client logos) fades to match. Categories cycle
+// through 4 placeholder slides — fill in real photos/quotes for each
+// vertical here once they are ready.
+const categoryContents = [
+  {
+    image: $image("/category-1.png"),
+    quote:
+      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+    author: "Наталія",
+    role: "бухгалтер, MD Fashion",
+    logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
+  },
+  {
+    image: $image("/category-2.png"),
+    quote:
+      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+    author: "Наталія",
+    role: "бухгалтер, MD Fashion",
+    logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
+  },
+  {
+    image: $image("/category-3.png"),
+    quote:
+      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+    author: "Наталія",
+    role: "бухгалтер, MD Fashion",
+    logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
+  },
+  {
+    image: $image("/category-4.png"),
+    quote:
+      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+    author: "Наталія",
+    role: "бухгалтер, MD Fashion",
+    logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
+  },
+];
 
 const categories = [
   { icon: IconCategoryRetail, label: "Класичний рітейл" },
@@ -396,7 +422,10 @@ const categories = [
   { icon: IconCategoryVending, label: "Вендінгу" },
   { icon: IconCategoryMall, label: "ТРЦ" },
   { icon: IconCategoryCourier, label: "Кур'єрам і водіям на платформах" },
-].map((category) => ({ ...category, content: categoryPlaceholder }));
+].map((category, i) => ({
+  ...category,
+  content: categoryContents[i % categoryContents.length],
+}));
 
 const activeCategoryIndex = 3; // "Інтернет-магазинам" — matches the design mock
 
@@ -1004,7 +1033,7 @@ const supportPoints = [
       <div class="steps-grid">
         <div class="step-card" data-card="1">
           <DottedBorder />
-          <span class="step-badge">Крок 01</span>
+          <div class="step-head"><span class="step-badge">Крок 01</span></div>
           <h3 class="step-card-title">
             <a href="#">Зареєструйтеся <ArrowRight /></a>
           </h3>
@@ -1027,7 +1056,7 @@ const supportPoints = [
 
         <div class="step-card" data-card="2">
           <DottedBorder />
-          <span class="step-badge">Крок 02</span>
+          <div class="step-head"><span class="step-badge">Крок 02</span></div>
           <h3 class="step-card-title">Налаштуйте касу</h3>
           <p class="step-card-text">
             Додайте торгову точку, касу та касира. Підключіть свою облікову
@@ -1048,7 +1077,7 @@ const supportPoints = [
 
         <div class="step-card" data-card="3">
           <DottedBorder />
-          <span class="step-badge">Крок 03</span>
+          <div class="step-head"><span class="step-badge">Крок 03</span></div>
           <h3 class="step-card-title">Наповніть каталог</h3>
           <p class="step-card-text">
             Додайте товари чи послуги для продажу та спрощення видачі чеків. Або
@@ -1162,7 +1191,7 @@ const supportPoints = [
                 data-image-h={content.image.height}
                 data-logos={content.logos.join("|")}
               >
-                <DottedBorder color="white" />
+                <DottedBorder color="#fff8" radius={12}/>
                 <Icon class="category-tab-icon" aria-hidden="true" />
                 <span class="category-tab-label">{label}</span>
               </button>
@@ -1349,22 +1378,12 @@ const supportPoints = [
               height="22"
               viewBox="0 0 167 22"
               fill="none"
-              ><defs
-                ><mask id="apiLineToError"
-                  ><path
-                    class="api-line-draw"
-                    d="M0 .5H154.5Q166.5.5 166.5 12.5V22"
-                    pathLength="1"
-                    stroke="#fff"
-                    stroke-width="4"
-                    fill="none"></path></mask
-                ></defs
               ><path
+                class="api-line-path"
                 d="M0 .5H154.5Q166.5.5 166.5 12.5V22"
                 stroke="white"
                 stroke-opacity="0.4"
-                stroke-dasharray="1 4"
-                mask="url(#apiLineToError)"></path></svg
+                stroke-dasharray="1 4"></path></svg
             >
             <svg
               class="api-line api-line--from-error"
@@ -1372,22 +1391,12 @@ const supportPoints = [
               height="44"
               viewBox="0 0 167 44"
               fill="none"
-              ><defs
-                ><mask id="apiLineFromError"
-                  ><path
-                    class="api-line-draw"
-                    d="M166.5 0V31.5Q166.5 43.5 154.5 43.5H0"
-                    pathLength="1"
-                    stroke="#fff"
-                    stroke-width="4"
-                    fill="none"></path></mask
-                ></defs
               ><path
+                class="api-line-path"
                 d="M166.5 0V31.5Q166.5 43.5 154.5 43.5H0"
                 stroke="white"
                 stroke-opacity="0.4"
-                stroke-dasharray="1 4"
-                mask="url(#apiLineFromError)"></path></svg
+                stroke-dasharray="1 4"></path></svg
             >
             <span class="api-ic">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -1425,28 +1434,12 @@ const supportPoints = [
             height="24"
             viewBox="0 0 657 24"
             fill="none"
-            ><defs
-              ><mask id="apiLineFork"
-                ><path
-                  class="api-line-draw"
-                  d="M328.5.5H12.5Q.5.5.5 12.5V24"
-                  pathLength="1"
-                  stroke="#fff"
-                  stroke-width="4"
-                  fill="none"></path><path
-                  class="api-line-draw"
-                  d="M328.5.5H644.5Q656.5.5 656.5 12.5V24"
-                  pathLength="1"
-                  stroke="#fff"
-                  stroke-width="4"
-                  fill="none"></path></mask
-              ></defs
             ><path
+              class="api-line-path"
               d="M.5 24V12.5Q.5.5 12.5.5H644.5Q656.5.5 656.5 12.5V24"
               stroke="white"
               stroke-opacity="0.4"
-              stroke-dasharray="1 4"
-              mask="url(#apiLineFork)"></path></svg
+              stroke-dasharray="1 4"></path></svg
           >
           <svg
             class="api-line api-line--merge"
@@ -1454,28 +1447,12 @@ const supportPoints = [
             height="24"
             viewBox="0 0 657 24"
             fill="none"
-            ><defs
-              ><mask id="apiLineMerge"
-                ><path
-                  class="api-line-draw"
-                  d="M.5 0V11.5Q.5 23.5 12.5 23.5H328.5"
-                  pathLength="1"
-                  stroke="#fff"
-                  stroke-width="4"
-                  fill="none"></path><path
-                  class="api-line-draw"
-                  d="M656.5 0V11.5Q656.5 23.5 644.5 23.5H328.5"
-                  pathLength="1"
-                  stroke="#fff"
-                  stroke-width="4"
-                  fill="none"></path></mask
-              ></defs
             ><path
+              class="api-line-path"
               d="M.5 0V11.5Q.5 23.5 12.5 23.5H644.5Q656.5 23.5 656.5 11.5V0"
               stroke="white"
               stroke-opacity="0.4"
-              stroke-dasharray="1 4"
-              mask="url(#apiLineMerge)"></path></svg
+              stroke-dasharray="1 4"></path></svg
           >
           <div class="api-card">
             <DottedBorder color="#7A7A7A" gap={4}/>
@@ -1663,7 +1640,7 @@ const supportPoints = [
   <section class="faq">
     <div class="container faq-inner">
       <p class="subtitle">FAQ</p>
-      <h2>Відповідаємо на часті питання</h2>
+      <h2>Поширені запитання</h2>
       <FaqBoy class="faq-boy" aria-hidden="true" />
       <FaqCup class="faq-cup" aria-hidden="true" />
       <div class="faq-list">
@@ -1733,7 +1710,7 @@ const supportPoints = [
             if (next) setQueueState(next, "is-syncing", "Синхронізація");
           },
           [],
-          idx === 0 ? "+=0.6" : "+=0.9"
+          "+=0.4"
         );
       });
 
@@ -1784,8 +1761,8 @@ const supportPoints = [
           .sort((a, b) => a[0] - b[0])
           .map(([, cols]) => cols);
 
-        const STEP = 1.4;
-        const HOLD = STEP + 0.25;
+        const STEP = .35;
+        const HOLD = STEP + 0.2;
         comboTl = gsap.timeline({ repeat: -1, repeatDelay: 1.6, paused: true });
 
         // route idles (all dashed) while the logo sweep is running
@@ -1808,7 +1785,7 @@ const supportPoints = [
         // 2. then the courier walks the route, one stop every 0.9s
         // ("+=" appends after the sweep's last call — same trick as the queue)
         for (let c = 0; c <= stops.length + 1; c++) {
-          comboTl.call(() => setStep(c), [], c === 0 ? "+=0.6" : "+=0.9");
+          comboTl.call(() => setStep(c), [], c === 0 ? "+=0.3" : "+=0.45");
         }
 
         // refresh the registry — the shared observer reads the Map on every
@@ -1855,7 +1832,7 @@ const supportPoints = [
       });
       postTl.call(resetPost);
       rows.slice(1).forEach((li) => {
-        postTl.call(() => setPostState(li, true), [], "+=1.2");
+        postTl.call(() => setPostState(li, true), [], "+=.5");
       });
 
       loops.set(postList, postTl);
@@ -1908,7 +1885,7 @@ const supportPoints = [
         );
         // then its fields / items fill one by one
         fillsOf(card).forEach((el) => {
-          stepsTl.call(() => el.classList.add(fillClass(el)), [], "+=0.7");
+          stepsTl.call(() => el.classList.add(fillClass(el)), [], "+=0.5");
         });
         // card 4's receipt frame lights up once its rows are in
         if (card.dataset.card === "4") {
@@ -1920,7 +1897,7 @@ const supportPoints = [
       stepsTl.call(
         () => cards[cards.length - 1].classList.add("is-done"),
         [],
-        "+=0.4"
+        "+=0.3"
       );
 
       loops.set(stepsGrid, stepsTl);
@@ -2109,7 +2086,7 @@ const supportPoints = [
       });
       apiTl.call(clearApi);
       apiNodes.forEach((n) => {
-        apiTl.call(() => n.classList.add("is-active"), [], "+=1.0");
+        apiTl.call(() => n.classList.add("is-active"), [], "+=.7");
       });
 
       loops.set(apiFlow, apiTl);

@@ -1,33 +1,14 @@
-<svg width="73" height="61" viewBox="0 0 73 61" fill="none" xmlns="http://www.w3.org/2000/svg">
-<style>
-/* Shared 11.9s cycle, each icon starting 2s after the previous one:
-   st-3 is third — the dark quarter and its base lines slide from the
-   icon's center into place at 4.0-4.8s. */
-.wing {
-  animation: st3-wing 11.9s cubic-bezier(0.33, 1, 0.68, 1) infinite both;
-}
-@keyframes st3-wing {
-  0%, 33.61% { transform: translate(13.5px, -13px); opacity: 0; }
-  34.45% { opacity: 1; }
-  40.34%, 100% { transform: translate(0, 0); opacity: 1; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .wing { animation: none; }
-}
-</style>
-<path d="M9.70496 25.9C9.70496 25.9 8.71091 -0.879059 43.0951 1.10478C56.3165 1.8676 68.1688 8.51593 70.202 16.6434C74.1688 32.4998 58.635 39.1243 58.635 39.1243" stroke="black" stroke-width="2"/>
-<path d="M70.6688 18.9998C70.6688 18.9998 71.1688 25.9998 71.1688 28.4998C71.1688 34.4998 71.1688 38.9998 71.1688 38.9998" stroke="black" stroke-width="2"/>
-<path d="M59.2938 38.4636V51.4999" stroke="black" stroke-width="2"/>
-<path d="M58.963 39.4553L41.1688 18.9998" stroke="black" stroke-width="2"/>
-<path d="M58.963 50.6959L41.1102 30.5288" stroke="black" stroke-width="2"/>
-<path d="M41.4403 19.4998V31.5207" stroke="black" stroke-width="2"/>
-<path d="M42.1688 19.4998L9.70199 25.9004" stroke="black" stroke-width="2"/>
-<path d="M9.70199 25.239V38.794" stroke="black" stroke-width="2"/>
-<path d="M40.7797 31.1902L9.37191 38.4636" stroke="black" stroke-width="2"/>
-<path d="M59.6239 50.696C59.6239 50.696 65.9747 46.0073 68.1688 43.4998C71.6688 39.4998 71.1688 38.4998 71.1688 38.4998" stroke="black" stroke-width="2"/>
-<g class="wing">
-<path d="M29.2089 27.884L1.76839 34.8268C1.76839 34.8268 10.8264 45.9151 18.6294 48.7124C31.8537 53.4532 44.1688 48.9998 44.1688 48.9998L29.2089 27.884Z" fill="black" stroke="black" stroke-width="2"/>
-<path d="M44.7465 49.0429L44.6687 58.9996M1.10622 34.4961V44.745" stroke="black" stroke-width="2"/>
-<path d="M1.10622 44.4143C1.10622 44.4143 7.05717 53.6955 17.6366 57.308C31.1916 61.9365 45.0771 57.9692 45.0771 57.9692" stroke="black" stroke-width="2"/>
-</g>
+<svg xmlns="http://www.w3.org/2000/svg" width="84" height="64" viewBox="0 0 84 64" fill="none">
+  <path d="M15.5987 26.9003C15.5987 26.9003 14.6046 0.121185 48.9888 2.10502C62.2102 2.86784 74.0625 9.51617 76.0957 17.6436C80.0625 33.5 64.5287 40.1246 64.5287 40.1246" stroke="black" stroke-width="2"/>
+  <path d="M76.5625 20C76.5625 20 77.0625 27 77.0625 29.5C77.0625 35.5 77.0625 40 77.0625 40" stroke="black" stroke-width="2"/>
+  <path d="M65 40L65 52" stroke="black" stroke-width="2"/>
+  <path d="M64.8568 40.4556L47 20.1001" stroke="black" stroke-width="2"/>
+  <path d="M47.334 20.5V32.5209" stroke="black" stroke-width="2"/>
+  <path d="M48 20.3999L15.5957 27.0005" stroke="black" stroke-width="2"/>
+  <path d="M15.5957 26.2393V39.7942" stroke="black" stroke-width="2"/>
+  <path d="M47 32L15.2656 39.4638" stroke="black" stroke-width="2"/>
+  <path d="M77.0625 39.5C77.0625 39.5 77.5625 40.5 74.0625 44.5C71.8684 47.0076 64.5 52 64.5 52L47 31.5" stroke="black" stroke-width="2"/>
+  <path d="M35.1025 28.8843L7.8999 36C7.8999 36 16.72 46.9153 24.523 49.7126C37.7474 54.4534 50.0624 50 50.0624 50L35.1025 28.8843Z" fill="black" stroke="black" stroke-width="2"/>
+  <path d="M50.5624 50.5001L50.4999 60.0001M7.19995 35.4966V46.0001" stroke="black" stroke-width="2"/>
+  <path d="M7 45.4146C7 45.4146 12.9509 54.6958 23.5304 58.3083C37.0854 62.9368 50.9709 58.9695 50.9709 58.9695" stroke="black" stroke-width="2"/>
 </svg>

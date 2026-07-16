@@ -1,1 +1,13 @@
-<svg class="reason-rotate" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none"><g clip-path="url(#clip0_10679_4453)"><path d="M11 12H5V6" stroke="black" stroke-width="2.5" stroke-linejoin="round"></path><path d="M5 11.9998L8.535 8.46484C10.5822 6.41771 13.3539 5.2602 16.249 5.24335C19.1441 5.2265 21.9291 6.35168 24 8.37484" stroke="black" stroke-width="2.5" stroke-linejoin="round"></path><path d="M21 20H27V26" stroke="black" stroke-width="2.5" stroke-linejoin="round"></path><path d="M27 20L23.465 23.535C21.4178 25.5821 18.6461 26.7396 15.751 26.7565C12.8559 26.7733 10.0709 25.6482 8 23.625" stroke="black" stroke-width="2.5" stroke-linejoin="round"></path></g></svg>
+<svg class="reason-rotate" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+    viewBox="0 0 32 32" fill="none">
+    <g clip-path="url(#clip0_10679_4453)">
+        <path d="M11 12H5V6" stroke="black" stroke-width="2.5" stroke-linejoin="round"></path>
+        <path
+            d="M5 11.9998L8.535 8.46484C10.5822 6.41771 13.3539 5.2602 16.249 5.24335C19.1441 5.2265 21.9291 6.35168 24 8.37484"
+            stroke="black" stroke-width="2.5" stroke-linejoin="round"></path>
+        <path d="M21 20H27V26" stroke="black" stroke-width="2.5" stroke-linejoin="round"></path>
+        <path
+            d="M27 20L23.465 23.535C21.4178 25.5821 18.6461 26.7396 15.751 26.7565C12.8559 26.7733 10.0709 25.6482 8 23.625"
+            stroke="black" stroke-width="2.5" stroke-linejoin="round"></path>
+    </g>
+</svg>

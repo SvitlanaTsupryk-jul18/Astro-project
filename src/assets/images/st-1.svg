@@ -1,57 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="84" height="64" viewBox="0 0 84 64" fill="none">
-<style>
-/* Shared 11.9s cycle, each icon starting 2s after the previous one:
-   st-1 is first — the drawing draws itself at 0-1.4s (outlines, then
-   inner details, then the fingers one by one), then rests until restart. */
-.o1, .o2, .f1, .f2, .f3 {
-  stroke-dasharray: 1;
-  animation: 11.9s ease-out infinite both;
-}
-.o1 { animation-name: st1-o1; }
-.o2 { animation-name: st1-o2; }
-.f1 { animation-name: st1-f1; }
-.f2 { animation-name: st1-f2; }
-.f3 { animation-name: st1-f3; }
-.fill { animation: st1-fill 11.9s ease-out infinite both; }
-/* big outlines draw 0-0.7s */
-@keyframes st1-o1 {
-  0% { stroke-dashoffset: 1; }
-  5.88%, 100% { stroke-dashoffset: 0; }
-}
-/* inner details draw 0.2-0.9s */
-@keyframes st1-o2 {
-  0%, 1.68% { stroke-dashoffset: 1; }
-  7.56%, 100% { stroke-dashoffset: 0; }
-}
-/* dark strip fades in 0.5-0.8s */
-@keyframes st1-fill {
-  0%, 4.2% { opacity: 0; }
-  6.72%, 100% { opacity: 1; }
-}
-/* fingers draw one by one 0.7-1.3s */
-@keyframes st1-f1 {
-  0%, 5.88% { stroke-dashoffset: 1; }
-  8.4%, 100% { stroke-dashoffset: 0; }
-}
-@keyframes st1-f2 {
-  0%, 7.14% { stroke-dashoffset: 1; }
-  9.66%, 100% { stroke-dashoffset: 0; }
-}
-@keyframes st1-f3 {
-  0%, 8.4% { stroke-dashoffset: 1; }
-  10.92%, 100% { stroke-dashoffset: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .o1, .o2, .f1, .f2, .f3, .fill { animation: none; stroke-dashoffset: 0; opacity: 1; }
-}
-</style>
-  <path class="o2" pathLength="1" d="M23.1423 25.0607C23.1423 25.0607 38.0164 28.0789 49.146 23.8979" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
-  <path class="o1" pathLength="1" d="M62 25.6L49.6416 5.22852H18.4066C18.4066 5.22852 14.5642 7.34909 12.3493 11.1324" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
-  <path class="fill" d="M38.5 11.5L46.5 5H18.5L12 11L38.5 11.5Z" fill="black"/>
-  <path class="o1" pathLength="1" d="M12.3493 11.1323C4.90304 13.8071 -5.30877 23.0665 12.7959 46.3929C16.21 50.7907 15.1822 55.2608 12.2575 58.8514L30.5213 61.3816C35.1346 57.4537 37.5453 49.8991 33.2562 44.3688C6.5795 9.99967 38.5059 11.1323 38.5059 11.1323H12.3493Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
-  <path class="o1" pathLength="1" d="M38 25.6C39.7683 27.811 42.0853 31.302 53.4045 30.3983C64.7238 29.4946 62.6435 21.2653 62.6435 21.2653C56.5494 13.03 57.0389 5.18024 57.0389 5.18024C57.0389 5.18024 59.4618 2.66807 64.3628 1.96924C64.3628 1.96924 64.3077 10.8432 70.879 16.247C71.6316 16.8675 72.3658 17.5182 73.0327 18.229C76.5937 22.0364 85.4166 33.1032 80.5891 45.0375C76.3612 55.5079 67.5 59.0769 57.0389 57.1077C53.3027 56.4044 50.3125 53.7965 49 51.6923" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
-  <path class="f1" pathLength="1" d="M35 26.0923C35 26.0923 30.2949 32.1454 35.7771 37.4649C36.8845 38.5373 38.2184 39.3686 39.6685 39.9289C44.7652 41.9049 50.3147 41.1699 50.3147 41.1699" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
-  <path class="f2" pathLength="1" d="M36.5174 38.0793C36.3216 40.0071 36.8662 42.3205 39.4421 44.4532C40.6352 45.4351 42.0302 46.1641 43.5231 46.6099C48.7606 48.1762 54.2367 47.0075 54.2367 47.0075" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
-  <path class="f3" pathLength="1" d="M40.4944 45.387C40.8248 46.7364 41.6447 48.1522 43.2722 49.4956C44.4592 50.4836 45.8604 51.2065 47.3472 51.6523C52.5908 53.2247 58.0607 52.056 58.0607 52.056" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
-  <path class="o2" pathLength="1" d="M49.6416 5.22852C49.6416 5.22852 37.9308 8.12622 36.5174 15.4037C35.5201 20.5364 40.1334 25.0547 45.3892 24.374C47.5491 24.0908 49.146 23.8981 49.146 23.8981C51.2726 26.653 51.3734 27.2758 53.5 30.0308" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path d="M23.1423 25.0607C23.1423 25.0607 38.0164 28.0789 49.146 23.8979" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path d="M61.9999 25.6L49.6416 5.22852H18.4066C18.4066 5.22852 14.5641 7.34909 12.3492 11.1324" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path d="M38.5 11.5L46.5 5H18.5L12 11L38.5 11.5Z" fill="black"/>
+  <path d="M12.3492 11.1323C4.90298 13.8071 -5.30883 23.0665 12.7958 46.3929C16.21 50.7907 15.1821 55.2608 12.2575 58.8514L30.5212 61.3816C35.1346 57.4537 37.5452 49.8991 33.2562 44.3688C6.57944 9.99967 38.5058 11.1323 38.5058 11.1323H12.3492Z" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path d="M38 25.6C39.7683 27.811 42.0853 31.302 53.4045 30.3983C64.7238 29.4946 62.6435 21.2653 62.6435 21.2653C56.5494 13.03 57.0389 5.18024 57.0389 5.18024C57.0389 5.18024 59.4618 2.66807 64.3628 1.96924C64.3628 1.96924 64.3077 10.8432 70.879 16.247C71.6316 16.8675 72.3658 17.5182 73.0327 18.229C76.5937 22.0364 85.4166 33.1032 80.5891 45.0375C76.3612 55.5079 67.5 59.0769 57.0389 57.1077C53.3027 56.4044 50.3125 53.7965 49 51.6923" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path d="M35 26.0923C35 26.0923 30.2948 32.1454 35.777 37.4649C36.8845 38.5373 38.2183 39.3686 39.6684 39.9289C44.7652 41.9049 50.3146 41.1699 50.3146 41.1699" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path d="M36.5174 38.0793C36.3216 40.0071 36.8661 42.3205 39.442 44.4532C40.6351 45.4351 42.0301 46.1641 43.5231 46.6099C48.7605 48.1762 54.2366 47.0075 54.2366 47.0075" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path d="M40.4944 45.387C40.8248 46.7364 41.6447 48.1522 43.2722 49.4956C44.4592 50.4836 45.8603 51.2065 47.3471 51.6523C52.5907 53.2247 58.0606 52.056 58.0606 52.056" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
+  <path d="M49.6415 5.22852C49.6415 5.22852 37.9307 8.12622 36.5173 15.4037C35.52 20.5364 40.1333 25.0547 45.3891 24.374C47.549 24.0908 49.1459 23.8981 49.1459 23.8981C51.2725 26.653 51.3733 27.2758 53.4999 30.0308" stroke="black" stroke-width="2" stroke-miterlimit="10"/>
 </svg>
