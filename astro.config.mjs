@@ -10,11 +10,15 @@ export default defineConfig({
 	// the dev toolbar's own modules 504 under astro 6.4.8 and spam the
 	// console — the site itself is unaffected; re-enable after upgrading
 	devToolbar: { enabled: false },
-	// Minifies HTML/CSS/JS and runs SVGO over every SVG in the built dist/
+	// Minifies HTML/JS and runs SVGO over every SVG in the built dist/
 	// output (inlined icons included). Only touches the production build,
 	// never the dev server — keep it last so it compresses what every
 	// other integration has already emitted.
-	integrations: [compress()],
+	// CSS: false — the csso pass doesn't understand native CSS nesting and
+	// silently drops nested rules (broke .feature--dark text color and the
+	// .innerList-link .svg-border hover on the deployed site); Astro/Vite
+	// already minifies CSS on build anyway.
+	integrations: [compress({ CSS: false })],
 	vite: {
 		css: {
 			devSourcemap: true,

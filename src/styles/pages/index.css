@@ -312,7 +312,9 @@ h1 {
 
 .feature--dark {
   background: var(--color-black);
+  h3,p{
   color: var(--color-white);
+  }
 }
 
 .feature[data-card="0"] {
