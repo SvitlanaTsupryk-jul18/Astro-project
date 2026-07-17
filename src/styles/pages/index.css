@@ -312,6 +312,7 @@ h1 {
 
 .feature--dark {
   background: var(--color-black);
+  color: var(--color-white);
 }
 
 .feature[data-card="0"] {

@@ -11,22 +11,30 @@ const canonicalURL = Astro.site
 
 const defaultOgImage = '/static/images/mainPage/og.png';
 
-const jsonLd = {
-    "@context": "http://schema.org",
+// Organization markup belongs on the homepage only (SEO spec)
+const basePath = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const isHome = Astro.url.pathname.replace(/\/+$/, '') === basePath;
+
+const logoURL = Astro.site
+    ? new URL(`${basePath}/static/images/logo.svg`, Astro.site)
+    : null;
+
+const organizationLd = {
+    "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "NetHunt",
-    "url": "https://nethunt.com/",
-    "logo": "/static/images/logos/logo-text.svg",
-    "description": "NetHunt is a simple and customizable customer relationship management system (CRM) for Gmail and Google Workspace. NetHunt was designed to help small and growing businesses manage the whole range of their activities without leaving the inbox, completed with email marketing and project management features.",
-    "foundingDate": "2015",
-    "founder": { "@type": "Person", "name": "Andrei Petrik" },
-    "contactPoint": { "@type": "ContactPoint", "contactType": "Customer support", "email": "support@nethunt.com" },
+    "name": "Чекбокс",
+    "url": "https://checkbox.ua/",
+    "logo": logoURL ? String(logoURL) : undefined,
+    "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "0800 330 676",
+        "contactType": "customer service",
+        "areaServed": "UA"
+    },
     "sameAs": [
-        "https://www.facebook.com/nethuntcrm/",
-        "https://twitter.com/nethuntcrm",
-        "https://www.linkedin.com/company/nethunt-crm",
-        "https://plus.google.com/+nethuntcrm",
-        "https://www.youtube.com/nethuntcrm"
+        "https://www.facebook.com/CheckboxUkraine",
+        "https://www.instagram.com/checkbox.ua/",
+        "https://www.youtube.com/channel/UCTEkKa-Z2DreSefLoMl97JA"
     ]
 };
 ---
@@ -46,7 +54,7 @@ const jsonLd = {
 <meta name="theme-color" content="#3f18a0">
 <meta name="apple-mobile-web-app-status-bar-style" content="#3f18a0">
 {isNoindex && <meta name="robots" content="noindex, nofollow">}
-<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+{isHome && <script type="application/ld+json" is:inline set:html={JSON.stringify(organizationLd)} />}
 <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.ico`.replace("//", "/")} type="image/x-icon"/>
 <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}/apple-touch-icon.png`.replace("//", "/")}/>
 {canonicalURL && <link rel="canonical" href={String(canonicalURL)}/>}
