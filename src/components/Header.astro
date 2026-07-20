@@ -204,6 +204,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
               d="M31.9404 31.9404H0V0H31.9404V31.9404ZM5.32422 5.32324V26.6172H26.6172V5.32324H5.32422Z"
             ></path>
             <path
+              class="tr"
               fill="black"
               d="M9.31641 9.31598H22.625V22.6245L9.31641 9.31598Z"></path>
           </g>
@@ -295,90 +296,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
         <a href={`${base}pricing`}>Ціни</a>
         <a href={`${base}integrations`}>Інтеграції</a>
-
-        <div class="header-extra">
-          <button class="list" aria-expanded="false">
-            База знань
-            <svg
-              class="chevron"
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                d="M9.99857 10.9761L14.1234 6.85138L15.3019 8.02989L9.99857 13.3332L4.69531 8.02989L5.87382 6.85138L9.99857 10.9761Z"
-                fill="black"></path>
-            </svg>
-          </button>
-          <div class="innerList">
-            <div class="innerList-grid innerList-grid--knowledge">
-              <div class="innerList-column">
-                <button class="subtitle innerList-label" aria-expanded="false">
-                  Матеріали
-                  <svg
-                    class="chevron"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      d="M9.99857 10.9761L14.1234 6.85138L15.3019 8.02989L9.99857 13.3332L4.69531 8.02989L5.87382 6.85138L9.99857 10.9761Z"
-                      fill="black"></path>
-                  </svg>
-                </button>
-                <ul class="innerList-items">
-                  {
-                    materialsItems.map((item) => (
-                      <li>
-                        <a href={item.href} class="innerList-link">
-                          <DottedBorder gap={4} />
-                          {item.title}
-                          <span>{item.description}</span>
-                        </a>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </div>
-
-              <div class="innerList-column posts">
-                <button class="subtitle innerList-label" aria-expanded="false">
-                  Трендові статті з блогу
-                  <svg
-                    class="chevron"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      d="M9.99857 10.9761L14.1234 6.85138L15.3019 8.02989L9.99857 13.3332L4.69531 8.02989L5.87382 6.85138L9.99857 10.9761Z"
-                      fill="black"></path>
-                  </svg>
-                </button>
-                <ul class="innerList-items">
-                  {
-                    blogPosts.map((post) => (
-                      <li>
-                        <a href={post.href} class="innerList-link">
-                          <DottedBorder gap={4} />
-                          {post.title}
-                          <span>{post.date}</span>
-                        </a>
-                      </li>
-                    ))
-                  }
-                </ul>
-                <a href="#" class="innerList-more">Переглянути всі →</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <a href={`${base}integrations`}>Блог</a>
         <a href={`${base}partners`}>Партнерка</a>
       </div>
 
@@ -428,14 +346,14 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
                 href="https://t.me/checkbox_ua"
                 target="_blank"
                 rel="noopener"
-                class="header-support-contact"
+                class="btn btn--outline"
               >
                 <IconTelegram />
                 Зверніться у Telegram
               </a>
               <a
                 href="viber://chat?number=%2B380800330676"
-                class="header-support-contact"
+                class="btn btn--outline"
               >
                 <IconViber />
                 Зверніться у Viber
@@ -525,8 +443,14 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .logo:hover .logo-icon {
-    transform: scale(1.07);
+  .tr {
+  transform-box: fill-box;
+  transform-origin: top right;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+  .logo:hover .tr {
+    transform: scale(1.1);
   }
 
   .logo-word {
@@ -636,6 +560,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     cursor: pointer;
     text-align: left;
     white-space: nowrap;
+    outline: none;
   }
 
   .chevron {
@@ -856,6 +781,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     letter-spacing: 0.05em;
     text-decoration: none;
     white-space: nowrap;
+    justify-content: center;
   }
 
   .header-support-phone span {
@@ -977,16 +903,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       display: inline-block;
     }
 
-    /* .header-nav > a:hover,
-    .list:hover {
-      color: #555;
-    } */
-
     .header-extra:hover .chevron {
       transform: rotate(180deg);
     }
 
-    /* innerList: white rounded dropdown card on hover */
     .innerList {
       display: block;
       position: absolute;
@@ -1046,16 +966,23 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 
     .nav-actions {
       flex: 0 0 auto;
+      align-items: center;
       flex-wrap: nowrap;
       margin: 0;
       padding-top: 0;
       background: none;
+      gap: 8px;
     }
 
     .nav-actions .btn {
       flex: none;
       width: auto;
-      padding: 10px 18px;
+      padding: 8px 18px;
+      height: fit-content;
+    }
+
+    .nav-actions .btn--solid {
+      padding-block: 10px;
     }
 
     .header-support {
@@ -1063,15 +990,16 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       order: 0;
     }
 
-    .header-support-btn {
+    .header-support .header-support-btn {
       display: flex;
       width: auto;
+      padding: 28px 24px;
     }
 
     .header-support-panel {
       display: none;
       position: absolute;
-      top: calc(100% + 20px);
+      top: calc(100% + 2px);
       right: 0;
       width: 320px;
       gap: 24px;
@@ -1082,8 +1010,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       border-radius: var(--radius-card);
       box-shadow: 0 24px 64px rgba(0, 0, 0, 0.16);
     }
-
-    /* Invisible bridge so hover survives the gap between button and card */
+    /* 
     .header-support-panel::before {
       content: "";
       position: absolute;
@@ -1091,14 +1018,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       left: 0;
       right: 0;
       height: 14px;
-    }
+    } */
 
     .header-support:hover .header-support-panel,
     .header-support:focus-within .header-support-panel {
       display: flex;
     }
 
-    /* Smaller phone number inside the narrow dropdown card */
     .header-support-phone {
       font-size: 22px;
     }

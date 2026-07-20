@@ -54,14 +54,22 @@ h1 {
 }
 
 .hero-image {
-
+  position: relative;
   margin: 24px auto 0;
 }
 
 .hero-image img {
-
+  position: relative;
   display: block;
   object-fit: cover;
+}
+
+.hero-pattern {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
 }
 
 @media (min-width: 1024px) {
@@ -98,6 +106,88 @@ h1 {
     width: auto;
     max-width: none;
   }
+
+  .hero-pattern {
+    inset: auto;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: auto;
+    max-width: none;
+    aspect-ratio: 952 / 575;
+  }
+
+  /* desktop only: like .banner-pattern on the kved-nace page — translucent
+     triangles pulse up to solid white; solid-white ones can't get any
+     whiter, so they pulse down to translucent instead */
+  .hero-pattern path {
+    animation: hero-triangle-fill 1200ms ease-in-out alternate infinite;
+  }
+
+  .hero-pattern path[fill="white"]:not([fill-opacity]) {
+    animation-name: hero-triangle-dim;
+  }
+  /* Знаходимо тінь і задаємо їй окрему анімацію згасання */
+.hero-pattern .hero-shadow {
+  animation: hero-shadow-fade 1200ms ease-in-out alternate infinite;
+  animation-delay: 6650ms; /* Затримка синхронізована з її чергою */
+}
+
+/* Створюємо нову анімацію спеціально для чорної тіні */
+@keyframes hero-shadow-fade {
+  to {
+    fill-opacity: 0; /* Тінь плавно стає повністю прозорою */
+  }
+}
+
+/* 
+  .hero-pattern .hero-shadow {
+    animation: none;
+  } */
+  .hero-pattern > g > path:nth-of-type(1) { animation-delay: 450ms; }
+  .hero-pattern > g > path:nth-of-type(2) { animation-delay: 900ms; }
+  .hero-pattern > g > path:nth-of-type(3) { animation-delay: 1350ms; }
+  .hero-pattern > g > path:nth-of-type(4) { animation-delay: 1800ms; }
+  .hero-pattern > g > path:nth-of-type(5) { animation-delay: 2250ms; }
+  .hero-pattern > g > path:nth-of-type(6) { animation-delay: 2700ms; }
+  .hero-pattern > g > path:nth-of-type(7) { animation-delay: 3150ms; }
+  .hero-pattern > g > path:nth-of-type(8) { animation-delay: 3600ms; }
+  .hero-pattern > g > path:nth-of-type(9) { animation-delay: 4050ms; }
+  .hero-pattern > g > path:nth-of-type(10) { animation-delay: 4500ms; }
+  .hero-pattern > g > path:nth-of-type(11) { animation-delay: 4950ms; }
+  .hero-pattern > g > path:nth-of-type(12) { animation-delay: 5400ms; }
+  .hero-pattern > g > path:nth-of-type(13) { animation-delay: 5850ms; }
+  .hero-pattern > g > path:nth-of-type(14) { animation-delay: 6300ms; }
+  .hero-pattern > g > path:nth-of-type(15) { animation-delay: 6750ms; }
+  .hero-pattern > g > path:nth-of-type(16) { animation-delay: 7200ms; }
+  .hero-pattern > g > path:nth-of-type(17) { animation-delay: 7650ms; }
+  .hero-pattern > g > path:nth-of-type(18) { animation-delay: 8100ms; }
+  .hero-pattern > g > path:nth-of-type(19) { animation-delay: 8550ms; }
+  .hero-pattern > g > path:nth-of-type(20) { animation-delay: 9000ms; }
+  .hero-pattern > g > path:nth-of-type(21) { animation-delay: 9450ms; }
+  .hero-pattern > g > path:nth-of-type(22) { animation-delay: 9900ms; }
+  .hero-pattern > g > path:nth-of-type(23) { animation-delay: 10350ms; }
+  .hero-pattern > g > path:nth-of-type(24) { animation-delay: 10800ms; }
+  .hero-pattern > g > path:nth-of-type(25) { animation-delay: 11250ms; }  
+}
+
+@keyframes hero-triangle-fill {
+  to {
+    fill: #fff;
+    fill-opacity: 1;
+  }
+}
+
+@keyframes hero-triangle-dim {
+  to {
+    fill-opacity: 0.24;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pattern path {
+    animation: none;
+  }
 }
 
 /* Choice */
@@ -108,9 +198,7 @@ h1 {
 
 .choice-wrapper {
   position: relative;
-  width: 100% !important;
-  overflow: hidden !important;
-  display: block !important;
+  overflow: hidden;
   margin-top: 32px;
 }
 
@@ -136,14 +224,12 @@ h1 {
 }
 
 .choice-content {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  white-space: nowrap !important;
+  display: flex;
+  white-space: nowrap;
   animation: ticker-scroll 30s linear infinite;
   width: max-content;
   will-change: transform;
-  line-height: 1 !important;
+  line-height: 1;
 }
 
 .choice-item {
@@ -209,8 +295,6 @@ h1 {
 }
 
 .statistic-icon {
-  width: 48px;
-  height: 48px;
   display: block;
   margin-bottom: 20px;
 }
@@ -261,7 +345,7 @@ h1 {
   gap: 16px;
 }
 
-@supports (animation-timeline: view()) {
+/* @supports (animation-timeline: view()) {
   .features-right {
     timeline-scope: --feature-1, --feature-2;
   }
@@ -274,6 +358,7 @@ h1 {
     view-timeline-name: --feature-2;
   }
 
+  
   .feature[data-card="0"],
   .feature[data-card="1"] {
     animation: feature-dim linear both;
@@ -287,11 +372,54 @@ h1 {
   .feature[data-card="1"] {
     animation-timeline: --feature-2;
   }
+} */
+
+
+@supports (animation-timeline: view()) {
+  .features-right {
+    /* Створюємо два таймлайни для відстеження руху 2-ї та 3-ї карток */
+    timeline-scope: --feature-1, --feature-2;
+  }
+
+  /* Друга картка створює перший таймлайн */
+  .feature[data-card="1"] {
+    view-timeline-name: --feature-1;
+  }
+
+  /* Третя картка створює другий таймлайн */
+  .feature[data-card="2"] {
+    view-timeline-name: --feature-2;
+  }
+
+  .feature[data-card="0"] {
+    animation: 
+      feature-fade-out linear forwards,
+      feature-stay-hidden linear forwards;
+    animation-timeline: --feature-1, --feature-2;
+    animation-range: 
+      cover calc(100vh - 550px) cover calc(100vh - 160px),
+      cover calc(100vh - 550px) cover calc(100vh - 160px);
+  }
+
+  .feature[data-card="1"] {
+    animation: feature-fade-out linear forwards;
+    animation-timeline: --feature-2;
+    animation-range: cover calc(100vh - 550px) cover calc(100vh - 160px);
+  }
 }
 
-@keyframes feature-dim {
+/* --- КЛЮЧОВІ КАДРИ (АНИМАЦІЇ) --- */
+
+/* Плавне зникнення елемента повністю в 0 */
+@keyframes feature-fade-out {
   to {
-    filter: blur(3px);
+    filter: opacity(0.3);
+  }
+}
+
+@keyframes feature-stay-hidden {
+  from, to {
+    filter: opacity(0);
   }
 }
 
@@ -312,8 +440,9 @@ h1 {
 
 .feature--dark {
   background: var(--color-black);
-  h3,p{
-  color: var(--color-white);
+  h3,
+  p {
+    color: var(--color-white);
   }
 }
 
@@ -381,6 +510,10 @@ h1 {
     position: sticky;
     top: 160px;
   }
+
+  .features-text {
+font-size: 20px;
+  }
 }
 
 /* Banner */
@@ -399,11 +532,7 @@ h1 {
   position: absolute;
   inset: var(--line-inset);
   pointer-events: none;
-  background-repeat:
-    repeat-x,
-    repeat-x,
-     repeat-y,
-    repeat-y;
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
   background-size:
     var(--gap) 1px,
     var(--gap) 1px,
@@ -462,11 +591,10 @@ h1 {
 }
 
 .reasons-grid {
-  border-top: 1px solid #e4e2e4;
-  border-bottom: 1px solid #e4e2e4;
+  border-top: 1px solid var(--color-grey-2);
+  border-bottom: 1px solid var(--color-grey-2);
   display: grid;
   grid-template-columns: 1fr;
-
 }
 
 .reason {
@@ -475,14 +603,16 @@ h1 {
   min-height: 425px;
   justify-content: space-between;
   gap: 24px;
-  border-bottom: 1px solid #e4e2e4;
+  border-bottom: 1px solid var(--color-grey-2);
   padding: 24px;
 }
 
 .reason-text {
   font-size: 20px;
   font-weight: 500;
-  span {
+
+  strong{
+    font-weight: 500;
     color: var(--color-grey);
   }
 }
@@ -646,8 +776,20 @@ h1 {
 }
 
 @media (min-width: 1024px) {
+  .reason:not(:has(.reason-mini)){
+    padding: 39px;
+  }
+
   .reason-mini p {
     font-size: 18px;
+  }
+
+  .reason-text {
+font-size: 22px;
+  }
+
+  .reason-4 .reason-text{
+    max-width: 450px;
   }
 }
 
@@ -843,7 +985,7 @@ h1 {
 }
 
 .reason-timeline li.is-done .reason-timeline-card {
-  border-color: #e4e2e4;
+  border-color: var(--color-grey-2);
 }
 
 .reason-timeline li.is-done .reason-timeline-card,
@@ -965,6 +1107,10 @@ h1 {
 
 .reason-dark .reason-text {
   color: var(--color-white);
+
+  strong{
+    color: var(--color-grey-light);
+  }
 }
 
 .reason-dark svg {
@@ -980,7 +1126,7 @@ h1 {
 
   .reasons,
   .reasons-head {
-    border-bottom: 1px solid #e4e2e4;
+    border-bottom: 1px solid var(--color-grey-2);
   }
 
   .reasons-grid {
@@ -989,9 +1135,9 @@ h1 {
     margin: 0 auto;
     border-top: none;
     border-bottom: 0;
-    border-left: 1px solid #e4e2e4;
-    border-right: 1px solid #e4e2e4;
-    background: #e4e2e4;
+    border-left: 1px solid var(--color-grey-2);
+    border-right: 1px solid var(--color-grey-2);
+    background: var(--color-grey-2);
     gap: 1px;
   }
 
@@ -1104,7 +1250,6 @@ h1 {
   strong {
     font-weight: 500;
   }
-
 }
 
 .compare-list {
@@ -1141,6 +1286,10 @@ h1 {
   align-items: center;
   gap: 8px;
   white-space: nowrap;
+
+  svg{
+    flex-shrink: 0;
+  }
 }
 
 .compare-mark {
@@ -1178,7 +1327,7 @@ h1 {
   }
 
   .compare-label {
-    flex: 1.1;
+    flex: 0.9;
     align-items: center;
     padding: 28px 24px 28px 0;
   }
@@ -1270,6 +1419,7 @@ h1 {
   }
 
   .compare-cell--cb {
+    flex:1.1;
     border-radius: 0;
     padding: 28px 24px;
   }
@@ -1294,6 +1444,7 @@ h1 {
   .compare-list {
     font-size: 16px;
   }
+
   .compare-value {
     font-size: 16px;
   }
@@ -1341,7 +1492,9 @@ h1 {
   padding: 0 4px;
   border-radius: 2px;
   background: rgba(0, 0, 0, 0.08);
-  transition: all 0.4s;
+  transition:
+    background-color 0.4s,
+    color 0.4s;
 }
 
 .step-card.is-active .step-badge,
@@ -1366,7 +1519,7 @@ h1 {
     transparent 1px 8px
   );
   clip-path: inset(0 100% 0 0);
-
+  margin-right: -32px;
 }
 
 .step-card.is-active .step-head::after,
@@ -1396,7 +1549,7 @@ h1 {
   text-underline-offset: 3px;
 
   svg {
-    transition: all 0.3s;
+    transition: transform 0.3s;
   }
 }
 
@@ -1645,21 +1798,7 @@ h1 {
 /* ── Category slider  ───────*/
 
 .category {
-  background-color: var(--color-black);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='234' height='234' viewBox='0 0 234 234' fill='none'%3E%3Cpath d='M116.6515 105.5H117.3485V128.5H116.6515V105.5Z' fill='white' fill-opacity='0.16'/%3E%3Cpath d='M105.5 116.6515H128.5V117.3485H105.5V116.6515Z' fill='white' fill-opacity='0.16'/%3E%3C/svg%3E");
   padding: 120px 0;
-}
-
-.category .subtitle {
-  color: var(--color-white);
-}
-
-.category .subtitle::before {
-  filter: invert(1);
-}
-
-.category h2 {
-  color: var(--color-white);
 }
 
 .category-nav {
@@ -1795,7 +1934,6 @@ h1 {
   background: linear-gradient(0deg, rgb(0 0 0 / 0.6), transparent);
   color: var(--color-white);
   font-family: var(--font-mono);
-  font-weight: 600;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   li {
@@ -1818,7 +1956,6 @@ h1 {
 
   .category-slider {
     display: flex;
-    flex-direction: column;
     flex-direction: row;
     align-items: stretch;
     gap: 24px;
@@ -1843,7 +1980,6 @@ h1 {
   }
 
   .category-panel {
-
     width: 50%;
     min-width: 0;
     height: auto;
@@ -1867,8 +2003,6 @@ h1 {
 /* ── Slider testimonials ── */
 
 .testimonials {
-  background-color: var(--color-black);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='234' height='234' viewBox='0 0 234 234' fill='none'%3E%3Cpath d='M116.6515 105.5H117.3485V128.5H116.6515V105.5Z' fill='white' fill-opacity='0.16'/%3E%3Cpath d='M105.5 116.6515H128.5V117.3485H105.5V116.6515Z' fill='white' fill-opacity='0.16'/%3E%3C/svg%3E");
   overflow: hidden;
 }
 
@@ -1880,7 +2014,6 @@ h1 {
 }
 
 .testimonials h2 {
-  color: var(--color-white);
   font-size: clamp(32px, 4vw, 44px);
   max-width: 550px;
 
@@ -2065,9 +2198,7 @@ h1 {
 /* ── API section ── */
 
 .api {
-  background-color: var(--color-black);
   color: var(--color-white);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='234' height='234' viewBox='0 0 234 234' fill='none'%3E%3Cpath d='M116.6515 105.5H117.3485V128.5H116.6515V105.5Z' fill='white' fill-opacity='0.16'/%3E%3Cpath d='M105.5 116.6515H128.5V117.3485H105.5V116.6515Z' fill='white' fill-opacity='0.16'/%3E%3C/svg%3E");
 }
 
 .api-inner {
@@ -2075,18 +2206,6 @@ h1 {
   flex-direction: column;
   align-items: center;
   text-align: center;
-}
-
-.api .subtitle {
-  color: var(--color-white);
-}
-
-.api .subtitle::before {
-  filter: invert(1);
-}
-
-.api h2 {
-  color: var(--color-white);
 }
 
 .api-text {
@@ -2153,7 +2272,6 @@ h1 {
 }
 
 .api-flow > .is-active::before {
-
   background-size:
     1px 100%,
     1px 5px;
@@ -2431,7 +2549,7 @@ h1 {
 }
 
 @media (min-width: 1024px) {
-  .api h2{
+  .api h2 {
     padding-bottom: 40px;
   }
 
@@ -2501,7 +2619,7 @@ h1 {
   font-weight: 600;
   line-height: 1;
   text-decoration: none;
-  transition: border-color 0.3s;
+letter-spacing: -4%;  
 }
 
 .support-btn:hover {
@@ -2529,6 +2647,8 @@ h1 {
 }
 
 .support-list svg {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   margin-top: 3px;
 }
@@ -2608,6 +2728,7 @@ h1 {
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
+  line-height: 1;
   letter-spacing: -0.36px;
   text-transform: uppercase;
   background: rgb(var(--color-accent-rgb) / 0.16);
@@ -2894,6 +3015,7 @@ h1 {
 .faq-content ul {
   padding-left: 22px;
   list-style: disc;
+  margin-bottom: 12px;
 }
 
 .faq-content li + li {
@@ -2937,6 +3059,5 @@ h1 {
     position: absolute;
     bottom: 0;
     right: 32px;
-
   }
 }

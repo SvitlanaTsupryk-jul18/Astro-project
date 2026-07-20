@@ -1,9 +1,9 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import DottedBorder from "@components/DottedBorder.astro";
-import { Image } from "astro:assets";
+import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import girlImage from "@assets/images/girl@2x.png";
+import girlImage from "@assets/images/girl1@2x.png";
 import ArrowRightWhite from "@assets/icons/arrow-right-white.svg";
 import ArrowRight from "@assets/icons/arrow-right.svg";
 import IconApi from "@assets/icons/reason-api.svg";
@@ -15,6 +15,7 @@ import IconPlayDemo from "@assets/icons/play-demo.svg";
 import IconReliable from "@assets/icons/reason-reliable.svg";
 import IconTimelineDot from "@assets/icons/timeline-dot.svg";
 import IconOk from "@assets/icons/ok-icon.svg";
+import IconHwTriangle from "@assets/icons/hw-triangle.svg";
 import IconNo from "@assets/icons/no-icon.svg";
 import LogoSquare from "@assets/icons/logo-square.svg";
 import IconUpdate from "@assets/icons/reason-update.svg";
@@ -41,6 +42,7 @@ import IconCategoryMall from "@assets/icons/category-mall.svg";
 import IconCategoryCourier from "@assets/icons/category-courier.svg";
 import Quotes from "@assets/icons/quotes.svg";
 import FaqBoy from "@assets/images/boy.svg";
+import NoteCloud from "@assets/images/note-cloud.svg";
 import FaqCup from "@assets/images/cup.svg";
 import blog1Image from "@assets/images/blog-1.png";
 import blog2Image from "@assets/images/blog-2.png";
@@ -144,11 +146,11 @@ const companyLogos = Object.entries(companyLogoModules)
   .map(([, src], i) => ({ src, alt: companiesNames[i] ?? "" }));
 
 const courierStops = [
-  { address: "Шевченка, 12", time: "10:24", done: true },
-  { address: "Личаківська, 48", time: "11:05", done: false },
-  { address: "Стрийська, 88", time: "12:10", done: false },
-  { address: "Зелена, 24", time: "13:30", done: false },
-  { address: "Тичини, 12", time: "14:07", done: false },
+  { address: "Шевченка, 12", time: "10:24" },
+  { address: "Личаківська, 48", time: "11:05" },
+  { address: "Стрийська, 88", time: "12:10" },
+  { address: "Зелена, 24", time: "13:30" },
+  { address: "Тичини, 12", time: "14:07" },
 ];
 
 const postShipments = [
@@ -156,7 +158,7 @@ const postShipments = [
     ttn: "TTN 720 4198 3221",
     carrier: "Нова пошта",
     amount: "1 240 ₴",
-    status: "Доставлено",
+    status: "Фіскалізовано",
   },
   {
     ttn: "TTN 110 5521 2144",
@@ -384,28 +386,44 @@ const categoryContents = [
   {
     image: $image("/category-2.png"),
     quote:
-      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
-    author: "Наталія",
-    role: "бухгалтер, MD Fashion",
-    logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
+      "2 Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+    author: "Н2аталія",
+    role: "2бухгалтер, MD Fashion",
+    logos: ["2MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
   },
   {
     image: $image("/category-3.png"),
     quote:
-      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
-    author: "Наталія",
-    role: "бухгалтер, MD Fashion",
-    logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
+      "3 Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+    author: "3Наталія",
+    role: "3бухгалтер, MD Fashion",
+    logos: ["3MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
   },
   {
     image: $image("/category-4.png"),
     quote:
-      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
-    author: "Наталія",
-    role: "бухгалтер, MD Fashion",
-    logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
+      "4 Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+    author: "4Наталія",
+    role: "4бухгалтер, MD Fashion",
+    logos: ["4MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
   },
 ];
+
+// The category panel swaps its <img> from data-* attributes via JS, which
+// bypasses <Image> — so pre-optimize the panel photos with getImage() here
+// and put the optimized URLs (webp + srcset) into those attributes instead.
+const categoryPanelSizes = "(min-width: 1024px) 50vw, 100vw";
+const optimizedCategoryContents = await Promise.all(
+  categoryContents.map(async ({ image, ...rest }) => ({
+    ...rest,
+    image: await getImage({
+      src: image,
+      format: "webp",
+      widths: [700, 1400],
+      sizes: categoryPanelSizes,
+    }),
+  }))
+);
 
 const categories = [
   { icon: IconCategoryRetail, label: "Класичний рітейл" },
@@ -424,7 +442,7 @@ const categories = [
   { icon: IconCategoryCourier, label: "Кур'єрам і водіям на платформах" },
 ].map((category, i) => ({
   ...category,
-  content: categoryContents[i % categoryContents.length],
+  content: optimizedCategoryContents[i % optimizedCategoryContents.length],
 }));
 
 const activeCategoryIndex = 3; // "Інтернет-магазинам" — matches the design mock
@@ -555,7 +573,7 @@ const supportPoints = [
     <div class="container">
       <div class="hero-content">
         <p class="hero-stat">
-          Чекбокс видав <b>2 582 509 485</b> чеків
+          Чекбокс видав <b data-receipt-counter>2 582 509 485</b> чеків
         </p>
         <h1>Впевненість<br />у кожному чеку</h1>
         <p class="hero-desc">
@@ -576,11 +594,59 @@ const supportPoints = [
         </div>
       </div>
       <div class="hero-image">
-        <!-- <div class="hero-pattern" aria-hidden="true"></div> -->
+        <svg
+          class="hero-pattern"
+          width="952"
+          height="575"
+          viewBox="0 0 952 575"
+          fill="none"
+          aria-hidden="true"
+        >
+          <g clip-path="url(#hero-pattern-clip)">
+            <path d="M692.475 136.956H583.754L692.475 245.866V136.956Z" fill="white"></path>
+            <rect x="117" y="137" width="466" height="438" fill="white"></rect>
+            <rect x="117" y="137" width="466" height="438" fill="#9E278A" fill-opacity="0.16"></rect>
+            <path d="M583.752 136.956H475.031L583.752 245.866V136.956Z" fill="white"></path>
+            <path d="M475.03 245.866H366.309L475.03 354.776V245.866Z" fill="white" fill-opacity="0.64"></path>
+            <path d="M473.721 466H365L473.721 574.91V466Z" fill="white" fill-opacity="0.64"></path>
+            <path d="M475.03 136.956H366.309L475.03 245.866V136.956Z" fill="white" fill-opacity="0.64"></path>
+            <path d="M368.721 137H260L368.721 245.91V137Z" fill="white" fill-opacity="0.32"></path>
+            <path d="M366.721 246H258L366.721 354.91V246Z" fill="white" fill-opacity="0.32"></path>
+            <path d="M252.721 246H144L252.721 354.91V246Z" fill="white" fill-opacity="0.24"></path>
+            <path d="M583.752 245.866H475.031L583.752 354.776V245.866Z" fill="white"></path>
+            <path d="M692.475 245.866H583.754L692.475 354.776V245.866Z" fill="white"></path>
+            <path d="M692.475 354.775H583.754L692.475 463.685V354.775Z" fill="white"></path>
+            <path d="M585 355H475L585 464V355Z" fill="white"></path>
+            <path d="M476 356H366L476 465V356Z" fill="white" fill-opacity="0.48"></path>
+            <g filter="url(#hero-pattern-blur)">
+              <path class="hero-shadow" d="M192 437H101L192 528V437Z" fill="black" fill-opacity="0.24"></path>
+            </g>
+            <path d="M170.721 411H62L170.721 519.91V411Z" fill="white"></path>
+            <path d="M695 464H585L695 573V464Z" fill="white"></path>
+            <path d="M802.475 136.956H693.754L802.475 245.866V136.956Z" fill="white"></path>
+            <path d="M802.475 245.866H693.754L802.475 354.776V245.866Z" fill="white"></path>
+            <path d="M802.475 354.775H693.754L802.475 463.685V354.775Z" fill="white"></path>
+            <path d="M803 464H693L803 573V464Z" fill="white"></path>
+            <path d="M912.475 245.866H803.754L912.475 354.776V245.866Z" fill="white"></path>
+            <path d="M912.475 354.775H803.754L912.475 463.685V354.775Z" fill="white"></path>
+            <path d="M1022.47 245.866H913.754L1022.47 354.776V245.866Z" fill="white"></path>
+            <path d="M585 464H475L585 573V464Z" fill="white"></path>
+          </g>
+          <defs>
+            <filter id="hero-pattern-blur" x="73" y="409" width="147" height="147" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
+              <feGaussianBlur stdDeviation="14" result="effect1_foregroundBlur"></feGaussianBlur>
+            </filter>
+            <clipPath id="hero-pattern-clip">
+              <rect width="952" height="575" fill="white"></rect>
+            </clipPath>
+          </defs>
+        </svg>
         <Image
           src={girlImage}
-          width={952}
-          height={575}
+          width={545}
+          height={562}
           widths={[400, 800, 1200, 1904]}
           sizes="(min-width: 1024px) min(50vw, 700px), calc(100vw - 48px)"
           alt="Клієнтка Checkbox у футболці з логотипом компанії"
@@ -689,7 +755,7 @@ const supportPoints = [
     <div class="reasons-grid">
       <div class="reason">
         <p class="reason-text">
-          <span>Масштабуємося разом із вашим бізнесом</span> — легко працювати як
+          <strong>Масштабуємося разом із вашим бізнесом</strong> — легко працювати як
           з 1 касою, так і з 10 000 кас.
         </p>
         <div class="reason-wrapper" aria-hidden="true">
@@ -724,8 +790,8 @@ const supportPoints = [
       <!-- Row 1 · Col 2: offline mode -->
       <div class="reason">
         <p class="reason-text">
-          Каса працює навіть без світла чи інтернету. <span
-            >Маємо офлайн-режим із синхронізацією при відновленні зв'язку.</span
+          Каса працює навіть без світла чи інтернету. <strong
+            >Маємо офлайн-режим із синхронізацією при відновленні зв'язку.</strong
           >
         </p>
         <div class="reason-offline">
@@ -788,8 +854,8 @@ const supportPoints = [
       <!-- Row 2 · Col 1-2: integrations -->
       <div class="reason reason-4">
         <p class="reason-text">
-          <strong>200+ готових інтеграцій</strong> з обліковими системами, терміналами
-          та іншим POS-обладнанням.
+          200+ готових інтеграцій<strong> з обліковими системами, терміналами
+          та іншим POS-обладнанням.</strong>
         </p>
         <ul class="reason-companies">
           {
@@ -805,9 +871,9 @@ const supportPoints = [
       <!-- Row 2 · Col 3: courier timeline mode -->
       <div class="reason">
         <p class="reason-text">
-          Режим кур'єра.<span>
+          Режим кур'єра.<strong>
             Ваші кур'єри зможуть бачити тільки замовлення згідно свого
-            маршрутного листа та видавати чеки в момент їх доставки.</span
+            маршрутного листа та видавати чеки в момент їх доставки.</strong
           >
         </p>
         <ul class="reason-timeline" aria-hidden="true">
@@ -859,8 +925,8 @@ const supportPoints = [
       <!-- Row 3 · Col 2: post payments -->
       <div class="reason">
         <p class="reason-text">
-          <strong>Автоматично фіскалізуємо</strong> проекти чеків після фактичної
-          доставки товару за накладеним платежем. Нова Пошта, УкрПошта, Meest Пошта.
+          Автоматично фіскалізуємо<strong> проекти чеків після фактичної
+          доставки товару за накладеним платежем.</strong> Нова Пошта, УкрПошта, Meest Пошта.
         </p>
         <div class="reason-post">
           <div class="reason-post-tabs">
@@ -901,9 +967,9 @@ const supportPoints = [
       <div class="reason">
         <div class="reason-dark">
           <p class="reason-text">
-            <strong>Служба турботи відповідає за декілька хвилин.</strong> 99,7% звернень
+            Служба турботи відповідає за декілька хвилин.<strong> 99,7% звернень
             до служби турботи отримують позитивний відгук від клієнтів. Персональний
-            менеджер, який завжди на зв'язку.
+            менеджер, який завжди на зв'язку.</strong>
           </p>
           <SupportIllustration />
         </div>
@@ -925,17 +991,7 @@ const supportPoints = [
           <div class="compare-cells">
             <div class="compare-cell">
               <span class="compare-cell-head">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  
-                  viewBox="0 0 16 16"
-                  fill="none"
-                >
-                  <path
-                    d="M7.91402 12.1379L14.1891 2.375L1.79297 2.375L7.91402 12.1379Z"
-                    fill="black"></path>
-                </svg>
+                <IconHwTriangle />
                 Апаратні касові апарати
               </span>
             </div>
@@ -962,18 +1018,7 @@ const supportPoints = [
                 <DottedBorder />
                 <div class="compare-cell">
                   <span class="compare-cell-head">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      
-                      viewBox="0 0 16 16"
-                      fill="none"
-                    >
-                      <path
-                        d="M7.91402 12.1379L14.1891 2.375L1.79297 2.375L7.91402 12.1379Z"
-                        fill="black"
-                      />
-                    </svg>
+                    <IconHwTriangle />
                     Апаратні касові апарати
                   </span>
                   {row.hw.text ? (
@@ -1146,7 +1191,7 @@ const supportPoints = [
     </div>
   </section>
 
-  <section class="category">
+  <section class="category section-dark">
     <div class="container category-inner">
       <p class="subtitle">Касова дисципліна без зусиль</p>
       <h2>
@@ -1187,8 +1232,9 @@ const supportPoints = [
                 data-author={content.author}
                 data-role={content.role}
                 data-image={content.image.src}
-                data-image-w={content.image.width}
-                data-image-h={content.image.height}
+                data-srcset={content.image.srcSet.attribute}
+                data-image-w={content.image.attributes.width}
+                data-image-h={content.image.attributes.height}
                 data-logos={content.logos.join("|")}
               >
                 <DottedBorder color="#fff8" radius={12}/>
@@ -1203,8 +1249,13 @@ const supportPoints = [
             <img
               class="category-panel-image"
               src={categories[activeCategoryIndex].content.image.src}
-              width={categories[activeCategoryIndex].content.image.width}
-              height={categories[activeCategoryIndex].content.image.height}
+              srcset={categories[activeCategoryIndex].content.image.srcSet
+                .attribute}
+              sizes={categoryPanelSizes}
+              width={categories[activeCategoryIndex].content.image.attributes
+                .width}
+              height={categories[activeCategoryIndex].content.image.attributes
+                .height}
               alt=""
               loading="lazy"
             />
@@ -1233,7 +1284,7 @@ const supportPoints = [
     </div>
   </section>
 
-  <section class="testimonials">
+  <section class="testimonials section-dark">
     <div class="container testimonials-head">
       <h2>
         Вам буде зручно з нами
@@ -1268,23 +1319,7 @@ const supportPoints = [
                 {slide.note ? (
                   <div class="testimonials-note">
                     <DottedBorder />
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="113"
-                      height="73"
-                      viewBox="0 0 113 73"
-                      fill="none"
-                    >
-                      <path d="M0 9H73V73H0V36.8641V32.5751V9Z" fill="black" />
-                      <path
-                        d="M0 9H73V73H0V36.8641C0.207104 37.3296 0.298684 38.2798 0.44123 38.8254C2.88847 48.191 10.5118 54.3052 18.4632 59.2749C21.3593 61.0924 24.341 62.77 27.3978 64.3019C27.99 64.5984 28.5793 64.8638 29.1805 65.1389C32.6253 66.7153 36.0187 68.3847 39.4726 69.9418C41.4251 70.822 43.3128 71.885 45.3273 72.6394C46.2013 71.8412 46.9423 70.7242 47.7699 69.8621C48.7533 68.8377 49.6153 67.6947 50.5523 66.6314C52.5339 64.3965 54.4909 62.1399 56.423 59.8621C57.3231 58.8088 58.2626 57.7629 59.1302 56.6855C60.7793 54.6344 62.3391 52.5133 63.805 50.3278C69.8037 41.5515 75.98 30.0119 71.0788 19.3109C69.1344 15.0665 65.4444 11.6935 61.0109 10.1941C56.2132 8.61176 50.9841 8.99534 46.4688 11.2608C41.9021 13.5168 38.9086 16.6969 36.4396 21.1599C35.9026 22.1306 35.4144 23.0825 35.0573 24.1371C33.5324 22.6202 29.6632 19.9888 27.7137 19.1348C22.0259 16.6433 16.7533 16.3143 10.916 18.5837C6.38419 20.3805 2.83468 24.0261 1.15957 28.6043C0.779538 29.6322 0.454774 30.6753 0.235326 31.7496C0.180847 32.0163 0.115536 32.3301 0 32.5751V9Z"
-                        fill="#F5F5F5"
-                      />
-                      <path
-                        d="M53.9767 11.9013C54.6044 11.778 56.5559 11.8887 57.2145 11.9551C60.8431 12.3206 64.3667 14.4198 66.6735 17.2146C69.9435 21.1749 70.5666 25.4782 70.0198 30.4294C69.6466 33.8076 68.486 36.643 67.0254 39.6917C64.8954 44.0588 62.3419 48.2064 59.402 52.0751C55.551 57.1649 51.1332 61.9168 46.9623 66.7497C46.1559 67.6841 45.5365 68.6527 44.5491 69.4349C42.29 68.4889 39.9273 67.2775 37.6923 66.2296C35.4036 65.177 33.1225 64.1083 30.849 63.0234C29.8743 62.565 28.788 62.1073 27.8404 61.6184C25.6008 60.463 23.4376 59.1523 21.2276 57.9339C20.349 57.4413 19.421 56.7861 18.5583 56.2335C15.3898 54.1749 12.1236 51.8091 9.4929 49.0982C5.62956 45.117 2.58172 40.3599 2.70063 34.624C2.79129 30.2504 4.23362 26.9124 7.4239 23.8386C10.4396 20.9331 14.8136 19.6893 18.9253 19.6331C23.9683 19.684 28.8619 22.2343 32.5733 25.5096C33.8116 26.6023 34.8287 27.6643 35.9811 28.8553C38.9829 20.1005 43.9783 12.7799 53.9767 11.9013Z"
-                        fill="#F5F5F5"
-                      />
-                    </svg>
+                    <NoteCloud aria-hidden="true" />
                     <p class="testimonials-text">{slide.text}</p>
                   </div>
                 ) : (
@@ -1311,7 +1346,7 @@ const supportPoints = [
     </div>
   </section>
 
-  <section class="api">
+  <section class="api section-dark">
     <div class="container api-inner">
       <p class="subtitle">API</p>
       <h2>
@@ -1669,7 +1704,35 @@ const supportPoints = [
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
+
+  // Hero receipt counter: keeps ticking up from the build-time number at
+  // ~16 receipts/second. Derived from elapsed time (not a blind +16) so it
+  // stays accurate when background tabs throttle timers.
+  const receiptCounter = document.querySelector("[data-receipt-counter]");
+  if (receiptCounter) {
+    const base = Number(receiptCounter.textContent!.replace(/\D/g, ""));
+    const start = Date.now();
+    setInterval(() => {
+      const receipts = base + Math.floor((Date.now() - start) / 1000) * 16;
+      receiptCounter.textContent = String(receipts).replace(
+        /\B(?=(\d{3})+(?!\d))/g,
+        " "
+      );
+    }, 1000);
+  }
   const loops = new Map<Element, gsap.core.Timeline>();
+
+  // One debounced resize listener for the whole page — blocks that need a
+  // re-layout register a callback here instead of adding their own listener.
+  const resizeHandlers: Array<() => void> = [];
+  let resizeTimer: number;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(
+      () => resizeHandlers.forEach((handler) => handler()),
+      200
+    );
+  });
   const scaleBlock = document.querySelector(".reason-wrapper");
   const queueItems = [...document.querySelectorAll(".reason-offline-list li")];
 
@@ -1710,7 +1773,7 @@ const supportPoints = [
             if (next) setQueueState(next, "is-syncing", "Синхронізація");
           },
           [],
-          "+=0.4"
+          "+=0.5"
         );
       });
 
@@ -1785,7 +1848,7 @@ const supportPoints = [
         // 2. then the courier walks the route, one stop every 0.9s
         // ("+=" appends after the sweep's last call — same trick as the queue)
         for (let c = 0; c <= stops.length + 1; c++) {
-          comboTl.call(() => setStep(c), [], c === 0 ? "+=0.3" : "+=0.45");
+          comboTl.call(() => setStep(c), [], c === 0 ? "+=0.45" : "+=0.6");
         }
 
         // refresh the registry — the shared observer reads the Map on every
@@ -1796,13 +1859,9 @@ const supportPoints = [
       build();
 
       // Layout (and therefore columns) changes across breakpoints — rebuild
-      let resizeTimer: number;
-      window.addEventListener("resize", () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = window.setTimeout(() => {
-          build();
-          comboTl.play();
-        }, 200);
+      resizeHandlers.push(() => {
+        build();
+        comboTl.play();
       });
     }
   }
@@ -1820,7 +1879,7 @@ const supportPoints = [
     };
 
     // Frame 1 of the mock: only the already-delivered first row is done
-    const resetPost = () => rows.forEach((li, i) => setPostState(li, i === 0));
+    const resetPost = () => rows.forEach((li, i) => setPostState(li, false));
 
     if (reducedMotion) {
       rows.forEach((li) => setPostState(li, true));
@@ -1831,13 +1890,78 @@ const supportPoints = [
         paused: true,
       });
       postTl.call(resetPost);
-      rows.slice(1).forEach((li) => {
+      rows.forEach((li) => {
         postTl.call(() => setPostState(li, true), [], "+=.5");
       });
 
       loops.set(postList, postTl);
     }
   }
+
+  // const stepsGrid = document.querySelector(".steps-grid");
+  // if (stepsGrid) {
+  //   const cards = [...stepsGrid.querySelectorAll<HTMLElement>(".step-card")];
+  //   const fillsOf = (card: HTMLElement) => [
+  //     ...card.querySelectorAll<HTMLElement>("[data-fill], [data-activate]"),
+  //   ];
+
+  //   const fillClass = (el: HTMLElement) =>
+  //     el.hasAttribute("data-activate") ? "is-active" : "is-filled";
+
+  //   const reset = () => {
+  //     cards.forEach((card) => {
+  //       card.classList.remove("is-active", "is-done", "is-filled-done");
+  //       fillsOf(card).forEach((el) =>
+  //         el.classList.remove("is-filled", "is-active")
+  //       );
+  //     });
+  //   };
+
+  //   if (reducedMotion) {
+  //     cards.forEach((card) => {
+  //       card.classList.add("is-done", "is-filled-done");
+  //       fillsOf(card).forEach((el) => el.classList.add(fillClass(el)));
+  //     });
+  //   } else {
+  //     const stepsTl = gsap.timeline({
+  //       repeat: -1,
+  //       repeatDelay: 2.5,
+  //       paused: true,
+  //     });
+  //     stepsTl.call(reset);
+
+  //     cards.forEach((card, i) => {
+  //       // this card becomes the active (solid-framed) one; every card
+  //       // before it has finished its animation and settles into is-done
+  //       stepsTl.call(
+  //         () =>
+  //           cards.forEach((c, k) => {
+  //             c.classList.toggle("is-active", c === card);
+  //             c.classList.toggle("is-done", k < i);
+  //           }),
+  //         [],
+  //         "+=0.75"
+  //       );
+  //       // then its fields / items fill one by one
+  //       fillsOf(card).forEach((el) => {
+  //         stepsTl.call(() => el.classList.add(fillClass(el)), [], "+=0.5");
+  //       });
+  //       // card 4's receipt frame lights up once its rows are in
+  //       if (card.dataset.card === "4") {
+  //         stepsTl.call(() => card.classList.add("is-filled-done"), [], "+=0.2");
+  //       }
+  //     });
+
+  //     // the last card has finished too — mark it done for the final hold
+  //     stepsTl.call(
+  //       () => cards[cards.length - 1].classList.add("is-done"),
+  //       [],
+  //       "+=0.4"
+  //     );
+
+  //     loops.set(stepsGrid, stepsTl);
+  //   }
+  // }
 
   const stepsGrid = document.querySelector(".steps-grid");
   if (stepsGrid) {
@@ -1852,9 +1976,11 @@ const supportPoints = [
     const reset = () => {
       cards.forEach((card) => {
         card.classList.remove("is-active", "is-done", "is-filled-done");
-        fillsOf(card).forEach((el) =>
-          el.classList.remove("is-filled", "is-active")
-        );
+        fillsOf(card).forEach((el) => {
+          el.classList.remove("is-filled", "is-active");
+          // Скидаємо трансформи тільки для внутрішніх елементів
+          gsap.set(el, { scale: 1 });
+        });
       });
     };
 
@@ -1869,35 +1995,45 @@ const supportPoints = [
         repeatDelay: 2.5,
         paused: true,
       });
+      
       stepsTl.call(reset);
 
       cards.forEach((card, i) => {
-        // this card becomes the active (solid-framed) one; every card
-        // before it has finished its animation and settles into is-done
+        // Активуємо картку (без баунсу для самої картки)
         stepsTl.call(
-          () =>
+          () => {
             cards.forEach((c, k) => {
               c.classList.toggle("is-active", c === card);
               c.classList.toggle("is-done", k < i);
-            }),
+            });
+          },
           [],
-          "+=0.6"
+          "+=0.5" // повернули оригінальну затримку
         );
-        // then its fields / items fill one by one
+
+        // Наповнення внутрішніх елементів по черзі (залишаємо цікавий ефект тут)
         fillsOf(card).forEach((el) => {
           stepsTl.call(() => el.classList.add(fillClass(el)), [], "+=0.5");
+          
+          // Ефект мікро-відскоку для внутрішніх елементів (вони м'яко виростають)
+          stepsTl.fromTo(el,
+            { scale: 0.92, transformOrigin: "left center" },
+            { scale: 1, duration: 0.35, ease: "back.out(2)" },
+            "<"
+          );
         });
-        // card 4's receipt frame lights up once its rows are in
+
+        // Картка 4 підсвічується
         if (card.dataset.card === "4") {
           stepsTl.call(() => card.classList.add("is-filled-done"), [], "+=0.2");
         }
       });
 
-      // the last card has finished too — mark it done for the final hold
+      // Фінал
       stepsTl.call(
         () => cards[cards.length - 1].classList.add("is-done"),
         [],
-        "+=0.3"
+        "+=0.35"
       );
 
       loops.set(stepsGrid, stepsTl);
@@ -2036,13 +2172,9 @@ const supportPoints = [
       { passive: true }
     );
 
-    let testimonialsResizeTimer: number;
-    window.addEventListener("resize", () => {
-      clearTimeout(testimonialsResizeTimer);
-      testimonialsResizeTimer = window.setTimeout(() => {
-        gsap.set([track, ...cards, ...bodies], { clearProps: "all" });
-        init();
-      }, 200);
+    resizeHandlers.push(() => {
+      gsap.set([track, ...cards, ...bodies], { clearProps: "all" });
+      init();
     });
 
     init();
@@ -2134,8 +2266,10 @@ const supportPoints = [
 
     const render = () => {
       const tab = tabs[index];
-      const { image, imageW, imageH, quote, author, role, logos } = tab.dataset;
+      const { image, srcset, imageW, imageH, quote, author, role, logos } =
+        tab.dataset;
       panelImage.src = image!;
+      panelImage.srcset = srcset ?? "";
       panelImage.width = Number(imageW);
       panelImage.height = Number(imageH);
       panelText.textContent = quote!;
