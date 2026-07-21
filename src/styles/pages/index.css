@@ -345,36 +345,6 @@ h1 {
   gap: 16px;
 }
 
-/* @supports (animation-timeline: view()) {
-  .features-right {
-    timeline-scope: --feature-1, --feature-2;
-  }
-
-  .feature[data-card="1"] {
-    view-timeline-name: --feature-1;
-  }
-
-  .feature[data-card="2"] {
-    view-timeline-name: --feature-2;
-  }
-
-  
-  .feature[data-card="0"],
-  .feature[data-card="1"] {
-    animation: feature-dim linear both;
-    animation-range: cover calc(100vh - 550px) cover calc(100vh - 160px);
-  }
-
-  .feature[data-card="0"] {
-    animation-timeline: --feature-1;
-  }
-
-  .feature[data-card="1"] {
-    animation-timeline: --feature-2;
-  }
-} */
-
-
 @supports (animation-timeline: view()) {
   .features-right {
     /* Створюємо два таймлайни для відстеження руху 2-ї та 3-ї карток */
@@ -432,6 +402,7 @@ h1 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-width: 700px;
 }
 
 .feature--light {
@@ -873,6 +844,12 @@ font-size: 22px;
   object-fit: contain;
 }
 
+@media (max-width: 1023px) {
+  .reason-companies li:nth-child(n+25) {
+    display: none;
+  }
+}
+
 /* Courier timeline */
 .reason-timeline {
   list-style: none;
@@ -1157,6 +1134,12 @@ font-size: 22px;
   }
 }
 
+@media (min-width: 768px) {
+  .reasons-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (min-width: 1024px) {
   .reasons-title {
     font-size: 44px;
@@ -1180,6 +1163,10 @@ font-size: 22px;
 }
 
 /* ── Comparison table (hardware РРО vs Checkbox) ─────── */
+
+.compare-table{
+  max-width: 600px;
+}
 
 .compare h2 {
   max-width: 1000px;
@@ -1307,6 +1294,10 @@ font-size: 22px;
 }
 
 @media (min-width: 1024px) {
+  .compare-table{
+    max-width: initial;
+  }
+
   .compare-row {
     flex-direction: row;
     align-items: stretch;
@@ -2588,6 +2579,7 @@ font-size: 22px;
   gap: 48px;
   padding: 48px 24px 24px;
   border-radius: var(--radius-card);
+  max-width: 530px;
 }
 
 .support-phone {
@@ -2609,21 +2601,10 @@ font-size: 22px;
 }
 
 .support-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 14px;
   padding: 17px 18px;
-  border: 2px solid var(--color-black);
-  border-radius: 8px;
-  font-weight: 600;
   line-height: 1;
-  text-decoration: none;
 letter-spacing: -4%;  
-}
-
-.support-btn:hover {
-  border-color: var(--color-black);
 }
 
 .support-list {
@@ -2663,6 +2644,13 @@ letter-spacing: -4%;
   height: auto;
 }
 
+@media (min-width: 650px) {
+
+  .support-phone {
+    text-align: left;
+  }
+}
+
 @media (min-width: 1024px) {
   .support {
     padding-top: 160px;
@@ -2675,11 +2663,9 @@ letter-spacing: -4%;
     gap: 64px;
     padding: 64px;
     position: relative;
+    max-width: initial;
   }
 
-  .support-phone {
-    text-align: left;
-  }
 
   .support-actions {
     flex-direction: row;
@@ -3022,7 +3008,7 @@ letter-spacing: -4%;
   margin-top: 6px;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1220px) {
   .faq .subtitle {
     justify-content: center;
   }

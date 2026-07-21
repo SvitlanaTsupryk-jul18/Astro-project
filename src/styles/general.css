@@ -163,6 +163,8 @@ p{
   line-height: 24px;
   letter-spacing: -0.16px;
   transition: all .3s;
+  max-width: 480px;
+  white-space: nowrap;
 }
 
 .btn:hover {
@@ -173,6 +175,7 @@ filter: invert(.1);
   width: 20px;
   height: 20px;
   transition: transform 0.3s;
+  flex-shrink: 0;
 }
 
 .btn:hover svg {
