@@ -86,7 +86,7 @@ h1 {
   }
 
   .hero-content {
-    padding-top: clamp(48px, 1.24rem + 7.5vw, 128px);
+    padding-top: clamp(48px, 6vw, 128px);
   }
   .hero-actions .btn {
     width: auto;
@@ -101,7 +101,7 @@ h1 {
   .hero-image img {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 64px;
     height: 100%;
     width: auto;
     max-width: none;
@@ -1377,6 +1377,7 @@ font-size: 22px;
   .compare-row:not(.compare-row--head):hover .compare-cell::before,
   .compare-row:hover + .compare-row .compare-label::before,
   .compare-row:hover + .compare-row .compare-cell::before {
+    background-image: linear-gradient(rgb(var(--color-accent-rgb) / 1), rgb(var(--color-accent-rgb) / 1)), repeating-linear-gradient(90deg, rgb(var(--color-accent-rgb) / 1) 0, rgb(var(--color-accent-rgb) / 1) 1px, transparent 1px, transparent 5px);
     background-size:
       100% 1px,
       5px 1px;

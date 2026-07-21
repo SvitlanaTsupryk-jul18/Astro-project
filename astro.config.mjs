@@ -23,6 +23,9 @@ export default defineConfig({
 		css: {
 			devSourcemap: true,
 		},
+    server: {
+      allowedHosts: ['hypoacid-lyndia-photovoltaic.ngrok-free.dev']
+    },
 	},
     fonts: [{
         provider: fontProviders.google(),
