@@ -157,19 +157,19 @@ const postShipments = [
   {
     ttn: "TTN 720 4198 3221",
     carrier: "Нова пошта",
-    amount: "1 240 ₴",
+    amount: "1 240",
     status: "Фіскалізовано",
   },
   {
     ttn: "TTN 110 5521 2144",
     carrier: "Нова пошта",
-    amount: "685 ₴",
+    amount: "685",
     status: "Фіскалізовано",
   },
   {
     ttn: "TTN 7000 1021 6230",
     carrier: "Нова пошта",
-    amount: "2 199 ₴",
+    amount: "2 199",
     status: "В дорозі",
   },
 ];
@@ -312,14 +312,14 @@ const stepSetupFields = [
   { label: "Тип", value: "Програмний РРО" },
 ];
 const stepCatalogItems = [
-  { name: "Кава", price: "75 ₴", dot: "#B2667C" },
-  { name: "Піца Маргарита", price: "180 ₴", dot: "#F79E1B" },
-  { name: "Вода 0.5л", price: "25 ₴", dot: "#315AFF" },
-  { name: "Вода 0.5л", price: "25 ₴", dot: "#315AFF" },
+  { name: "Кава", price: "75", dot: "#B2667C" },
+  { name: "Піца Маргарита", price: "180", dot: "#F79E1B" },
+  { name: "Вода 0.5л", price: "25", dot: "#315AFF" },
+  { name: "Вода 0.5л", price: "25", dot: "#315AFF" },
 ];
 const stepReceiptItems = [
-  { name: "Кава", qty: "1 шт", price: "75 ₴" },
-  { name: "Круасан", qty: "2 шт", price: "90 ₴" },
+  { name: "Кава", qty: "1 шт", price: "75" },
+  { name: "Круасан", qty: "2 шт", price: "90" },
 ];
 
 // Client cases testimonials. A slide is either a quote (author + role) or a
@@ -603,40 +603,104 @@ const supportPoints = [
           aria-hidden="true"
         >
           <g clip-path="url(#hero-pattern-clip)">
-            <path d="M692.475 136.956H583.754L692.475 245.866V136.956Z" fill="white"></path>
+            <path
+              d="M692.475 136.956H583.754L692.475 245.866V136.956Z"
+              fill="white"></path>
             <rect x="117" y="137" width="466" height="438" fill="white"></rect>
-            <rect x="117" y="137" width="466" height="438" fill="#9E278A" fill-opacity="0.16"></rect>
-            <path d="M583.752 136.956H475.031L583.752 245.866V136.956Z" fill="white"></path>
-            <path d="M475.03 245.866H366.309L475.03 354.776V245.866Z" fill="white" fill-opacity="0.64"></path>
-            <path d="M473.721 466H365L473.721 574.91V466Z" fill="white" fill-opacity="0.64"></path>
-            <path d="M475.03 136.956H366.309L475.03 245.866V136.956Z" fill="white" fill-opacity="0.64"></path>
-            <path d="M368.721 137H260L368.721 245.91V137Z" fill="white" fill-opacity="0.32"></path>
-            <path d="M366.721 246H258L366.721 354.91V246Z" fill="white" fill-opacity="0.32"></path>
-            <path d="M252.721 246H144L252.721 354.91V246Z" fill="white" fill-opacity="0.24"></path>
-            <path d="M583.752 245.866H475.031L583.752 354.776V245.866Z" fill="white"></path>
-            <path d="M692.475 245.866H583.754L692.475 354.776V245.866Z" fill="white"></path>
-            <path d="M692.475 354.775H583.754L692.475 463.685V354.775Z" fill="white"></path>
+            <rect
+              x="117"
+              y="137"
+              width="466"
+              height="438"
+              fill="#9E278A"
+              fill-opacity="0.16"></rect>
+            <path
+              d="M583.752 136.956H475.031L583.752 245.866V136.956Z"
+              fill="white"></path>
+            <path
+              d="M475.03 245.866H366.309L475.03 354.776V245.866Z"
+              fill="white"
+              fill-opacity="0.64"></path>
+            <path
+              d="M473.721 466H365L473.721 574.91V466Z"
+              fill="white"
+              fill-opacity="0.64"></path>
+            <path
+              d="M475.03 136.956H366.309L475.03 245.866V136.956Z"
+              fill="white"
+              fill-opacity="0.64"></path>
+            <path
+              d="M368.721 137H260L368.721 245.91V137Z"
+              fill="white"
+              fill-opacity="0.32"></path>
+            <path
+              d="M366.721 246H258L366.721 354.91V246Z"
+              fill="white"
+              fill-opacity="0.32"></path>
+            <path
+              d="M252.721 246H144L252.721 354.91V246Z"
+              fill="white"
+              fill-opacity="0.24"></path>
+            <path
+              d="M583.752 245.866H475.031L583.752 354.776V245.866Z"
+              fill="white"></path>
+            <path
+              d="M692.475 245.866H583.754L692.475 354.776V245.866Z"
+              fill="white"></path>
+            <path
+              d="M692.475 354.775H583.754L692.475 463.685V354.775Z"
+              fill="white"></path>
             <path d="M585 355H475L585 464V355Z" fill="white"></path>
-            <path d="M476 356H366L476 465V356Z" fill="white" fill-opacity="0.48"></path>
+            <path d="M476 356H366L476 465V356Z" fill="white" fill-opacity="0.48"
+            ></path>
             <g filter="url(#hero-pattern-blur)">
-              <path class="hero-shadow" d="M192 437H101L192 528V437Z" fill="black" fill-opacity="0.24"></path>
+              <path
+                class="hero-shadow"
+                d="M192 437H101L192 528V437Z"
+                fill="black"
+                fill-opacity="0.24"></path>
             </g>
             <path d="M170.721 411H62L170.721 519.91V411Z" fill="white"></path>
             <path d="M695 464H585L695 573V464Z" fill="white"></path>
-            <path d="M802.475 136.956H693.754L802.475 245.866V136.956Z" fill="white"></path>
-            <path d="M802.475 245.866H693.754L802.475 354.776V245.866Z" fill="white"></path>
-            <path d="M802.475 354.775H693.754L802.475 463.685V354.775Z" fill="white"></path>
+            <path
+              d="M802.475 136.956H693.754L802.475 245.866V136.956Z"
+              fill="white"></path>
+            <path
+              d="M802.475 245.866H693.754L802.475 354.776V245.866Z"
+              fill="white"></path>
+            <path
+              d="M802.475 354.775H693.754L802.475 463.685V354.775Z"
+              fill="white"></path>
             <path d="M803 464H693L803 573V464Z" fill="white"></path>
-            <path d="M912.475 245.866H803.754L912.475 354.776V245.866Z" fill="white"></path>
-            <path d="M912.475 354.775H803.754L912.475 463.685V354.775Z" fill="white"></path>
-            <path d="M1022.47 245.866H913.754L1022.47 354.776V245.866Z" fill="white"></path>
+            <path
+              d="M912.475 245.866H803.754L912.475 354.776V245.866Z"
+              fill="white"></path>
+            <path
+              d="M912.475 354.775H803.754L912.475 463.685V354.775Z"
+              fill="white"></path>
+            <path
+              d="M1022.47 245.866H913.754L1022.47 354.776V245.866Z"
+              fill="white"></path>
             <path d="M585 464H475L585 573V464Z" fill="white"></path>
           </g>
           <defs>
-            <filter id="hero-pattern-blur" x="73" y="409" width="147" height="147" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <filter
+              id="hero-pattern-blur"
+              x="73"
+              y="409"
+              width="147"
+              height="147"
+              filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB"
+            >
               <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-              <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"></feBlend>
-              <feGaussianBlur stdDeviation="14" result="effect1_foregroundBlur"></feGaussianBlur>
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="BackgroundImageFix"
+                result="shape"></feBlend>
+              <feGaussianBlur stdDeviation="14" result="effect1_foregroundBlur"
+              ></feGaussianBlur>
             </filter>
             <clipPath id="hero-pattern-clip">
               <rect width="952" height="575" fill="white"></rect>
@@ -719,7 +783,7 @@ const supportPoints = [
                   class="feature-image"
                   loading="lazy"
                 />
-                <div class="feature-body">
+                <div>
                   <h3 class="feature-title">{feature.title}</h3>
                   <p class="feature-text" set:html={feature.text} />
                 </div>
@@ -755,8 +819,8 @@ const supportPoints = [
     <div class="reasons-grid">
       <div class="reason">
         <p class="reason-text">
-          <strong>Масштабуємося разом із вашим бізнесом</strong> — легко працювати як
-          з 1 касою, так і з 10 000 кас.
+          <strong>Масштабуємося разом із вашим бізнесом</strong> — легко працювати
+          як з 1 касою, так і з 10 000 кас.
         </p>
         <div class="reason-wrapper" aria-hidden="true">
           <div>
@@ -854,8 +918,9 @@ const supportPoints = [
       <!-- Row 2 · Col 1-2: integrations -->
       <div class="reason reason-4">
         <p class="reason-text">
-          200+ готових інтеграцій<strong> з обліковими системами, терміналами
-          та іншим POS-обладнанням.</strong>
+          200+ готових інтеграцій<strong>
+            з обліковими системами, терміналами та іншим POS-обладнанням.</strong
+          >
         </p>
         <ul class="reason-companies">
           {
@@ -925,8 +990,10 @@ const supportPoints = [
       <!-- Row 3 · Col 2: post payments -->
       <div class="reason">
         <p class="reason-text">
-          Автоматично фіскалізуємо<strong> проекти чеків після фактичної
-          доставки товару за накладеним платежем.</strong> Нова Пошта, УкрПошта, Meest Пошта.
+          Автоматично фіскалізуємо<strong>
+            проекти чеків після фактичної доставки товару за накладеним
+            платежем.</strong
+          > Нова Пошта, УкрПошта, Meest Пошта.
         </p>
         <div class="reason-post">
           <div class="reason-post-tabs">
@@ -951,7 +1018,9 @@ const supportPoints = [
                     </p>
                   </div>
                   <div>
-                    <p class="reason-post-amount">{item.amount}</p>
+                    <p class="reason-post-amount">
+                      {item.amount} <small>₴</small>
+                    </p>
                     <span class="reason-post-status" data-status={item.status}>
                       {item.status}
                     </span>
@@ -967,9 +1036,10 @@ const supportPoints = [
       <div class="reason">
         <div class="reason-dark">
           <p class="reason-text">
-            Служба турботи відповідає за декілька хвилин.<strong> 99,7% звернень
-            до служби турботи отримують позитивний відгук від клієнтів. Персональний
-            менеджер, який завжди на зв'язку.</strong>
+            Служба турботи відповідає за декілька хвилин.<strong>
+              99,7% звернень до служби турботи отримують позитивний відгук від
+              клієнтів. Персональний менеджер, який завжди на зв'язку.</strong
+            >
           </p>
           <SupportIllustration />
         </div>
@@ -1137,7 +1207,9 @@ const supportPoints = [
                     <DottedBorder gap={4} radius={4} />
                     <span class="step-dot" style={`--dot: ${it.dot}`} />
                     <span class="step-catalog-name">{it.name}</span>
-                    <span class="step-catalog-price">{it.price}</span>
+                    <span class="step-catalog-price">
+                      {it.price} <small>₴</small>
+                    </span>
                   </li>
                 ))
               }
@@ -1164,13 +1236,15 @@ const supportPoints = [
                       {it.name}
                       <small>{it.qty}</small>
                     </span>
-                    <span class="step-receipt-price">{it.price}</span>
+                    <span class="step-receipt-price">
+                      {it.price} <small>₴</small>
+                    </span>
                   </div>
                 ))
               }
               <div class="step-receipt-row step-receipt-total" data-fill>
                 <span class="step-receipt-name">Разом</span>
-                <span class="step-receipt-price">165 ₴</span>
+                <span class="step-receipt-price">165 <small>₴</small></span>
               </div>
             </div>
           </div>
@@ -1195,7 +1269,7 @@ const supportPoints = [
     <div class="container category-inner">
       <p class="subtitle">Касова дисципліна без зусиль</p>
       <h2>
-        Чекбокс обирають<br> бізнеси різного<br> штибу та напрямку
+        Чекбокс обирають<br /> бізнеси різного<br /> штибу та напрямку
       </h2>
 
       <div class="category-nav">
@@ -1237,7 +1311,7 @@ const supportPoints = [
                 data-image-h={content.image.attributes.height}
                 data-logos={content.logos.join("|")}
               >
-                <DottedBorder color="#fff8" radius={12}/>
+                <DottedBorder color="#fff8" radius={12} />
                 <Icon class="category-tab-icon" aria-hidden="true" />
                 <span class="category-tab-label">{label}</span>
               </button>
@@ -1246,6 +1320,7 @@ const supportPoints = [
         </div>
 
         <div class="category-panel">
+          <div class="category-panel-media">
             <img
               class="category-panel-image"
               src={categories[activeCategoryIndex].content.image.src}
@@ -1279,6 +1354,7 @@ const supportPoints = [
                 ))
               }
             </ul>
+          </div>
         </div>
       </div>
     </div>
@@ -1349,18 +1425,20 @@ const supportPoints = [
     <div class="container api-inner">
       <p class="subtitle">API</p>
       <h2>
-        Потужне відкрите API<br />для унікальних<br> інтеграцій
+        Потужне відкрите API<br />для унікальних<br /> інтеграцій
       </h2>
       <p class="api-text">
         Ми розуміємо, що ваш бізнес-процес наче сніжинка, іншого такого не
         існує.<br />
         Ми допоможемо вашій команді вбудувати Чекбокс, щоб усе працювало як слід.
       </p>
-      <a href="#" class="api-link">Перегляньте документацію <ArrowRightWhite /></a>
+      <a href="#" class="api-link"
+        >Перегляньте документацію <ArrowRightWhite /></a
+      >
       <ApiScheme class="api-scheme" aria-hidden="true" />
       <div class="api-flow" aria-hidden="true">
         <div class="api-node">
-          <DottedBorder color="#7A7A7A" gap={4}/>
+          <DottedBorder color="#7A7A7A" gap={4} />
           <span class="api-badge api-badge--power">
             <svg viewBox="0 0 16 16" fill="none"
               ><path
@@ -1371,28 +1449,51 @@ const supportPoints = [
             >
           </span>
           <span class="api-ic">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M16 16H0V0H16V16ZM2.66679 2.66671V13.3334H13.3335V2.66671H2.66679Z" fill="white"/>
-              <path d="M4.66689 4.66668H11.3336V11.3333L4.66689 4.66668Z" fill="white"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M16 16H0V0H16V16ZM2.66679 2.66671V13.3334H13.3335V2.66671H2.66679Z"
+                fill="white"></path>
+              <path
+                d="M4.66689 4.66668H11.3336V11.3333L4.66689 4.66668Z"
+                fill="white"></path>
             </svg>
           </span>
           Каса Checkbox
         </div>
         <div class="api-node">
-          <DottedBorder color="#7A7A7A" gap={4}/>
+          <DottedBorder color="#7A7A7A" gap={4} />
           <span class="api-ic api-ic--num">1</span>
           Авторизація
         </div>
         <div class="api-node">
-          <DottedBorder color="#7A7A7A" gap={4}/>
+          <DottedBorder color="#7A7A7A" gap={4} />
           <span class="api-badge api-badge--spark">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+            >
               <g clip-path="url(#clip0_10679_7104)">
-                <path d="M7.49142 7.49142L6.35048 10.6292C6.32384 10.701 6.27588 10.7629 6.21303 10.8066C6.15019 10.8503 6.07547 10.8737 5.99892 10.8737C5.92237 10.8737 5.84765 10.8503 5.78481 10.8066C5.72196 10.7629 5.674 10.701 5.64736 10.6292L4.50829 7.49142L1.37048 6.35048C1.29872 6.32384 1.23682 6.27588 1.19311 6.21303C1.1494 6.15019 1.12598 6.07547 1.12598 5.99892C1.12598 5.92237 1.1494 5.84765 1.19311 5.78481C1.23682 5.72196 1.29872 5.674 1.37048 5.64736L4.50829 4.50829L5.64923 1.37048C5.67587 1.29872 5.72383 1.23682 5.78668 1.19311C5.84953 1.1494 5.92424 1.12598 6.00079 1.12598C6.07735 1.12598 6.15206 1.1494 6.21491 1.19311C6.27775 1.23682 6.32572 1.29872 6.35236 1.37048L7.49329 4.50829L10.6311 5.64923C10.7029 5.67587 10.7648 5.72383 10.8085 5.78668C10.8522 5.84953 10.8756 5.92424 10.8756 6.00079C10.8756 6.07735 10.8522 6.15206 10.8085 6.21491C10.7648 6.27775 10.7029 6.32572 10.6311 6.35236L7.49142 7.49142Z" stroke="black" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                <path
+                  d="M7.49142 7.49142L6.35048 10.6292C6.32384 10.701 6.27588 10.7629 6.21303 10.8066C6.15019 10.8503 6.07547 10.8737 5.99892 10.8737C5.92237 10.8737 5.84765 10.8503 5.78481 10.8066C5.72196 10.7629 5.674 10.701 5.64736 10.6292L4.50829 7.49142L1.37048 6.35048C1.29872 6.32384 1.23682 6.27588 1.19311 6.21303C1.1494 6.15019 1.12598 6.07547 1.12598 5.99892C1.12598 5.92237 1.1494 5.84765 1.19311 5.78481C1.23682 5.72196 1.29872 5.674 1.37048 5.64736L4.50829 4.50829L5.64923 1.37048C5.67587 1.29872 5.72383 1.23682 5.78668 1.19311C5.84953 1.1494 5.92424 1.12598 6.00079 1.12598C6.07735 1.12598 6.15206 1.1494 6.21491 1.19311C6.27775 1.23682 6.32572 1.29872 6.35236 1.37048L7.49329 4.50829L10.6311 5.64923C10.7029 5.67587 10.7648 5.72383 10.8085 5.78668C10.8522 5.84953 10.8756 5.92424 10.8756 6.00079C10.8756 6.07735 10.8522 6.15206 10.8085 6.21491C10.7648 6.27775 10.7029 6.32572 10.6311 6.35236L7.49142 7.49142Z"
+                  stroke="black"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
               </g>
               <defs>
                 <clipPath id="clip0_10679_7104">
-                  <rect width="12" height="12" fill="white"/>
+                  <rect width="12" height="12" fill="white"></rect>
                 </clipPath>
               </defs>
             </svg>
@@ -1401,11 +1502,11 @@ const supportPoints = [
           Відкриття зміни
         </div>
         <div class="api-node api-node--branch">
-          <DottedBorder color="#7A7A7A" gap={4}/>
+          <DottedBorder color="#7A7A7A" gap={4} />
           <span class="api-ic api-ic--num">3</span>
           Створення чека
           <div class="api-card api-error">
-            <DottedBorder color="#7A7A7A" gap={4}/>
+            <DottedBorder color="#7A7A7A" gap={4} />
             <svg
               class="api-line api-line--to-error"
               width="167"
@@ -1435,9 +1536,21 @@ const supportPoints = [
             <span class="api-ic">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <g clip-path="url(#clip0_10679_7067)">
-                  <path d="M15 9L9 15" stroke="white" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M9 9L15 15" stroke="white" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z" stroke="white" stroke-width="1.6" stroke-linejoin="round"/>
+                  <path
+                    d="M15 9L9 15"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M9 9L15 15"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linejoin="round"></path>
+                  <path
+                    d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
+                    stroke="white"
+                    stroke-width="1.6"
+                    stroke-linejoin="round"></path>
                 </g>
               </svg>
             </span>
@@ -1448,7 +1561,7 @@ const supportPoints = [
           </div>
         </div>
         <div class="api-node">
-          <DottedBorder color="#7A7A7A" gap={4}/>
+          <DottedBorder color="#7A7A7A" gap={4} />
           <span class="api-badge api-badge--check">
             <svg viewBox="0 0 16 16" fill="none"
               ><path
@@ -1456,7 +1569,8 @@ const supportPoints = [
                 stroke="currentColor"
                 stroke-width="1.8"
                 stroke-linecap="round"
-                stroke-linejoin="round"></path></svg>
+                stroke-linejoin="round"></path></svg
+            >
           </span>
           <span class="api-ic api-ic--num">4</span>
           Чек готовий
@@ -1489,12 +1603,31 @@ const supportPoints = [
               stroke-dasharray="1 4"></path></svg
           >
           <div class="api-card">
-            <DottedBorder color="#7A7A7A" gap={4}/>
+            <DottedBorder color="#7A7A7A" gap={4} />
             <span class="api-ic">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M16.875 16.875H3.125" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
-                  <path d="M16 5.625H12V13.75H16V5.625Z" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M8 2.5H4V13.75H8V2.5Z" stroke="white" stroke-width="2" stroke-linecap="round"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="M16.875 16.875H3.125"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="square"
+                  stroke-linejoin="round"></path>
+                <path
+                  d="M16 5.625H12V13.75H16V5.625Z"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"></path>
+                <path
+                  d="M8 2.5H4V13.75H8V2.5Z"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"></path>
               </svg>
             </span>
             <span class="api-card-body">
@@ -1503,14 +1636,45 @@ const supportPoints = [
             </span>
           </div>
           <div class="api-card">
-            <DottedBorder color="#7A7A7A" gap={4}/>
+            <DottedBorder color="#7A7A7A" gap={4} />
             <span class="api-ic">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M4.6875 3.4375H17.1875" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
-                  <path d="M3.4375 6.875H12.8125" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
-                  <path d="M5.9375 10.3125H12.8125" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
-                  <path d="M10.3125 13.75H13.4375" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
-                  <path d="M9.6875 17.1875H10.9375" stroke="white" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="M4.6875 3.4375H17.1875"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="square"
+                  stroke-linejoin="round"></path>
+                <path
+                  d="M3.4375 6.875H12.8125"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="square"
+                  stroke-linejoin="round"></path>
+                <path
+                  d="M5.9375 10.3125H12.8125"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="square"
+                  stroke-linejoin="round"></path>
+                <path
+                  d="M10.3125 13.75H13.4375"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="square"
+                  stroke-linejoin="round"></path>
+                <path
+                  d="M9.6875 17.1875H10.9375"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="square"
+                  stroke-linejoin="round"></path>
               </svg>
             </span>
             <span class="api-card-body">
@@ -1519,11 +1683,25 @@ const supportPoints = [
             </span>
           </div>
           <div class="api-card">
-            <DottedBorder color="#7A7A7A" gap={4}/>
+            <DottedBorder color="#7A7A7A" gap={4} />
             <span class="api-ic">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path d="M15.625 4.375L4.375 15.625" stroke="white" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M15.625 15.625L4.375 4.375" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="M15.625 4.375L4.375 15.625"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linejoin="round"></path>
+                <path
+                  d="M15.625 15.625L4.375 4.375"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linejoin="round"></path>
               </svg>
             </span>
             <span class="api-card-body">
@@ -1533,7 +1711,7 @@ const supportPoints = [
           </div>
         </div>
         <div class="api-node">
-          <DottedBorder color="#7A7A7A" gap={4}/>
+          <DottedBorder color="#7A7A7A" gap={4} />
           <span class="api-ic">
             <svg viewBox="0 0 16 16" fill="none"
               ><path
@@ -1546,21 +1724,56 @@ const supportPoints = [
           Закриття зміни
         </div>
         <div class="api-logo">
-          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="32 32 64 64" fill="none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="64"
+            height="64"
+            viewBox="32 32 64 64"
+            fill="none"
+          >
             <g filter="url(#filter0_d_10679_3904)">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M96 96H32V32H96V96ZM42.6671 42.6668V85.3335H85.3338V42.6668H42.6671Z" fill="white"/>
-              <path d="M50.6676 50.6667H77.3342V77.3334L50.6676 50.6667Z" fill="white"/>
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M96 96H32V32H96V96ZM42.6671 42.6668V85.3335H85.3338V42.6668H42.6671Z"
+                fill="white"></path>
+              <path
+                d="M50.6676 50.6667H77.3342V77.3334L50.6676 50.6667Z"
+                fill="white"></path>
             </g>
             <defs>
-              <filter id="filter0_d_10679_3904" x="0" y="0" width="128" height="128" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-                <feOffset/>
-                <feGaussianBlur stdDeviation="16"/>
-                <feComposite in2="hardAlpha" operator="out"/>
-                <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0"/>
-                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_10679_3904"/>
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_10679_3904" result="shape"/>
+              <filter
+                id="filter0_d_10679_3904"
+                x="0"
+                y="0"
+                width="128"
+                height="128"
+                filterUnits="userSpaceOnUse"
+                color-interpolation-filters="sRGB"
+              >
+                <feFlood flood-opacity="0" result="BackgroundImageFix"
+                ></feFlood>
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                  result="hardAlpha"></feColorMatrix>
+                <feOffset></feOffset>
+                <feGaussianBlur stdDeviation="16"></feGaussianBlur>
+                <feComposite in2="hardAlpha" operator="out"></feComposite>
+                <feColorMatrix
+                  type="matrix"
+                  values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0"
+                ></feColorMatrix>
+                <feBlend
+                  mode="normal"
+                  in2="BackgroundImageFix"
+                  result="effect1_dropShadow_10679_3904"></feBlend>
+                <feBlend
+                  mode="normal"
+                  in="SourceGraphic"
+                  in2="effect1_dropShadow_10679_3904"
+                  result="shape"></feBlend>
               </filter>
             </defs>
           </svg>
@@ -1574,7 +1787,7 @@ const supportPoints = [
       <p class="subtitle">Підтримка</p>
       <h2>Наша служба турботи<br />завжди допоможе</h2>
       <div class="support-card">
-        <DottedBorder radius={16}/>
+        <DottedBorder radius={16} />
         <div class="support-info">
           <a class="support-phone" href="tel:0800330676">0 800 330 676</a>
           <div class="support-actions">
@@ -1681,7 +1894,7 @@ const supportPoints = [
         {
           faqItems.map((item) => (
             <div class="faq-item-wrap">
-              <DottedBorder/>
+              <DottedBorder />
               <details class="faq-item">
                 <summary>
                   {item.q}
@@ -1704,47 +1917,31 @@ const supportPoints = [
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  // Hero receipt counter: keeps ticking up from the build-time number at
-  // ~16 receipts/second. Derived from elapsed time (not a blind +16) so it
-  // stays accurate when background tabs throttle timers.
-  // const receiptCounter = document.querySelector("[data-receipt-counter]");
-  // if (receiptCounter) {
-  //   const base = Number(receiptCounter.textContent!.replace(/\D/g, ""));
-  //   const start = Date.now();
-  //   setInterval(() => {
-  //     const receipts = base + Math.floor((Date.now() - start) / 1000) * 16;
-  //     receiptCounter.textContent = String(receipts).replace(
-  //       /\B(?=(\d{3})+(?!\d))/g,
-  //       " "
-  //     );
-  //   }, 1000);
-  // }
-
+  // First screen checks counter
+  
   const receiptCounter = document.querySelector("[data-receipt-counter]");
-if (receiptCounter) {
-  const base = Number(receiptCounter.textContent!.replace(/\D/g, "")); // 2582509485, value as of 00:00 today
-  const perSecond = 33;
+  if (receiptCounter) {
+    const base = Number(receiptCounter.textContent!.replace(/\D/g, "")); // 2582509485, value as of 00:00 today
+    const perSecond = 33;
 
-  const now = new Date();
-  const midnight = new Date(2026, 6, 20, 0, 0, 0, 0).getTime();
+    const now = new Date();
+    const midnight = new Date(2026, 6, 20, 0, 0, 0, 0).getTime();
 
-  const update = () => {
-    const elapsedSeconds = Math.floor((Date.now() - midnight) / 1000);
-    const receipts = base + elapsedSeconds * perSecond;
-    receiptCounter.textContent = String(receipts).replace(
-      /\B(?=(\d{3})+(?!\d))/g,
-      " "
-    );
-  };
+    const update = () => {
+      const elapsedSeconds = Math.floor((Date.now() - midnight) / 1000);
+      const receipts = base + elapsedSeconds * perSecond;
+      receiptCounter.textContent = String(receipts).replace(
+        /\B(?=(\d{3})+(?!\d))/g,
+        " "
+      );
+    };
 
-  update(); // show the correct number immediately, don't wait 1s for the first tick
-  setInterval(update, 1000);
-}
+    update();
+    setInterval(update, 1000);
+  }
 
   const loops = new Map<Element, gsap.core.Timeline>();
 
-  // One debounced resize listener for the whole page — blocks that need a
-  // re-layout register a callback here instead of adding their own listener.
   const resizeHandlers: Array<() => void> = [];
   let resizeTimer: number;
   window.addEventListener("resize", () => {
@@ -1754,6 +1951,9 @@ if (receiptCounter) {
       200
     );
   });
+
+  // 1-line animation in reasons section
+
   const scaleBlock = document.querySelector(".reason-wrapper");
   const queueItems = [...document.querySelectorAll(".reason-offline-list li")];
 
@@ -1768,10 +1968,10 @@ if (receiptCounter) {
       setQueueState(queueItems[0], "is-done", "Відправлено");
       setQueueState(queueItems[1], "is-syncing", "Синхронізація");
       queueItems.slice(2).forEach((li) => setQueueState(li, "", "У черзі"));
+      gsap.set(queueItems, { scale: 1 });
     };
 
     if (reducedMotion) {
-      // No looping animation: show both mocks in their final state
       gsap.set(".reason-scale-slot .reason-scale", { scale: 1 });
       queueItems.forEach((li) => setQueueState(li, "is-done", "Відправлено"));
     } else {
@@ -1796,15 +1996,21 @@ if (receiptCounter) {
           [],
           "+=0.5"
         );
+
+        tl.fromTo(
+          li,
+          { scale: 0.92, transformOrigin: "left center" },
+          { scale: 1, duration: 0.3, ease: "back.out(2)" },
+          "<"
+        );
       });
 
       loops.set(scaleBlock, tl);
     }
   }
 
-  // Integrations sweep + courier route: ONE shared timeline (like the
-  // terminals + offline queue pair), so the logo wave runs first, then the
-  // courier walks the route, and both restart together on every repeat.
+  // 2-nd line of animation(grid and curier timeline)
+ 
   const companiesGrid = document.querySelector(".reason-companies");
   const routeList = document.querySelector(".reason-timeline");
 
@@ -1829,11 +2035,14 @@ if (receiptCounter) {
     } else {
       let comboTl: gsap.core.Timeline;
 
-      // (Re)build from the current layout — the logo columns depend on the
-      // rendered grid (9 on desktop / 3 on mobile), so resize rebuilds it.
       const build = () => {
         if (comboTl) comboTl.kill();
         clearAll();
+        gsap.set(stops, { scale: 1 });
+        gsap.set(
+          stops.map((li) => li.querySelector(".reason-timeline-dot")),
+          { scale: 1 }
+        );
 
         const byLeft = new Map<number, Element[]>();
         items.forEach((li) => {
@@ -1845,14 +2054,12 @@ if (receiptCounter) {
           .sort((a, b) => a[0] - b[0])
           .map(([, cols]) => cols);
 
-        const STEP = .35;
+        const STEP = 0.35;
         const HOLD = STEP + 0.2;
         comboTl = gsap.timeline({ repeat: -1, repeatDelay: 1.6, paused: true });
 
-        // route idles (all dashed) while the logo sweep is running
         comboTl.call(() => setStep(-1), [], 0);
 
-        // 1. crossfade wave across the logo columns
         columns.forEach((col, i) => {
           comboTl.call(
             () => col.forEach((li) => li.classList.add("is-active")),
@@ -1866,26 +2073,61 @@ if (receiptCounter) {
           );
         });
 
-        // 2. then the courier walks the route, one stop every 0.9s
-        // ("+=" appends after the sweep's last call — same trick as the queue)
         for (let c = 0; c <= stops.length + 1; c++) {
           comboTl.call(() => setStep(c), [], c === 0 ? "+=0.45" : "+=0.6");
+
+          const target = stops[c - 1];
+          if (target) {
+            const card = target.querySelector(".reason-timeline-card");
+            const dot = target.querySelector(".reason-timeline-dot");
+
+            if (card) {
+              comboTl.fromTo(
+                card,
+                { scale: 0.85, transformOrigin: "left center" },
+                {
+                  scale: 1,
+                  duration: 0.3,
+                  ease: "back.out(5)",
+                  immediateRender: false,
+                },
+                "<"
+              );
+            }
+
+            if (dot) {
+              comboTl.fromTo(
+                dot,
+                { scale: 1 },
+                {
+                  keyframes: [
+                    { scale: 1.4, duration: 0.15 },
+                    { scale: 0.85, duration: 0.15 },
+                    { scale: 1, duration: 0.2 },
+                  ],
+                  ease: "power2.out",
+                  transformOrigin: "center center",
+                  immediateRender: false,
+                },
+                "<"
+              );
+            }
+          }
         }
 
-        // refresh the registry — the shared observer reads the Map on every
-        // event, so it picks up the rebuilt timeline automatically
         loops.set(companiesGrid, comboTl);
       };
 
       build();
 
-      // Layout (and therefore columns) changes across breakpoints — rebuild
       resizeHandlers.push(() => {
         build();
         comboTl.play();
       });
     }
   }
+
+  // Post list
 
   const postList = document.querySelector(".reason-post-list");
   if (postList) {
@@ -1899,8 +2141,10 @@ if (receiptCounter) {
         : (status.getAttribute("data-status") ?? "");
     };
 
-    // Frame 1 of the mock: only the already-delivered first row is done
-    const resetPost = () => rows.forEach((li, i) => setPostState(li, false));
+    const resetPost = () => {
+      rows.forEach((li) => setPostState(li, false));
+      gsap.set(rows, { scale: 1 });
+    };
 
     if (reducedMotion) {
       rows.forEach((li) => setPostState(li, true));
@@ -1910,9 +2154,23 @@ if (receiptCounter) {
         repeatDelay: 2,
         paused: true,
       });
+
       postTl.call(resetPost);
+
       rows.forEach((li) => {
         postTl.call(() => setPostState(li, true), [], "+=.5");
+
+        postTl.fromTo(
+          li,
+          { scale: 0.92, transformOrigin: "left center" },
+          {
+            scale: 1,
+            duration: 0.3,
+            ease: "back.out(2)",
+            immediateRender: false,
+          },
+          "<"
+        );
       });
 
       loops.set(postList, postTl);
@@ -1984,12 +2242,17 @@ if (receiptCounter) {
   //   }
   // }
 
+  // Steps
+
   const stepsGrid = document.querySelector(".steps-grid");
   if (stepsGrid) {
     const cards = [...stepsGrid.querySelectorAll<HTMLElement>(".step-card")];
     const fillsOf = (card: HTMLElement) => [
       ...card.querySelectorAll<HTMLElement>("[data-fill], [data-activate]"),
     ];
+    const cardDelay = 0.8; 
+    const fillDelay = 0.25; 
+    const fillDuration = 0.25; 
 
     const fillClass = (el: HTMLElement) =>
       el.hasAttribute("data-activate") ? "is-active" : "is-filled";
@@ -1999,7 +2262,6 @@ if (receiptCounter) {
         card.classList.remove("is-active", "is-done", "is-filled-done");
         fillsOf(card).forEach((el) => {
           el.classList.remove("is-filled", "is-active");
-          // Скидаємо трансформи тільки для внутрішніх елементів
           gsap.set(el, { scale: 1 });
         });
       });
@@ -2016,11 +2278,10 @@ if (receiptCounter) {
         repeatDelay: 2.5,
         paused: true,
       });
-      
+
       stepsTl.call(reset);
 
       cards.forEach((card, i) => {
-        // Активуємо картку (без баунсу для самої картки)
         stepsTl.call(
           () => {
             cards.forEach((c, k) => {
@@ -2029,28 +2290,29 @@ if (receiptCounter) {
             });
           },
           [],
-          "+=0.5" // повернули оригінальну затримку
+          `+=${cardDelay}`
         );
 
-        // Наповнення внутрішніх елементів по черзі (залишаємо цікавий ефект тут)
         fillsOf(card).forEach((el) => {
-          stepsTl.call(() => el.classList.add(fillClass(el)), [], "+=0.5");
-          
-          // Ефект мікро-відскоку для внутрішніх елементів (вони м'яко виростають)
-          stepsTl.fromTo(el,
+          stepsTl.call(
+            () => el.classList.add(fillClass(el)),
+            [],
+            `+=${fillDelay}`
+          );
+
+          stepsTl.fromTo(
+            el,
             { scale: 0.92, transformOrigin: "left center" },
-            { scale: 1, duration: 0.25, ease: "back.out(2)" },
+            { scale: 1, duration: fillDuration, ease: "back.out(2)" },
             "<"
           );
         });
 
-        // Картка 4 підсвічується
         if (card.dataset.card === "4") {
           stepsTl.call(() => card.classList.add("is-filled-done"), [], "+=0.2");
         }
       });
 
-      // Фінал
       stepsTl.call(
         () => cards[cards.length - 1].classList.add("is-done"),
         [],
@@ -2221,242 +2483,235 @@ if (receiptCounter) {
   // }
 
   const testimonialsSection =
-  document.querySelector<HTMLElement>(".testimonials");
-if (testimonialsSection) {
-  const track = testimonialsSection.querySelector<HTMLElement>(
-    ".testimonials-track"
-  )!;
+    document.querySelector<HTMLElement>(".testimonials");
+  if (testimonialsSection) {
+    const track = testimonialsSection.querySelector<HTMLElement>(
+      ".testimonials-track"
+    )!;
 
-  // ── Безкінечна стрічка: клонуємо перший і останній слайд ──
-  const realCards = [
-    ...track.querySelectorAll<HTMLElement>(".testimonials-card"),
-  ];
+    const realCards = [
+      ...track.querySelectorAll<HTMLElement>(".testimonials-card"),
+    ];
 
-  // Прибирає дублікати id всередині inline SVG (defs/gradient/clipPath),
-  // щоб клони не ламали посилання url(#...) / href="#..."
-  const dedupeIds = (root: HTMLElement) => {
-    const suffix = `-clone-${Math.random().toString(36).slice(2, 8)}`;
-    root.querySelectorAll<HTMLElement>("[id]").forEach((el) => {
-      const oldId = el.id;
-      const newId = oldId + suffix;
-      el.id = newId;
-      root
-        .querySelectorAll(`[fill="url(#${oldId})"]`)
-        .forEach((ref) => ref.setAttribute("fill", `url(#${newId})`));
-      root
-        .querySelectorAll(`[href="#${oldId}"]`)
-        .forEach((ref) => ref.setAttribute("href", `#${newId}`));
-    });
-  };
-
-  const hasLoop = realCards.length > 1;
-
-  if (hasLoop) {
-    const firstClone = realCards[0].cloneNode(true) as HTMLElement;
-    const lastClone = realCards[realCards.length - 1].cloneNode(
-      true
-    ) as HTMLElement;
-
-    [firstClone, lastClone].forEach((clone) => {
-      clone.classList.add("is-clone");
-      clone.setAttribute("aria-hidden", "true");
-      clone
-        .querySelectorAll<HTMLElement>("a, button")
-        .forEach((el) => el.setAttribute("tabindex", "-1"));
-      dedupeIds(clone);
-    });
-
-    track.insertBefore(lastClone, realCards[0]);
-    track.appendChild(firstClone);
-  }
-
-  const cards = [
-    ...track.querySelectorAll<HTMLElement>(".testimonials-card"),
-  ];
-  const bodies = cards.map(
-    (card) => card.querySelector<HTMLElement>(".testimonials-body")!
-  );
-  const prevBtn = testimonialsSection.querySelector<HTMLButtonElement>(
-    ".slider-btn--prev"
-  )!;
-  const nextBtn = testimonialsSection.querySelector<HTMLButtonElement>(
-    ".slider-btn--next"
-  )!;
-
-  const desktop = window.matchMedia("(min-width: 1024px)");
-  const PAD_ACTIVE = 16;
-  const BODY_MARGIN = { top: 24, right: 40, bottom: 24, left: 24 };
-  const ACTIVE_SHARE = 0.65;
-
-  // Реальний перший/останній слайд у новому, "розширеному" масиві cards
-  const FIRST_REAL = hasLoop ? 1 : 0;
-  const LAST_REAL = hasLoop ? cards.length - 2 : cards.length - 1;
-
-  let index = FIRST_REAL;
-  let bodyW = 0;
-  let step = 0;
-  let isAnimating = false;
-
-  const cardProps = (active: boolean) => ({
-    padding: active ? PAD_ACTIVE : 16,
-    backgroundColor: active ? "#ffffff" : "rgba(255,255,255,0)",
-    borderColor: active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0.35)",
-  });
-  const bodyProps = (active: boolean) => ({
-    width: active ? bodyW : 0,
-    marginTop: active ? BODY_MARGIN.top : 0,
-    marginRight: active ? BODY_MARGIN.right : 0,
-    marginBottom: active ? BODY_MARGIN.bottom : 0,
-    marginLeft: active ? BODY_MARGIN.left : 0,
-    autoAlpha: active ? 1 : 0,
-  });
-
-  const measure = () => {
-    if (!desktop.matches) return;
-    const mediaW = cards[0].querySelector<HTMLElement>(
-      ".testimonials-media"
-    )!.offsetWidth;
-    const containerW = track.parentElement!.clientWidth;
-    bodyW = Math.max(
-      240,
-      Math.round(containerW * ACTIVE_SHARE) -
-        (PAD_ACTIVE * 2 + BODY_MARGIN.left + BODY_MARGIN.right + mediaW)
-    );
-    testimonialsSection.style.setProperty("--body-w", `${bodyW}px`);
-    for (let k = 0; k < cards.length - 1; k++) {
-      if (k !== index && k + 1 !== index) {
-        step = cards[k + 1].offsetLeft - cards[k].offsetLeft;
-        break;
-      }
-    }
-  };
-
-  // apply() тепер приймає onDone — колбек, що спрацює
-  // одразу (instant) або по завершенню анімації треку (animate)
-  const apply = (animate: boolean, onDone?: () => void) => {
-    const instant = reducedMotion || !animate;
-    const tween: gsap.TweenVars = {
-      duration: 1,
-      ease: "expo.inOut",
-      overwrite: true,
+    const dedupeIds = (root: HTMLElement) => {
+      const suffix = `-clone-${Math.random().toString(36).slice(2, 8)}`;
+      root.querySelectorAll<HTMLElement>("[id]").forEach((el) => {
+        const oldId = el.id;
+        const newId = oldId + suffix;
+        el.id = newId;
+        root
+          .querySelectorAll(`[fill="url(#${oldId})"]`)
+          .forEach((ref) => ref.setAttribute("fill", `url(#${newId})`));
+        root
+          .querySelectorAll(`[href="#${oldId}"]`)
+          .forEach((ref) => ref.setAttribute("href", `#${newId}`));
+      });
     };
 
-    if (desktop.matches) {
-      cards.forEach((card, k) => {
-        const active = k === index;
-        if (instant) {
-          gsap.set(card, cardProps(active));
-          gsap.set(bodies[k], bodyProps(active));
-        } else {
-          gsap.to(card, { ...cardProps(active), ...tween });
-          gsap.to(bodies[k], { ...bodyProps(active), ...tween });
-        }
+    const hasLoop = realCards.length > 1;
+
+    if (hasLoop) {
+      const firstClone = realCards[0].cloneNode(true) as HTMLElement;
+      const lastClone = realCards[realCards.length - 1].cloneNode(
+        true
+      ) as HTMLElement;
+
+      [firstClone, lastClone].forEach((clone) => {
+        clone.classList.add("is-clone");
+        clone.setAttribute("aria-hidden", "true");
+        clone
+          .querySelectorAll<HTMLElement>("a, button")
+          .forEach((el) => el.setAttribute("tabindex", "-1"));
+        dedupeIds(clone);
       });
-      const x = -index * step;
-      if (instant) {
-        gsap.set(track, { x });
-      } else {
-        gsap.to(track, { x, ...tween, onComplete: onDone });
-      }
-    } else {
-      const x = -(cards[index].offsetLeft - cards[0].offsetLeft);
-      if (instant) {
-        gsap.set(track, { x });
-      } else {
-        gsap.to(track, { x, ...tween, onComplete: onDone });
-      }
+
+      track.insertBefore(lastClone, realCards[0]);
+      track.appendChild(firstClone);
     }
+
+    const cards = [
+      ...track.querySelectorAll<HTMLElement>(".testimonials-card"),
+    ];
+    const bodies = cards.map(
+      (card) => card.querySelector<HTMLElement>(".testimonials-body")!
+    );
+    const prevBtn =
+      testimonialsSection.querySelector<HTMLButtonElement>(
+        ".slider-btn--prev"
+      )!;
+    const nextBtn =
+      testimonialsSection.querySelector<HTMLButtonElement>(
+        ".slider-btn--next"
+      )!;
+
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const PAD_ACTIVE = 16;
+    const BODY_MARGIN = { top: 24, right: 40, bottom: 24, left: 24 };
+    const ACTIVE_SHARE = 0.65;
+
+    const FIRST_REAL = hasLoop ? 1 : 0;
+    const LAST_REAL = hasLoop ? cards.length - 2 : cards.length - 1;
+
+    let index = FIRST_REAL;
+    let bodyW = 0;
+    let step = 0;
+    let isAnimating = false;
+
+    const cardProps = (active: boolean) => ({
+      padding: active ? PAD_ACTIVE : 16,
+      backgroundColor: active ? "#ffffff" : "rgba(255,255,255,0)",
+      borderColor: active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0.35)",
+    });
+    const bodyProps = (active: boolean) => ({
+      width: active ? bodyW : 0,
+      marginTop: active ? BODY_MARGIN.top : 0,
+      marginRight: active ? BODY_MARGIN.right : 0,
+      marginBottom: active ? BODY_MARGIN.bottom : 0,
+      marginLeft: active ? BODY_MARGIN.left : 0,
+      autoAlpha: active ? 1 : 0,
+    });
+
+    const measure = () => {
+      if (!desktop.matches) return;
+      const mediaW = cards[0].querySelector<HTMLElement>(
+        ".testimonials-media"
+      )!.offsetWidth;
+      const containerW = track.parentElement!.clientWidth;
+      bodyW = Math.max(
+        240,
+        Math.round(containerW * ACTIVE_SHARE) -
+          (PAD_ACTIVE * 2 + BODY_MARGIN.left + BODY_MARGIN.right + mediaW)
+      );
+      testimonialsSection.style.setProperty("--body-w", `${bodyW}px`);
+      for (let k = 0; k < cards.length - 1; k++) {
+        if (k !== index && k + 1 !== index) {
+          step = cards[k + 1].offsetLeft - cards[k].offsetLeft;
+          break;
+        }
+      }
+    };
+
+    const apply = (animate: boolean, onDone?: () => void) => {
+      const instant = reducedMotion || !animate;
+      const tween: gsap.TweenVars = {
+        duration: 1,
+        ease: "expo.inOut",
+        overwrite: true,
+      };
+
+      if (desktop.matches) {
+        cards.forEach((card, k) => {
+          const active = k === index;
+          if (instant) {
+            gsap.set(card, cardProps(active));
+            gsap.set(bodies[k], bodyProps(active));
+          } else {
+            gsap.to(card, { ...cardProps(active), ...tween });
+            gsap.to(bodies[k], { ...bodyProps(active), ...tween });
+          }
+        });
+        const x = -index * step;
+        if (instant) {
+          gsap.set(track, { x });
+        } else {
+          gsap.to(track, { x, ...tween, onComplete: onDone });
+        }
+      } else {
+        const x = -(cards[index].offsetLeft - cards[0].offsetLeft);
+        if (instant) {
+          gsap.set(track, { x });
+        } else {
+          gsap.to(track, { x, ...tween, onComplete: onDone });
+        }
+      }
+
+      cards.forEach((card, k) =>
+        card.classList.toggle("is-current", k === index)
+      );
+
+      if (instant) onDone?.();
+    };
+
+    const goTo = (i: number, animate = true) => {
+      console.log(i, index);
+      if (isAnimating) return;
+      index = i;
+
+      const finalize = () => {
+        if (hasLoop && index === 0) {
+          index = LAST_REAL;
+          apply(false);
+        }
+        else if (hasLoop && index === cards.length - 1) {
+          index = FIRST_REAL;
+          apply(false);
+        }
+        isAnimating = false;
+      };
+
+      if (animate && !reducedMotion) isAnimating = true;
+      apply(animate, finalize);
+    };
+
+    const init = () => {
+      apply(false);
+      measure();
+      apply(false);
+    };
+
+    prevBtn.addEventListener("click", () => goTo(index - 1));
+    nextBtn.addEventListener("click", () => goTo(index + 1));
 
     cards.forEach((card, k) =>
-      card.classList.toggle("is-current", k === index)
+      card.addEventListener("click", () => {
+        if (desktop.matches && k !== index && !isAnimating) goTo(k);
+      })
     );
 
-    if (instant) onDone?.();
-  };
-
-  const goTo = (i: number, animate = true) => {
-    console.log(i, index);
-    if (isAnimating) return;
-    index = i;
-
-    const finalize = () => {
-      // Проскочили за клон останньої картки назад → миттєво
-      // перескакуємо на справжню останню (виглядає ідентично)
-      if (hasLoop && index === 0) {
-        index = LAST_REAL;
-        apply(false);
-      }
-      // Проскочили за клон першої картки вперед → миттєво
-      // перескакуємо на справжню першу
-      else if (hasLoop && index === cards.length - 1) {
-        index = FIRST_REAL;
-        apply(false);
-      }
-      isAnimating = false;
-    };
-
-    if (animate && !reducedMotion) isAnimating = true;
-    apply(animate, finalize);
-  };
-
-  const init = () => {
-    apply(false);
-    measure();
-    apply(false);
-  };
-
-  prevBtn.addEventListener("click", () => goTo(index - 1));
-  nextBtn.addEventListener("click", () => goTo(index + 1));
-
-  cards.forEach((card, k) =>
-    card.addEventListener("click", () => {
-      if (desktop.matches && k !== index && !isAnimating) goTo(k);
-    })
-  );
-
-  let touchX = 0;
-  track.addEventListener(
-    "touchstart",
-    (e) => (touchX = e.touches[0].clientX),
-    { passive: true }
-  );
-  track.addEventListener(
-    "touchend",
-    (e) => {
-      const dx = e.changedTouches[0].clientX - touchX;
-      if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
-    },
-    { passive: true }
-  );
-
-  resizeHandlers.push(() => {
-    gsap.set([track, ...cards, ...bodies], { clearProps: "all" });
-    init();
-  });
-
-  init();
-
-  if (!reducedMotion) {
-    gsap.set(cards, { y: 48, autoAlpha: 0 });
-    const introObserver = new IntersectionObserver(
-      (entries) => {
-        if (!entries[0].isIntersecting) return;
-        introObserver.disconnect();
-        gsap.to(cards, {
-          y: 0,
-          autoAlpha: 1,
-          duration: 0.9,
-          ease: "power3.out",
-          stagger: 0.12,
-        });
+    let touchX = 0;
+    track.addEventListener(
+      "touchstart",
+      (e) => (touchX = e.touches[0].clientX),
+      { passive: true }
+    );
+    track.addEventListener(
+      "touchend",
+      (e) => {
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
       },
-      { threshold: 0.2 }
+      { passive: true }
     );
-    introObserver.observe(track);
+
+    resizeHandlers.push(() => {
+      gsap.set([track, ...cards, ...bodies], { clearProps: "all" });
+      init();
+    });
+
+    init();
+
+    if (!reducedMotion) {
+      gsap.set(cards, { y: 48, autoAlpha: 0 });
+      const introObserver = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting) return;
+          introObserver.disconnect();
+          gsap.to(cards, {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.9,
+            ease: "power3.out",
+            stagger: 0.12,
+          });
+        },
+        { threshold: 0.2 }
+      );
+      introObserver.observe(track);
+    }
   }
-}
 
   // API //
+
   const apiFlow = document.querySelector(".api-flow");
   if (apiFlow) {
     const apiNodes = [
@@ -2482,9 +2737,8 @@ if (testimonialsSection) {
     }
   }
 
-  // Category slider: tabs auto-advance one by one (paused via loops/
-  // loopObserver below, same as the API flow); any manual click on a tab or
-  // arrow jumps straight to that slide and stops the autoplay for good.
+  // Category slider
+
   const categorySection = document.querySelector<HTMLElement>(".category");
   if (categorySection) {
     const tabs = [
@@ -2508,12 +2762,10 @@ if (testimonialsSection) {
     const panelLogos = categorySection.querySelector<HTMLElement>(
       ".category-panel-logos"
     )!;
-    const prevBtn = categorySection.querySelector<HTMLButtonElement>(
-      ".slider-btn--prev"
-    )!;
-    const nextBtn = categorySection.querySelector<HTMLButtonElement>(
-      ".slider-btn--next"
-    )!;
+    const prevBtn =
+      categorySection.querySelector<HTMLButtonElement>(".slider-btn--prev")!;
+    const nextBtn =
+      categorySection.querySelector<HTMLButtonElement>(".slider-btn--next")!;
 
     let index = Math.max(
       0,
@@ -2563,12 +2815,17 @@ if (testimonialsSection) {
           overwrite: "auto",
           onComplete: () => {
             render();
-            gsap.to(panelMedia, {
-              autoAlpha: 1,
-              duration: 0.35,
-              ease: "power1.out",
-              overwrite: "auto",
-            });
+            gsap.fromTo(
+              panelMedia,
+              { autoAlpha: 0, y: 10 },
+              {
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.35,
+                ease: "power1.out",
+                overwrite: "auto",
+              }
+            );
           },
         });
       }
@@ -2606,9 +2863,8 @@ if (testimonialsSection) {
     loops.forEach((_, el) => loopObserver.observe(el));
   }
 
-  // FAQ: <details> can't animate natively, so the summary click is
-  // intercepted and the answer is tweened by GSAP (it can animate height to
-  // "auto"); [open] is only removed after the collapse finishes
+  // FAQ
+
   document
     .querySelectorAll<HTMLDetailsElement>(".faq-item")
     .forEach((details) => {
@@ -2618,9 +2874,6 @@ if (testimonialsSection) {
 
       summary.addEventListener("click", (e) => {
         e.preventDefault();
-        // is-open (not details.open) drives the toggle: [open] stays set
-        // until the collapse tween finishes, so a click mid-collapse should
-        // reopen, tweening from the current height
         const isOpen = details.classList.contains("is-open");
 
         if (!isOpen) {
@@ -2639,8 +2892,8 @@ if (testimonialsSection) {
             height: "auto",
             opacity: 1,
             marginTop: 16,
-            duration: 0.2,
-            ease: "power1.out",
+            duration: 0.5,
+            ease: "back.out(1.2)",
             overwrite: true,
             clearProps: "all",
           });
@@ -2652,8 +2905,8 @@ if (testimonialsSection) {
             opacity: 0,
             marginTop: 0,
             overflow: "hidden",
-            duration: 0.2,
-            ease: "power1.in",
+            duration: 0.4,
+            ease: "power2.in", // для закриття краще без bounce
             overwrite: true,
             onComplete: () => {
               details.open = false;

@@ -18,7 +18,7 @@
   --color-grey-light: #818081;
   --color-grey-2: #e4e2e4;
   /* --color-accent-rgb: 158 39 138; */
-  --color-accent-rgb: 63 24 160;
+  --color-accent-rgb: 158 39 138;
     /* Non transparent color: background: color-mix(in srgb, rgb(var(--color-accent-rgb)) 32%, var(--color-bg)); */
 
   --border-dotted-bottom: repeating-linear-gradient(
