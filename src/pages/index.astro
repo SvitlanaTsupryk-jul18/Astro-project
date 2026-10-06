@@ -57,7 +57,7 @@ const clientLogos = [
   { src: $image("/choices/logo-1.svg"), alt: "Компанія 1" },
   { src: $image("/choices/logo-2.svg"), alt: "Компанія 2" },
   { src: $image("/choices/logo-3.svg"), alt: "Компанія 3" },
-  { src: $image("/choices/logo-4.svg"), alt: "Компанія 4" },
+  { src: $image("/choices/logo-4.png"), alt: "Компанія 4" },
   { src: $image("/choices/logo-5.svg"), alt: "Компанія 5" },
   { src: $image("/choices/logo-6.svg"), alt: "Компанія 6" },
   { src: $image("/choices/logo-7.svg"), alt: "Компанія 7" },
@@ -65,8 +65,24 @@ const clientLogos = [
   { src: $image("/choices/logo-9.svg"), alt: "Компанія 9" },
   { src: $image("/choices/logo-10.svg"), alt: "Компанія 10" },
   { src: $image("/choices/logo-11.svg"), alt: "Компанія 11" },
-  { src: $image("/choices/logo-12.svg"), alt: "Компанія 12" },
 ];
+
+// Hero receipt counter: a known total at a fixed moment plus the average
+// issuing rate. The build renders the value for build time so the first
+// paint is already close; the client script then updates it to "now" and
+// adds perSecond every second. Kyiv time offset is explicit so every
+// visitor sees the same number.
+const receiptCounter = {
+  base: 2_582_509_485,
+  baseAt: Date.parse("2026-07-20T00:00:00+03:00"),
+  perSecond: 33,
+};
+// group digits with non-breaking spaces so the number never wraps
+const formatCount = (n: number) =>
+  String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0");
+const receiptsAtBuild =
+  receiptCounter.base +
+  Math.floor((Date.now() - receiptCounter.baseAt) / 1000) * receiptCounter.perSecond;
 
 // Statistics cards
 const stats = [
@@ -315,7 +331,7 @@ const stepCatalogItems = [
   { name: "Кава", price: "75", dot: "#B2667C" },
   { name: "Піца Маргарита", price: "180", dot: "#F79E1B" },
   { name: "Вода 0.5л", price: "25", dot: "#315AFF" },
-  { name: "Вода 0.5л", price: "25", dot: "#315AFF" },
+  { name: "Круасан", price: "45", dot: "#05BC17" },
 ];
 const stepReceiptItems = [
   { name: "Кава", qty: "1 шт", price: "75" },
@@ -371,78 +387,165 @@ const testimonials: Slide[] = [
 ];
 
 // Category slider: left-hand tabs cycle automatically and the right-hand
-// panel (photo + quote + client logos) fades to match. Categories cycle
-// through 4 placeholder slides — fill in real photos/quotes for each
-// vertical here once they are ready.
-const categoryContents = [
-  {
-    image: $image("/category-1.png"),
-    quote:
-      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
-    author: "Наталія",
-    role: "бухгалтер, MD Fashion",
-    logos: ["MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
-  },
-  {
-    image: $image("/category-2.png"),
-    quote:
-      "2 Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
-    author: "Н2аталія",
-    role: "2бухгалтер, MD Fashion",
-    logos: ["2MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
-  },
-  {
-    image: $image("/category-3.png"),
-    quote:
-      "3 Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
-    author: "3Наталія",
-    role: "3бухгалтер, MD Fashion",
-    logos: ["3MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
-  },
-  {
-    image: $image("/category-4.png"),
-    quote:
-      "4 Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
-    author: "4Наталія",
-    role: "4бухгалтер, MD Fashion",
-    logos: ["4MD FASHION", "ROZETKA", "Prom", "ХОРОШОП"],
-  },
+// panel (photo + quote + client logos) fades to match. Every category has
+// its own quote; the photos are shared placeholders for now (one per four
+// categories) until each vertical gets its own shot.
+const categoryPhotos = [
+  $image("/category-1.png"),
+  $image("/category-2.png"),
+  $image("/category-3.png"),
+  $image("/category-4.png"),
 ];
 
 // The category panel swaps its <img> from data-* attributes via JS, which
 // bypasses <Image> — so pre-optimize the panel photos with getImage() here
 // and put the optimized URLs (webp + srcset) into those attributes instead.
 const categoryPanelSizes = "(min-width: 1024px) 50vw, 100vw";
-const optimizedCategoryContents = await Promise.all(
-  categoryContents.map(async ({ image, ...rest }) => ({
-    ...rest,
-    image: await getImage({
-      src: image,
+const optimizedCategoryPhotos = await Promise.all(
+  categoryPhotos.map((src) =>
+    getImage({
+      src,
       format: "webp",
       widths: [700, 1400],
       sizes: categoryPanelSizes,
-    }),
-  }))
+    })
+  )
 );
 
 const categories = [
-  { icon: IconCategoryRetail, label: "Класичний рітейл" },
-  { icon: IconCategoryNetwork, label: "Мережам магазинам" },
-  { icon: IconCategoryMarketplace, label: "Торговцям на маркетплейсах" },
-  { icon: IconCategoryEcommerce, label: "Інтернет-магазинам" },
-  { icon: IconCategoryHospitality, label: "Кафе, ресторанам і готелям" },
-  { icon: IconCategoryMedical, label: "Медичним центрам" },
-  { icon: IconCategoryBeauty, label: "Салонам краси, перукарням" },
-  { icon: IconCategorySport, label: "Спортивним клубам" },
-  { icon: IconCategoryPawnshop, label: "Ломбардам" },
-  { icon: IconCategoryExchange, label: "Обмінникам валют" },
-  { icon: IconCategoryFranchise, label: "Франшизам" },
-  { icon: IconCategoryVending, label: "Вендінгу" },
-  { icon: IconCategoryMall, label: "ТРЦ" },
-  { icon: IconCategoryCourier, label: "Кур'єрам і водіям на платформах" },
-].map((category, i) => ({
-  ...category,
-  content: optimizedCategoryContents[i % optimizedCategoryContents.length],
+  {
+    icon: IconCategoryRetail,
+    label: "Класичний рітейл",
+    quote:
+      "Перейшли з двох старих касових апаратів за один вечір. Більше ніяких опломбувань і сервісних центрів, а виручку бачу з телефона навіть у відпустці.",
+    author: "Олена",
+    role: "власниця, магазин «Комора»",
+    logos: ["Комора", "Лавка 24", "Господар", "Домівка"],
+  },
+  {
+    icon: IconCategoryNetwork,
+    label: "Мережам магазинам",
+    quote:
+      "У нас 37 точок по всій країні. Усі каси в одному кабінеті, а нову точку запускаємо за день, а не за тиждень, як раніше.",
+    author: "Андрій",
+    role: "операційний директор, мережа «Свіжа зелень»",
+    logos: ["Мамина кухня", "Еко-маркет", "Хлібний"],
+  },
+  {
+    icon: IconCategoryMarketplace,
+    label: "Торговцям на маркетплейсах",
+    quote:
+      "Чеки по замовленнях з маркетплейсів формуються автоматично. Більше не звіряю вручну сотні відправок наприкінці місяця.",
+    author: "Ірина",
+    role: "ФОП, продаж аксесуарів",
+    logos: ["Bloom Case", "Нитка", "Cozy Home", "Kidsy"],
+  },
+  {
+    icon: IconCategoryEcommerce,
+    label: "Інтернет-магазинам",
+    quote:
+      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+    author: "Наталія",
+    role: "бухгалтер, MD Fashion",
+    logos: ["MD Fashion", "Rozetka", "Prom", "Хорошоп"],
+  },
+  {
+    icon: IconCategoryHospitality,
+    label: "Кафе, ресторанам і готелям",
+    quote:
+      "Інтеграція з нашою POS-системою запрацювала з першого дня. Офіціанти пробивають чек за секунди, навіть коли зникає інтернет.",
+    author: "Максим",
+    role: "керуючий, ресторан «Дров'яна піч»",
+    logos: ["Дров'яна піч", "Кава тут", "Смерека", "Бранч"],
+  },
+  {
+    icon: IconCategoryMedical,
+    label: "Медичним центрам",
+    quote:
+      "Пацієнти оплачують прийом карткою, а чек одразу приходить на пошту. Адміністратори нарешті займаються людьми, а не касою.",
+    author: "Тетяна",
+    role: "головна бухгалтерка, клініка «Віта-Мед»",
+    logos: ["Віта-Мед", "Dental Art", "Лабтест+", "Оптика 1"],
+  },
+  {
+    icon: IconCategoryBeauty,
+    label: "Салонам краси, перукарням",
+    quote:
+      "Майстри працюють з планшета, а чек видається автоматично після кожного візиту. Для салону на 12 крісел це реальна економія часу.",
+    author: "Юлія",
+    role: "власниця, студія краси «Lumi»",
+    logos: ["Lumi", "Barber Bros", "Nail Lab", "Локон"],
+  },
+  {
+    icon: IconCategorySport,
+    label: "Спортивним клубам",
+    quote:
+      "Продаємо абонементи онлайн і на рецепції, а всі чеки зібрані в одному місці. Перевірка податкової пройшла без жодного зауваження.",
+    author: "Дмитро",
+    role: "директор, фітнес-клуб «Пульс»",
+    logos: ["Пульс", "Aqua Fit", "Скеледром", "Йога"],
+  },
+  {
+    icon: IconCategoryPawnshop,
+    label: "Ломбардам",
+    quote:
+      "Для ломбарду важливо, щоб кожна операція була прозорою. Checkbox підтримує всі наші сценарії, а служба турботи відповідає за лічені хвилини.",
+    author: "Сергій",
+    role: "фінансовий директор, мережа «Гарант»",
+    logos: ["Гарант", "Золотий запас", "Капітал"],
+  },
+  {
+    icon: IconCategoryExchange,
+    label: "Обмінникам валют",
+    quote:
+      "Курс змінюється кілька разів на день, і каса встигає за ним. Чеки за обмінними операціями формуються без ручних виправлень.",
+    author: "Олександр",
+    role: "керівник відділення, «Обмін Плюс»",
+    logos: ["Обмін Плюс", "Валюта 24", "Курс", "Фінпункт"],
+  },
+  {
+    icon: IconCategoryFranchise,
+    label: "Франшизам",
+    quote:
+      "Кожен франчайзі підключається за одним стандартом: однакові налаштування, звіти й інтеграції. Продажі всієї мережі бачимо в реальному часі.",
+    author: "Вікторія",
+    role: "менеджерка з розвитку, «Кава поруч»",
+    logos: ["Кава поруч", "Pizza Point", "Donut Bar"],
+  },
+  {
+    icon: IconCategoryVending,
+    label: "Вендінгу",
+    quote:
+      "Сто двадцять кавових автоматів і жодного касира. Чеки фіскалізуються самі, а ми лише стежимо за статистикою в кабінеті.",
+    author: "Ігор",
+    role: "засновник, Vend Coffee",
+    logos: ["Vend Coffee", "Snack Box", "Fresh Juice"],
+  },
+  {
+    icon: IconCategoryMall,
+    label: "ТРЦ",
+    quote:
+      "Допомогли орендарям швидко перейти на програмні каси. Тепер обороти для розрахунку оренди бачимо без запитів і таблиць.",
+    author: "Роман",
+    role: "адміністратор, ТРЦ «Арена Сіті»",
+    logos: ["Арена Сіті", "Fashion Hall", "Фудкорт", "Кіноплекс"],
+  },
+  {
+    icon: IconCategoryCourier,
+    label: "Кур'єрам і водіям на платформах",
+    quote:
+      "Працюю з кількома службами доставки і видаю чек просто з телефона. Жодного додаткового обладнання, тільки застосунок.",
+    author: "Віталій",
+    role: "кур'єр, ФОП",
+    logos: ["Доставка 24", "Швидко", "Таксі Плюс", "Food Run"],
+  },
+].map(({ icon, label, ...content }, i) => ({
+  icon,
+  label,
+  content: {
+    ...content,
+    image: optimizedCategoryPhotos[i % optimizedCategoryPhotos.length],
+  },
 }));
 
 const activeCategoryIndex = 3; // "Інтернет-магазинам" — matches the design mock
@@ -573,7 +676,13 @@ const supportPoints = [
     <div class="container">
       <div class="hero-content">
         <p class="hero-stat">
-          Чекбокс видав <b data-receipt-counter>2 582 509 485</b> чеків
+          Чекбокс видав <b
+            data-receipt-counter
+            data-base={receiptCounter.base}
+            data-base-at={receiptCounter.baseAt}
+            data-per-second={receiptCounter.perSecond}
+            >{formatCount(receiptsAtBuild)}</b
+          > чеків
         </p>
         <h1>Впевненість<br />у кожному чеку</h1>
         <p class="hero-desc">
@@ -731,7 +840,18 @@ const supportPoints = [
         {
           [...clientLogos, ...clientLogos].map((logo) => (
             <span class="choice-item">
-              <Image src={logo.src} alt={logo.alt} class="choice-logo" />
+              <Image
+                src={logo.src}
+                alt={logo.alt}
+                class="choice-logo"
+                {...(logo.src.format !== "svg" && {
+                  // raster logos are stored at 2x — render them at the
+                  // same 139x100 box as the SVG ones, with a 2x srcset
+                  width: 139,
+                  height: 100,
+                  densities: [1, 2],
+                })}
+              />
             </span>
           ))
         }
@@ -1041,7 +1161,15 @@ const supportPoints = [
               клієнтів. Персональний менеджер, який завжди на зв'язку.</strong
             >
           </p>
-          <SupportIllustration />
+          <img
+            src={SupportIllustration.src}
+            width={SupportIllustration.width}
+            height={SupportIllustration.height}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            class="reason-dark-illustration"
+          />
         </div>
       </div>
     </div>
@@ -1155,7 +1283,7 @@ const supportPoints = [
           <p class="step-card-text">
             Заведіть кабінет у Чекбоксі за 2 хвилини.
           </p>
-          <div class="step-ui" aria-hidden="true">
+          <div class="step-ui" aria-hidden="true" inert>
             {
               stepRegisterFields.map((f) => (
                 <label class="step-input" data-fill>
@@ -1177,7 +1305,7 @@ const supportPoints = [
             Додайте торгову точку, касу та касира. Підключіть свою облікову
             систему або використовуйте веб-портал Чекбокса.
           </p>
-          <div class="step-ui" aria-hidden="true">
+          <div class="step-ui" aria-hidden="true" inert>
             {
               stepSetupFields.map((f) => (
                 <label class="step-input" data-fill>
@@ -1198,7 +1326,7 @@ const supportPoints = [
             Додайте товари чи послуги для продажу та спрощення видачі чеків. Або
             одразу видавайте чеки, набиваючи товари вручну.
           </p>
-          <div class="step-ui" aria-hidden="true">
+          <div class="step-ui" aria-hidden="true" inert>
             <span class="step-catalog-add">+ Додати</span>
             <ul class="step-catalog">
               {
@@ -1225,7 +1353,7 @@ const supportPoints = [
             Видавайте паперові, або відправляйте онлайн цифрові. Автоматично чи
             вручну.
           </p>
-          <div class="step-ui" aria-hidden="true">
+          <div class="step-ui" aria-hidden="true" inert>
             <p class="step-receipt-num">Чек #12547</p>
             <div class="step-receipt">
               <DottedBorder gap={4} radius={4} />
@@ -1290,7 +1418,11 @@ const supportPoints = [
       </div>
 
       <div class="category-slider">
-        <div class="category-tabs" role="tablist">
+        <div
+          class="category-tabs"
+          role="tablist"
+          aria-label="Категорії бізнесу"
+        >
           {
             categories.map(({ icon: Icon, label, content }, i) => (
               <button
@@ -1300,7 +1432,10 @@ const supportPoints = [
                   { "is-active": i === activeCategoryIndex },
                 ]}
                 role="tab"
+                id={`category-tab-${i}`}
+                aria-controls="category-panel"
                 aria-selected={i === activeCategoryIndex}
+                tabindex={i === activeCategoryIndex ? 0 : -1}
                 data-index={i}
                 data-quote={content.quote}
                 data-author={content.author}
@@ -1319,7 +1454,12 @@ const supportPoints = [
           }
         </div>
 
-        <div class="category-panel">
+        <div
+          class="category-panel"
+          id="category-panel"
+          role="tabpanel"
+          aria-labelledby={`category-tab-${activeCategoryIndex}`}
+        >
           <div class="category-panel-media">
             <img
               class="category-panel-image"
@@ -1435,7 +1575,15 @@ const supportPoints = [
       <a href="#" class="api-link"
         >Перегляньте документацію <ArrowRightWhite /></a
       >
-      <ApiScheme class="api-scheme" aria-hidden="true" />
+      <img
+        src={ApiScheme.src}
+        width={ApiScheme.width}
+        height={ApiScheme.height}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        class="api-scheme"
+      />
       <div class="api-flow" aria-hidden="true">
         <div class="api-node">
           <DottedBorder color="#7A7A7A" gap={4} />
@@ -1824,7 +1972,14 @@ const supportPoints = [
         </div>
 
         <div class="support-media">
-          <SupportOperator />
+          <img
+            src={SupportOperator.src}
+            width={SupportOperator.width}
+            height={SupportOperator.height}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </div>
     </div>
@@ -1900,7 +2055,9 @@ const supportPoints = [
                   {item.q}
                   <span class="faq-icon" />
                 </summary>
-                <div class="faq-content" set:html={item.a} />
+                <div class="faq-content">
+                  <div class="faq-content-inner" set:html={item.a} />
+                </div>
               </details>
             </div>
           ))
@@ -1917,27 +2074,35 @@ const supportPoints = [
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  // First screen checks counter
-  
-  const receiptCounter = document.querySelector("[data-receipt-counter]");
+  // Shared "pop" for small UI pieces — offline-queue rows, route cards and
+  // dots, parcel rows: they grow to full size with one soft overshoot.
+  // Change it here to retune every small pop on the page at once.
+  const POP = { duration: 0.35, ease: "back.out(2)" };
+
+  // Hero receipt counter: steps once a second by the per-second rate
+  // (e.g. +33), and only while the counter is on screen
+
+  const receiptCounter = document.querySelector<HTMLElement>(
+    "[data-receipt-counter]"
+  );
   if (receiptCounter) {
-    const base = Number(receiptCounter.textContent!.replace(/\D/g, "")); // 2582509485, value as of 00:00 today
-    const perSecond = 33;
-
-    const now = new Date();
-    const midnight = new Date(2026, 6, 20, 0, 0, 0, 0).getTime();
-
+    const base = Number(receiptCounter.dataset.base);
+    const baseAt = Number(receiptCounter.dataset.baseAt);
+    const perSecond = Number(receiptCounter.dataset.perSecond);
     const update = () => {
-      const elapsedSeconds = Math.floor((Date.now() - midnight) / 1000);
-      const receipts = base + elapsedSeconds * perSecond;
-      receiptCounter.textContent = String(receipts).replace(
-        /\B(?=(\d{3})+(?!\d))/g,
-        " "
-      );
+      const elapsedSeconds = Math.floor((Date.now() - baseAt) / 1000);
+      receiptCounter.textContent = String(
+        base + elapsedSeconds * perSecond
+      ).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0");
     };
 
-    update();
-    setInterval(update, 1000);
+    let timer = 0;
+    new IntersectionObserver(([entry]) => {
+      clearInterval(timer);
+      if (!entry.isIntersecting) return;
+      update();
+      timer = window.setInterval(update, 1000);
+    }).observe(receiptCounter);
   }
 
   const loops = new Map<Element, gsap.core.Timeline>();
@@ -1958,6 +2123,14 @@ const supportPoints = [
   const queueItems = [...document.querySelectorAll(".reason-offline-list li")];
 
   if (scaleBlock && queueItems.length) {
+    // Line 1 timing, in seconds
+    const timing = {
+      cycleDelay: 2, // pause before the loop starts over
+      terminalPop: 0.5, // one terminal popping into its slot
+      terminalGap: 0.5, // between terminals
+      queueStep: 0.5, // between queue rows turning "sent"
+    };
+
     const setQueueState = (li: Element, state: string, badgeText: string) => {
       li.classList.remove("is-syncing", "is-done");
       if (state) li.classList.add(state);
@@ -1975,17 +2148,26 @@ const supportPoints = [
       gsap.set(".reason-scale-slot .reason-scale", { scale: 1 });
       queueItems.forEach((li) => setQueueState(li, "is-done", "Відправлено"));
     } else {
-      const tl = gsap.timeline({ repeat: -1, repeatDelay: 2, paused: true });
+      const tl = gsap.timeline({
+        repeat: -1,
+        repeatDelay: timing.cycleDelay,
+        paused: true,
+      });
 
       tl.call(resetQueue)
         // 1. terminals pop into the slots one by one
         .fromTo(
           ".reason-scale-slot .reason-scale",
           { scale: 0 },
-          { scale: 1, duration: 0.5, ease: "back.out(1.2)", stagger: 0.5 }
+          {
+            scale: 1,
+            duration: timing.terminalPop,
+            ease: "back.out(1.2)",
+            stagger: timing.terminalGap,
+          }
         );
 
-      // 2. then the queue advances one row every 0.9s
+      // 2. then the queue advances one row at a time
       queueItems.slice(1).forEach((li, idx) => {
         tl.call(
           () => {
@@ -1994,18 +2176,21 @@ const supportPoints = [
             if (next) setQueueState(next, "is-syncing", "Синхронізація");
           },
           [],
-          "+=0.5"
+          `+=${timing.queueStep}`
         );
 
         tl.fromTo(
           li,
           { scale: 0.92, transformOrigin: "left center" },
-          { scale: 1, duration: 0.3, ease: "back.out(2)" },
+          { scale: 1, ...POP },
           "<"
         );
       });
 
+      // on mobile the terminals and the queue sit in different cards —
+      // keep playing while either of them is on screen
       loops.set(scaleBlock, tl);
+      loops.set(queueItems[0].parentElement!, tl);
     }
   }
 
@@ -2015,6 +2200,15 @@ const supportPoints = [
   const routeList = document.querySelector(".reason-timeline");
 
   if (companiesGrid && routeList) {
+    // Line 2 timing, in seconds
+    const timing = {
+      cycleDelay: 1.6, // pause before the loop starts over
+      columnStep: 0.35, // grid: the next column lights up
+      columnHold: 0.55, // grid: how long a column stays lit
+      firstStop: 0.45, // route: wait before the first stop
+      stopStep: 0.6, // route: between stops
+    };
+
     const items = [...companiesGrid.querySelectorAll("li")];
     const stops = [...routeList.querySelectorAll("li")];
 
@@ -2054,9 +2248,11 @@ const supportPoints = [
           .sort((a, b) => a[0] - b[0])
           .map(([, cols]) => cols);
 
-        const STEP = 0.35;
-        const HOLD = STEP + 0.2;
-        comboTl = gsap.timeline({ repeat: -1, repeatDelay: 1.6, paused: true });
+        comboTl = gsap.timeline({
+          repeat: -1,
+          repeatDelay: timing.cycleDelay,
+          paused: true,
+        });
 
         comboTl.call(() => setStep(-1), [], 0);
 
@@ -2064,17 +2260,21 @@ const supportPoints = [
           comboTl.call(
             () => col.forEach((li) => li.classList.add("is-active")),
             [],
-            i * STEP
+            i * timing.columnStep
           );
           comboTl.call(
             () => col.forEach((li) => li.classList.remove("is-active")),
             [],
-            i * STEP + HOLD
+            i * timing.columnStep + timing.columnHold
           );
         });
 
         for (let c = 0; c <= stops.length + 1; c++) {
-          comboTl.call(() => setStep(c), [], c === 0 ? "+=0.45" : "+=0.6");
+          comboTl.call(
+            () => setStep(c),
+            [],
+            `+=${c === 0 ? timing.firstStop : timing.stopStep}`
+          );
 
           const target = stops[c - 1];
           if (target) {
@@ -2085,37 +2285,27 @@ const supportPoints = [
               comboTl.fromTo(
                 card,
                 { scale: 0.85, transformOrigin: "left center" },
-                {
-                  scale: 1,
-                  duration: 0.3,
-                  ease: "back.out(5)",
-                  immediateRender: false,
-                },
+                { scale: 1, ...POP, immediateRender: false },
                 "<"
               );
             }
 
+            // the dot starts smaller than its card: a 16px dot needs more
+            // travel for the same pop to read
             if (dot) {
               comboTl.fromTo(
                 dot,
-                { scale: 1 },
-                {
-                  keyframes: [
-                    { scale: 1.4, duration: 0.15 },
-                    { scale: 0.85, duration: 0.15 },
-                    { scale: 1, duration: 0.2 },
-                  ],
-                  ease: "power2.out",
-                  transformOrigin: "center center",
-                  immediateRender: false,
-                },
+                { scale: 0.6, transformOrigin: "center center" },
+                { scale: 1, ...POP, immediateRender: false },
                 "<"
               );
             }
           }
         }
 
+        // grid and route are separate cards on mobile: watch both
         loops.set(companiesGrid, comboTl);
+        loops.set(routeList, comboTl);
       };
 
       build();
@@ -2131,6 +2321,12 @@ const supportPoints = [
 
   const postList = document.querySelector(".reason-post-list");
   if (postList) {
+    // Line 3 timing, in seconds
+    const timing = {
+      cycleDelay: 2, // pause before the loop starts over
+      rowStep: 0.5, // between parcels turning "delivered"
+    };
+
     const rows = [...postList.querySelectorAll("li")];
 
     const setPostState = (li: Element, done: boolean) => {
@@ -2151,24 +2347,19 @@ const supportPoints = [
     } else {
       const postTl = gsap.timeline({
         repeat: -1,
-        repeatDelay: 2,
+        repeatDelay: timing.cycleDelay,
         paused: true,
       });
 
       postTl.call(resetPost);
 
       rows.forEach((li) => {
-        postTl.call(() => setPostState(li, true), [], "+=.5");
+        postTl.call(() => setPostState(li, true), [], `+=${timing.rowStep}`);
 
         postTl.fromTo(
           li,
           { scale: 0.92, transformOrigin: "left center" },
-          {
-            scale: 1,
-            duration: 0.3,
-            ease: "back.out(2)",
-            immediateRender: false,
-          },
+          { scale: 1, ...POP, immediateRender: false },
           "<"
         );
       });
@@ -2176,71 +2367,6 @@ const supportPoints = [
       loops.set(postList, postTl);
     }
   }
-
-  // const stepsGrid = document.querySelector(".steps-grid");
-  // if (stepsGrid) {
-  //   const cards = [...stepsGrid.querySelectorAll<HTMLElement>(".step-card")];
-  //   const fillsOf = (card: HTMLElement) => [
-  //     ...card.querySelectorAll<HTMLElement>("[data-fill], [data-activate]"),
-  //   ];
-
-  //   const fillClass = (el: HTMLElement) =>
-  //     el.hasAttribute("data-activate") ? "is-active" : "is-filled";
-
-  //   const reset = () => {
-  //     cards.forEach((card) => {
-  //       card.classList.remove("is-active", "is-done", "is-filled-done");
-  //       fillsOf(card).forEach((el) =>
-  //         el.classList.remove("is-filled", "is-active")
-  //       );
-  //     });
-  //   };
-
-  //   if (reducedMotion) {
-  //     cards.forEach((card) => {
-  //       card.classList.add("is-done", "is-filled-done");
-  //       fillsOf(card).forEach((el) => el.classList.add(fillClass(el)));
-  //     });
-  //   } else {
-  //     const stepsTl = gsap.timeline({
-  //       repeat: -1,
-  //       repeatDelay: 2.5,
-  //       paused: true,
-  //     });
-  //     stepsTl.call(reset);
-
-  //     cards.forEach((card, i) => {
-  //       // this card becomes the active (solid-framed) one; every card
-  //       // before it has finished its animation and settles into is-done
-  //       stepsTl.call(
-  //         () =>
-  //           cards.forEach((c, k) => {
-  //             c.classList.toggle("is-active", c === card);
-  //             c.classList.toggle("is-done", k < i);
-  //           }),
-  //         [],
-  //         "+=0.75"
-  //       );
-  //       // then its fields / items fill one by one
-  //       fillsOf(card).forEach((el) => {
-  //         stepsTl.call(() => el.classList.add(fillClass(el)), [], "+=0.5");
-  //       });
-  //       // card 4's receipt frame lights up once its rows are in
-  //       if (card.dataset.card === "4") {
-  //         stepsTl.call(() => card.classList.add("is-filled-done"), [], "+=0.2");
-  //       }
-  //     });
-
-  //     // the last card has finished too — mark it done for the final hold
-  //     stepsTl.call(
-  //       () => cards[cards.length - 1].classList.add("is-done"),
-  //       [],
-  //       "+=0.4"
-  //     );
-
-  //     loops.set(stepsGrid, stepsTl);
-  //   }
-  // }
 
   // Steps
 
@@ -2250,9 +2376,14 @@ const supportPoints = [
     const fillsOf = (card: HTMLElement) => [
       ...card.querySelectorAll<HTMLElement>("[data-fill], [data-activate]"),
     ];
-    const cardDelay = 0.8; 
-    const fillDelay = 0.25; 
-    const fillDuration = 0.25; 
+    // Steps timing, in seconds
+    const timing = {
+      cycleDelay: 2.5, // pause before the loop starts over
+      cardStep: 0.6, // pause before the next card becomes active
+      fillStep: 0.25, // start-to-start gap between fields: pops overlap
+      receiptGlow: 0.2, // card 4: wait before its receipt frame lights up
+      finalHold: 0.35, // wait before the last card is marked done
+    };
 
     const fillClass = (el: HTMLElement) =>
       el.hasAttribute("data-activate") ? "is-active" : "is-filled";
@@ -2275,7 +2406,7 @@ const supportPoints = [
     } else {
       const stepsTl = gsap.timeline({
         repeat: -1,
-        repeatDelay: 2.5,
+        repeatDelay: timing.cycleDelay,
         paused: true,
       });
 
@@ -2290,33 +2421,39 @@ const supportPoints = [
             });
           },
           [],
-          `+=${cardDelay}`
+          `+=${timing.cardStep}`
         );
 
+        // "<" + gap = counted from the START of the previous pop, so the
+        // next field begins while the last one is still settling
         fillsOf(card).forEach((el) => {
           stepsTl.call(
             () => el.classList.add(fillClass(el)),
             [],
-            `+=${fillDelay}`
+            `<${timing.fillStep}`
           );
 
           stepsTl.fromTo(
             el,
             { scale: 0.92, transformOrigin: "left center" },
-            { scale: 1, duration: fillDuration, ease: "back.out(2)" },
+            { scale: 1, ...POP },
             "<"
           );
         });
 
         if (card.dataset.card === "4") {
-          stepsTl.call(() => card.classList.add("is-filled-done"), [], "+=0.2");
+          stepsTl.call(
+            () => card.classList.add("is-filled-done"),
+            [],
+            `+=${timing.receiptGlow}`
+          );
         }
       });
 
       stepsTl.call(
         () => cards[cards.length - 1].classList.add("is-done"),
         [],
-        "+=0.35"
+        `+=${timing.finalHold}`
       );
 
       loops.set(stepsGrid, stepsTl);
@@ -2324,163 +2461,6 @@ const supportPoints = [
   }
 
   // Slider testimonials
-
-  // const testimonialsSection =
-  //   document.querySelector<HTMLElement>(".testimonials");
-  // if (testimonialsSection) {
-  //   const track = testimonialsSection.querySelector<HTMLElement>(
-  //     ".testimonials-track"
-  //   )!;
-  //   const cards = [
-  //     ...track.querySelectorAll<HTMLElement>(".testimonials-card"),
-  //   ];
-  //   const bodies = cards.map(
-  //     (card) => card.querySelector<HTMLElement>(".testimonials-body")!
-  //   );
-  //   const prevBtn = testimonialsSection.querySelector<HTMLButtonElement>(
-  //     ".slider-btn--prev"
-  //   )!;
-  //   const nextBtn = testimonialsSection.querySelector<HTMLButtonElement>(
-  //     ".slider-btn--next"
-  //   )!;
-
-  //   const desktop = window.matchMedia("(min-width: 1024px)");
-  //   const PAD_ACTIVE = 16;
-  //   const BODY_MARGIN = { top: 24, right: 40, bottom: 24, left: 24 };
-  //   const ACTIVE_SHARE = 0.65;
-  //   let index = 0;
-  //   let bodyW = 0;
-  //   let step = 0;
-  //   const cardProps = (active: boolean) => ({
-  //     padding: active ? PAD_ACTIVE : 16,
-  //     backgroundColor: active ? "#ffffff" : "rgba(255,255,255,0)",
-  //     borderColor: active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0.35)",
-  //   });
-  //   const bodyProps = (active: boolean) => ({
-  //     width: active ? bodyW : 0,
-  //     marginTop: active ? BODY_MARGIN.top : 0,
-  //     marginRight: active ? BODY_MARGIN.right : 0,
-  //     marginBottom: active ? BODY_MARGIN.bottom : 0,
-  //     marginLeft: active ? BODY_MARGIN.left : 0,
-  //     autoAlpha: active ? 1 : 0,
-  //   });
-
-  //   const measure = () => {
-  //     if (!desktop.matches) return;
-  //     const mediaW = cards[0].querySelector<HTMLElement>(
-  //       ".testimonials-media"
-  //     )!.offsetWidth;
-  //     // size against the .container, not the track: the track is as wide
-  //     // as all its cards together, the container is the visible column
-  //     const containerW = track.parentElement!.clientWidth;
-  //     bodyW = Math.max(
-  //       240,
-  //       Math.round(containerW * ACTIVE_SHARE) -
-  //         (PAD_ACTIVE * 2 + BODY_MARGIN.left + BODY_MARGIN.right + mediaW)
-  //     );
-  //     testimonialsSection.style.setProperty("--body-w", `${bodyW}px`);
-  //     for (let k = 0; k < cards.length - 1; k++) {
-  //       if (k !== index && k + 1 !== index) {
-  //         step = cards[k + 1].offsetLeft - cards[k].offsetLeft;
-  //         break;
-  //       }
-  //     }
-  //   };
-
-  //   const apply = (animate: boolean) => {
-  //     const instant = reducedMotion || !animate;
-  //     const tween: gsap.TweenVars = {
-  //       duration: 1,
-  //       ease: "expo.inOut",
-  //       overwrite: "auto",
-  //     };
-
-  //     if (desktop.matches) {
-  //       cards.forEach((card, k) => {
-  //         const active = k === index;
-  //         if (instant) {
-  //           gsap.set(card, cardProps(active));
-  //           gsap.set(bodies[k], bodyProps(active));
-  //         } else {
-  //           gsap.to(card, { ...cardProps(active), ...tween });
-  //           gsap.to(bodies[k], { ...bodyProps(active), ...tween });
-  //         }
-  //       });
-  //       const x = -index * step;
-  //       instant ? gsap.set(track, { x }) : gsap.to(track, { x, ...tween });
-  //     } else {
-  //       const x = -(cards[index].offsetLeft - cards[0].offsetLeft);
-  //       instant ? gsap.set(track, { x }) : gsap.to(track, { x, ...tween });
-  //     }
-
-  //     prevBtn.disabled = index === 0;
-  //     nextBtn.disabled = index === cards.length - 1;
-  //     cards.forEach((card, k) =>
-  //       card.classList.toggle("is-current", k === index)
-  //     );
-  //   };
-
-  //   const goTo = (i: number, animate = true) => {
-  //     index = Math.max(0, Math.min(cards.length - 1, i));
-  //     apply(animate);
-  //   };
-
-  //   const init = () => {
-  //     apply(false);
-  //     measure();
-  //     apply(false);
-  //   };
-
-  //   prevBtn.addEventListener("click", () => goTo(index - 1));
-  //   nextBtn.addEventListener("click", () => goTo(index + 1));
-
-  //   cards.forEach((card, k) =>
-  //     card.addEventListener("click", () => {
-  //       if (desktop.matches && k !== index) goTo(k);
-  //     })
-  //   );
-
-  //   let touchX = 0;
-  //   track.addEventListener(
-  //     "touchstart",
-  //     (e) => (touchX = e.touches[0].clientX),
-  //     { passive: true }
-  //   );
-  //   track.addEventListener(
-  //     "touchend",
-  //     (e) => {
-  //       const dx = e.changedTouches[0].clientX - touchX;
-  //       if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
-  //     },
-  //     { passive: true }
-  //   );
-
-  //   resizeHandlers.push(() => {
-  //     gsap.set([track, ...cards, ...bodies], { clearProps: "all" });
-  //     init();
-  //   });
-
-  //   init();
-
-  //   if (!reducedMotion) {
-  //     gsap.set(cards, { y: 48, autoAlpha: 0 });
-  //     const introObserver = new IntersectionObserver(
-  //       (entries) => {
-  //         if (!entries[0].isIntersecting) return;
-  //         introObserver.disconnect();
-  //         gsap.to(cards, {
-  //           y: 0,
-  //           autoAlpha: 1,
-  //           duration: 0.9,
-  //           ease: "power3.out",
-  //           stagger: 0.12,
-  //         });
-  //       },
-  //       { threshold: 0.2 }
-  //     );
-  //     introObserver.observe(track);
-  //   }
-  // }
 
   const testimonialsSection =
     document.querySelector<HTMLElement>(".testimonials");
@@ -2556,6 +2536,8 @@ const supportPoints = [
     let bodyW = 0;
     let step = 0;
     let isAnimating = false;
+    // the card that is currently open on screen (index changes first)
+    let shownIndex = index;
 
     const cardProps = (active: boolean) => ({
       padding: active ? PAD_ACTIVE : 16,
@@ -2605,7 +2587,9 @@ const supportPoints = [
           if (instant) {
             gsap.set(card, cardProps(active));
             gsap.set(bodies[k], bodyProps(active));
-          } else {
+          } else if (active || k === shownIndex) {
+            // only the card that opens and the one that closes change —
+            // tweening the rest would just restyle them every frame
             gsap.to(card, { ...cardProps(active), ...tween });
             gsap.to(bodies[k], { ...bodyProps(active), ...tween });
           }
@@ -2625,15 +2609,24 @@ const supportPoints = [
         }
       }
 
-      cards.forEach((card, k) =>
-        card.classList.toggle("is-current", k === index)
-      );
+      cards.forEach((card, k) => {
+        const current = k === index;
+        card.classList.toggle("is-current", current);
+        // only the open card's link is reachable by Tab; collapsed and
+        // off-screen cards are hidden from assistive tech too
+        if (!card.classList.contains("is-clone")) {
+          card.toggleAttribute("aria-hidden", !current);
+          card
+            .querySelectorAll<HTMLElement>("a, button")
+            .forEach((el) => (el.tabIndex = current ? 0 : -1));
+        }
+      });
+      shownIndex = index;
 
       if (instant) onDone?.();
     };
 
     const goTo = (i: number, animate = true) => {
-      console.log(i, index);
       if (isAnimating) return;
       index = i;
 
@@ -2691,22 +2684,29 @@ const supportPoints = [
     init();
 
     if (!reducedMotion) {
-      gsap.set(cards, { y: 48, autoAlpha: 0 });
+      // opacity, not autoAlpha: visibility:hidden would make the card links
+      // unreachable by Tab until the section had been scrolled into view
+      gsap.set(cards, { y: 48, opacity: 0 });
+      const playIntro = () => {
+        introObserver.disconnect();
+        gsap.to(cards, {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.12,
+        });
+      };
       const introObserver = new IntersectionObserver(
-        (entries) => {
-          if (!entries[0].isIntersecting) return;
-          introObserver.disconnect();
-          gsap.to(cards, {
-            y: 0,
-            autoAlpha: 1,
-            duration: 0.9,
-            ease: "power3.out",
-            stagger: 0.12,
-          });
-        },
+        (entries) => entries[0].isIntersecting && playIntro(),
         { threshold: 0.2 }
       );
-      introObserver.observe(track);
+      // watch the track's container, not the track: the slider shifts the
+      // track sideways (on mobile almost all of its box sits off-screen to
+      // the left), so the track itself never looked 20% visible
+      introObserver.observe(track.parentElement!);
+      // tabbing straight into the slider also reveals it
+      track.addEventListener("focusin", playIntro, { once: true });
     }
   }
 
@@ -2744,12 +2744,6 @@ const supportPoints = [
     const tabs = [
       ...categorySection.querySelectorAll<HTMLButtonElement>(".category-tab"),
     ];
-    const panelMedia = categorySection.querySelector<HTMLElement>(
-      ".category-panel-media"
-    )!;
-    const panelImage = categorySection.querySelector<HTMLImageElement>(
-      ".category-panel-image"
-    )!;
     const panelText = categorySection.querySelector<HTMLElement>(
       ".category-panel-text"
     )!;
@@ -2773,24 +2767,127 @@ const supportPoints = [
     );
     let categoryTl: gsap.core.Timeline | undefined;
 
-    const render = () => {
-      const tab = tabs[index];
-      const { image, srcset, imageW, imageH, quote, author, role, logos } =
-        tab.dataset;
-      panelImage.src = image!;
-      panelImage.srcset = srcset ?? "";
-      panelImage.width = Number(imageW);
-      panelImage.height = Number(imageH);
+    const tabList = categorySection.querySelector<HTMLElement>(".category-tabs")!;
+    const panelCopy = [
+      categorySection.querySelector<HTMLElement>(".category-panel-quote")!,
+      panelLogos,
+    ];
+    let panelImage = categorySection.querySelector<HTMLImageElement>(
+      ".category-panel-image"
+    )!;
+    // bumped on every switch, so a slow image decode from an older click
+    // can't overwrite a newer one
+    let renderToken = 0;
+
+    // Builds a detached <img> for a tab and resolves once it is decoded,
+    // so it can be shown without a blank frame or a progressive paint
+    const loadImage = (tab: HTMLElement) => {
+      const { image, srcset, imageW, imageH } = tab.dataset;
+      const img = panelImage.cloneNode() as HTMLImageElement;
+      img.loading = "eager";
+      img.srcset = srcset ?? "";
+      img.src = image!;
+      img.width = Number(imageW);
+      img.height = Number(imageH);
+      return img.decode().then(
+        () => img,
+        () => img
+      );
+    };
+
+    const markLogoOverflow = () =>
+      panelLogos.classList.toggle(
+        "is-overflowing",
+        panelLogos.scrollWidth > panelLogos.clientWidth
+      );
+    markLogoOverflow();
+    resizeHandlers.push(markLogoOverflow);
+
+    const renderCopy = (tab: HTMLElement) => {
+      const { quote, author, role, logos } = tab.dataset;
       panelText.textContent = quote!;
       panelAuthorName.textContent = author!;
       panelRole.textContent = role!;
-      panelLogos.innerHTML = "";
-      logos!.split("|").forEach((label) => {
-        const li = document.createElement("li");
-        li.textContent = label;
-        panelLogos.append(li);
+      panelLogos.replaceChildren(
+        ...logos!.split("|").map((label) => {
+          const li = document.createElement("li");
+          li.textContent = label;
+          return li;
+        })
+      );
+      markLogoOverflow();
+    };
+
+    // Scroll only the tab strip (mobile) — scrollIntoView would also scroll
+    // the window and yank the page while the autoplay runs
+    const centerTab = (tab: HTMLElement, smooth = !reducedMotion) => {
+      if (tabList.scrollWidth <= tabList.clientWidth) return;
+      const listBox = tabList.getBoundingClientRect();
+      const tabBox = tab.getBoundingClientRect();
+      tabList.scrollTo({
+        left:
+          tabList.scrollLeft +
+          (tabBox.left - listBox.left) -
+          (listBox.width - tabBox.width) / 2,
+        behavior: smooth ? "smooth" : "auto",
       });
     };
+
+    // the initially active tab sits off-screen in the mobile strip
+    centerTab(tabs[index], false);
+
+    const show = async (tab: HTMLElement) => {
+      const token = ++renderToken;
+      const nextImage = await loadImage(tab);
+      if (token !== renderToken) return;
+
+      if (reducedMotion) {
+        panelImage.replaceWith(nextImage);
+        panelImage = nextImage;
+        renderCopy(tab);
+        return;
+      }
+
+      // crossfade: the new photo rises and fades in on top of the old one,
+      // which is removed once covered — the panel never flashes to black
+      const prevImage = panelImage;
+      gsap.set(nextImage, { autoAlpha: 0, y: 10 });
+      prevImage.after(nextImage);
+      panelImage = nextImage;
+      gsap.to(nextImage, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        onComplete: () => prevImage.remove(),
+      });
+
+      gsap.to(panelCopy, {
+        autoAlpha: 0,
+        y: -8,
+        duration: 0.2,
+        ease: "power2.in",
+        overwrite: true,
+        onComplete: () => {
+          if (token !== renderToken) return;
+          renderCopy(tab);
+          gsap.fromTo(
+            panelCopy,
+            { autoAlpha: 0, y: 8 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.4,
+              ease: "power2.out",
+              stagger: 0.06,
+              overwrite: true,
+            }
+          );
+        },
+      });
+    };
+
+    const panel = categorySection.querySelector<HTMLElement>(".category-panel")!;
 
     const activate = (next: number, userTriggered = false) => {
       index = (next + tabs.length) % tabs.length;
@@ -2798,37 +2895,17 @@ const supportPoints = [
         const active = k === index;
         tab.classList.toggle("is-active", active);
         tab.setAttribute("aria-selected", String(active));
+        // roving tabindex: only the selected tab is a Tab stop
+        tab.tabIndex = active ? 0 : -1;
       });
-      tabs[index].scrollIntoView({
-        behavior: reducedMotion ? "auto" : "smooth",
-        inline: "center",
-        block: "nearest",
-      });
-
-      if (reducedMotion) {
-        render();
-      } else {
-        gsap.to(panelMedia, {
-          autoAlpha: 0,
-          duration: 0.25,
-          ease: "power1.in",
-          overwrite: "auto",
-          onComplete: () => {
-            render();
-            gsap.fromTo(
-              panelMedia,
-              { autoAlpha: 0, y: 10 },
-              {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.35,
-                ease: "power1.out",
-                overwrite: "auto",
-              }
-            );
-          },
-        });
-      }
+      panel.setAttribute("aria-labelledby", tabs[index].id);
+      // announce the new quote only when the visitor switched it — the
+      // autoplay changing it every few seconds would be noise
+      panel.setAttribute("aria-live", userTriggered ? "polite" : "off");
+      centerTab(tabs[index]);
+      show(tabs[index]);
+      // warm the cache for the autoplay's next slide
+      loadImage(tabs[(index + 1) % tabs.length]);
 
       if (userTriggered) {
         categoryTl?.pause();
@@ -2842,77 +2919,181 @@ const supportPoints = [
     prevBtn.addEventListener("click", () => activate(index - 1, true));
     nextBtn.addEventListener("click", () => activate(index + 1, true));
 
+    // keyboard: arrows move between tabs (and select them), Home/End jump
+    // to the ends — the WAI-ARIA tabs pattern
+    tabList.addEventListener("keydown", (e) => {
+      const keys: Record<string, number> = {
+        ArrowRight: index + 1,
+        ArrowDown: index + 1,
+        ArrowLeft: index - 1,
+        ArrowUp: index - 1,
+        Home: 0,
+        End: tabs.length - 1,
+      };
+      if (!(e.key in keys)) return;
+      e.preventDefault();
+      activate(keys[e.key], true);
+      tabs[index].focus({ preventScroll: true });
+    });
+
+    // swipe the photo panel on touch screens, like the testimonials
+    let touchX = 0;
+    panel.addEventListener(
+      "touchstart",
+      (e) => (touchX = e.touches[0].clientX),
+      { passive: true }
+    );
+    panel.addEventListener(
+      "touchend",
+      (e) => {
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 40) activate(index + (dx < 0 ? 1 : -1), true);
+      },
+      { passive: true }
+    );
+
     if (!reducedMotion) {
       categoryTl = gsap.timeline({ repeat: -1, paused: true });
       categoryTl.call(() => activate(index + 1), [], 4);
       loops.set(categorySection, categoryTl);
+
+      // hold the autoplay while the visitor points at or tabs into the
+      // slider, so a quote doesn't change mid-read (WCAG 2.2.2)
+      let hovered = false;
+      let focused = false;
+      const sync = () => {
+        if (!loops.has(categorySection)) return; // stopped for good
+        hovered || focused ? categoryTl!.pause() : categoryTl!.play();
+      };
+      const slider = categorySection.querySelector<HTMLElement>(".category-slider")!;
+      slider.addEventListener("mouseenter", () => ((hovered = true), sync()));
+      slider.addEventListener("mouseleave", () => ((hovered = false), sync()));
+      slider.addEventListener("focusin", () => ((focused = true), sync()));
+      slider.addEventListener("focusout", (e) => {
+        if (slider.contains(e.relatedTarget as Node)) return;
+        focused = false;
+        sync();
+      });
     }
   }
 
+  // A loop plays while ANY of its parts is in the middle 80% of the screen.
+  // No "30% visible" threshold: on mobile some blocks (steps) are taller
+  // than three screens and would never reach it, freezing mid-animation.
   if (loops.size) {
+    const onScreen = new Set<Element>();
     const loopObserver = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          const timeline = loops.get(entry.target);
-          if (!timeline) return;
-          entry.isIntersecting ? timeline.play() : timeline.pause();
-        });
+        entries.forEach((entry) =>
+          entry.isIntersecting
+            ? onScreen.add(entry.target)
+            : onScreen.delete(entry.target)
+        );
+        // only touch the timelines whose parts just changed, so other
+        // pauses (e.g. category hover) are left alone
+        new Set(entries.map((entry) => loops.get(entry.target))).forEach(
+          (timeline) => {
+            if (!timeline) return;
+            const visible = [...loops].some(
+              ([el, tl]) => tl === timeline && onScreen.has(el)
+            );
+            visible ? timeline.play() : timeline.pause();
+          }
+        );
       },
-      { threshold: 0.3 }
+      { rootMargin: "-10% 0px" }
     );
     loops.forEach((_, el) => loopObserver.observe(el));
   }
 
   // FAQ
 
+  // Height animates on .faq-content (the clip) with a slight bounce on open;
+  // the text inside fades and slides separately, slightly behind, so it
+  // never pops in at full height.
   document
     .querySelectorAll<HTMLDetailsElement>(".faq-item")
     .forEach((details) => {
       const summary = details.querySelector("summary")!;
       const content = details.querySelector<HTMLElement>(".faq-content")!;
+      const inner = content.firstElementChild as HTMLElement;
       const wrap = details.closest(".faq-item-wrap");
 
-      summary.addEventListener("click", (e) => {
-        e.preventDefault();
-        const isOpen = details.classList.contains("is-open");
+      const setOpenState = (open: boolean) => {
+        wrap?.classList.toggle("is-open", open);
+        details.classList.toggle("is-open", open);
+      };
 
-        if (!isOpen) {
-          wrap?.classList.add("is-open");
-          details.classList.add("is-open");
-          if (!details.open) {
-            details.open = true;
-            gsap.set(content, {
-              height: 0,
-              opacity: 0,
-              marginTop: 0,
-              overflow: "hidden",
-            });
-          }
-          gsap.to(content, {
-            height: "auto",
-            opacity: 1,
-            marginTop: 16,
-            duration: 0.5,
-            ease: "back.out(1.2)",
-            overwrite: true,
-            clearProps: "all",
-          });
-        } else {
-          wrap?.classList.remove("is-open");
-          details.classList.remove("is-open");
-          gsap.to(content, {
+      const open = () => {
+        setOpenState(true);
+        if (reducedMotion) {
+          details.open = true;
+          return;
+        }
+        if (!details.open) {
+          details.open = true;
+          gsap.set(content, { height: 0, overflow: "hidden" });
+          gsap.set(inner, { autoAlpha: 0, y: -6 });
+        }
+        gsap.to(content, {
+          height: "auto",
+          duration: 0.5,
+          ease: "back.out(1.2)",
+          overwrite: true,
+          clearProps: "height,overflow",
+        });
+        gsap.to(inner, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.4,
+          delay: 0.08,
+          ease: "power2.out",
+          overwrite: true,
+        });
+      };
+
+      const close = () => {
+        setOpenState(false);
+        if (reducedMotion) {
+          details.open = false;
+          return;
+        }
+        gsap.to(inner, {
+          autoAlpha: 0,
+          y: -6,
+          duration: 0.2,
+          ease: "power1.in",
+          overwrite: true,
+        });
+        gsap.fromTo(
+          content,
+          { height: content.offsetHeight, overflow: "hidden" },
+          {
             height: 0,
-            opacity: 0,
-            marginTop: 0,
-            overflow: "hidden",
-            duration: 0.4,
-            ease: "power2.in", // для закриття краще без bounce
+            duration: 0.35,
+            ease: "power2.inOut",
             overwrite: true,
             onComplete: () => {
               details.open = false;
-              gsap.set(content, { clearProps: "all" });
+              gsap.set(content, { clearProps: "height,overflow" });
+              gsap.set(inner, { clearProps: "all" });
             },
-          });
+          }
+        );
+      };
+
+      summary.addEventListener("click", (e) => {
+        e.preventDefault();
+        details.classList.contains("is-open") ? close() : open();
+      });
+
+      // the browser opens <details> by itself for find-in-page and
+      // #fragment matches — keep the icon and frame in sync with it
+      details.addEventListener("toggle", () => {
+        if (details.open && !details.classList.contains("is-open")) {
+          gsap.set(content, { clearProps: "height,overflow" });
+          gsap.set(inner, { clearProps: "all" });
+          setOpenState(true);
         }
       });
     });

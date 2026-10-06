@@ -16,6 +16,9 @@
   --color-black: #000000;
   --color-grey: #595959;
   --color-grey-light: #818081;
+  /* the same grey, a touch darker: small text on the light page background
+     needs at least 4.5:1 contrast (grey-light only reaches 3.65:1) */
+  --color-grey-text: #706f70;
   --color-grey-2: #e4e2e4;
   /* --color-accent-rgb: 158 39 138; */
   --color-accent-rgb: 158 39 138;
@@ -54,6 +57,23 @@
   --radius-card: 16px;
   --grid-gap: clamp(16px, 4vw, 32px);
   --border-solid: 2px solid #000;
+
+  /* Motion tokens for CSS transitions — the durations the UI actually
+     uses, short to long. Choreographed keyframe delays and long ambient
+     loops (ticker, rotations) keep their own literal timings. */
+  --dur-press: 150ms; /* button press feedback */
+  --dur-fast: 200ms; /* small hovers: arrows, icons, menu items */
+  --dur-quick: 250ms; /* tab / control colour changes */
+  --dur-base: 300ms; /* default hover and fade */
+  --dur-medium: 350ms; /* dropdowns and panels */
+  --dur-slow: 400ms; /* state changes inside animated cards */
+  --dur-slower: 500ms; /* emphasised state changes */
+  --dur-lazy: 800ms; /* slow glow / highlight */
+  /* overshoot ("back out") curve for playful pops */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* keyboard focus ring colour — flipped to white on dark surfaces below */
+  --focus-color: var(--color-black);
 
   --border-dotted-svg: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%23000000' stroke-width='1' stroke-dasharray='1%2c4' stroke-linecap='square' vector-effect='non-scaling-stroke'/%3e%3c/svg%3e");
 
@@ -162,7 +182,11 @@ p{
   font-weight: 600;
   line-height: 24px;
   letter-spacing: -0.16px;
-  transition: all .3s;
+  transition:
+    filter var(--dur-base),
+    background-color var(--dur-base),
+    color var(--dur-base),
+    border-color var(--dur-base);
   max-width: 480px;
   white-space: nowrap;
 }
@@ -174,7 +198,7 @@ filter: invert(.1);
 .btn svg {
   width: 20px;
   height: 20px;
-  transition: transform 0.3s;
+  transition: transform var(--dur-base);
   flex-shrink: 0;
 }
 
@@ -200,12 +224,12 @@ filter: invert(.1);
   border: 2px solid var(--color-white);
   border-radius: 4px;
   transition:
-    background-color 0.3s,
-    opacity 0.3s,
-    transform 0.15s;
+    background-color var(--dur-base),
+    opacity var(--dur-base),
+    transform var(--dur-press);
 
   svg {
-    transition: transform 0.3s;
+    transition: transform var(--dur-base);
   }
 }
 
@@ -257,6 +281,20 @@ filter: invert(.1);
 .section-dark {
   background-color: var(--color-black);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='234' height='234' viewBox='0 0 234 234' fill='none'%3E%3Cpath d='M116.6515 105.5H117.3485V128.5H116.6515V105.5Z' fill='white' fill-opacity='0.16'/%3E%3Cpath d='M105.5 116.6515H128.5V117.3485H105.5V116.6515Z' fill='white' fill-opacity='0.16'/%3E%3C/svg%3E");
+}
+
+/* Keyboard focus: one clearly visible ring on every interactive element.
+   :focus-visible keeps it off for mouse clicks. The offset leaves a gap so
+   the ring reads on solid black buttons as well as on the page. */
+:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 3px;
+}
+
+.section-dark,
+.reason-dark,
+.footer {
+  --focus-color: var(--color-white);
 }
 
 .section-dark h2,

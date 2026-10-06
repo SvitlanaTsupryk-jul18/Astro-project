@@ -229,12 +229,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         id="burger"
         aria-label="Меню"
         aria-expanded="false"
+        aria-controls="main-nav"
       >
         <div></div>
       </button>
     </div>
 
-    <nav class="nav" aria-label="Основна навігація">
+    <nav class="nav" id="main-nav" aria-label="Основна навігація">
       <div class="header-nav">
         <div class="header-extra">
           <button class="list" aria-expanded="false">
@@ -382,20 +383,40 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 </header>
 
 <script>
-  const header = document.getElementById("header");
-  const burger = document.getElementById("burger");
+  const header = document.getElementById("header")!;
+  const burger = document.getElementById("burger")!;
+  const nav = header.querySelector<HTMLElement>(".nav")!;
+  const desktop = window.matchMedia("(min-width: 1024px)");
 
-  burger?.addEventListener("click", () => {
-    const open = header?.classList.toggle("active");
-    burger.setAttribute("aria-expanded", String(Boolean(open)));
+  // ---------- mobile menu ----------
+
+  // While the full-screen menu is open, the page behind it is inert (Tab
+  // can't wander under the overlay); while it is closed, the off-screen
+  // menu itself is inert (Tab can't land on invisible links).
+  const syncInert = () => {
+    const open = header.classList.contains("active");
+    nav.inert = !desktop.matches && !open;
+    document
+      .querySelectorAll<HTMLElement>("main, footer")
+      .forEach((el) => (el.inert = !desktop.matches && open));
+  };
+
+  const setMenu = (open: boolean) => {
+    header.classList.toggle("active", open);
+    burger.setAttribute("aria-expanded", String(open));
     document.body.style.overflow = open ? "hidden" : "";
-  });
+    syncInert();
+  };
+
+  burger.addEventListener("click", () =>
+    setMenu(!header.classList.contains("active"))
+  );
 
   // Mobile only: clicking a trigger toggles its parent accordion (.show);
-  // on desktop the same dropdowns open on hover via CSS instead.
+  // on desktop the same dropdowns open on hover/focus via CSS instead.
   function bindMobileAccordion(trigger: HTMLElement) {
     trigger.addEventListener("click", () => {
-      if (window.innerWidth >= 1024) return;
+      if (desktop.matches) return;
       const shown = trigger.parentElement?.classList.toggle("show");
       trigger.setAttribute("aria-expanded", String(Boolean(shown)));
     });
@@ -406,6 +427,73 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       ".header .list, .header .header-support-btn, .header button.innerList-label"
     )
     .forEach(bindMobileAccordion);
+
+  // ---------- desktop dropdowns ----------
+
+  // The column labels inside the mega menu are accordion buttons on mobile
+  // but plain headings on desktop — keep them out of the Tab order there.
+  const columnLabels = [
+    ...header.querySelectorAll<HTMLElement>("button.innerList-label"),
+  ];
+
+  const dropdowns = [
+    ...header.querySelectorAll<HTMLElement>(".header-extra, .header-support"),
+  ];
+
+  dropdowns.forEach((drop) => {
+    const trigger = drop.querySelector<HTMLButtonElement>(":scope > button")!;
+    const setExpanded = (open: boolean) => {
+      if (desktop.matches) trigger.setAttribute("aria-expanded", String(open));
+    };
+    const isOpen = () =>
+      !drop.classList.contains("is-dismissed") &&
+      (drop.matches(":hover") || drop.contains(document.activeElement));
+
+    drop.addEventListener("mouseenter", () => {
+      drop.classList.remove("is-dismissed");
+      setExpanded(true);
+    });
+    drop.addEventListener("mouseleave", () => setExpanded(isOpen()));
+    drop.addEventListener("focusin", () => setExpanded(isOpen()));
+    drop.addEventListener("focusout", (e) => {
+      if (drop.contains(e.relatedTarget as Node)) return;
+      drop.classList.remove("is-dismissed");
+      setExpanded(drop.matches(":hover"));
+    });
+
+    // Escape closes it and puts focus back on its trigger
+    drop.addEventListener("keydown", (e) => {
+      if (e.key !== "Escape" || !desktop.matches) return;
+      drop.classList.add("is-dismissed");
+      setExpanded(false);
+      trigger.focus();
+    });
+
+    // Enter / Space on the trigger toggles it (detail 0 = keyboard click;
+    // mouse users already open it by hovering)
+    trigger.addEventListener("click", (e) => {
+      if (!desktop.matches || e.detail !== 0) return;
+      drop.classList.toggle("is-dismissed");
+      setExpanded(isOpen());
+    });
+  });
+
+  // Escape also closes the mobile menu, returning focus to the burger
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape" || !header.classList.contains("active")) return;
+    setMenu(false);
+    burger.focus();
+  });
+
+  // ---------- breakpoint changes ----------
+
+  const syncBreakpoint = () => {
+    columnLabels.forEach((label) => (label.tabIndex = desktop.matches ? -1 : 0));
+    if (desktop.matches && header.classList.contains("active")) setMenu(false);
+    else syncInert();
+  };
+  desktop.addEventListener("change", syncBreakpoint);
+  syncBreakpoint();
 </script>
 
 <style>
@@ -440,13 +528,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     transform-box: fill-box;
     transform-origin: center;
     transform: scale(1);
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform var(--dur-medium) var(--ease-bounce);
   }
 
   .tr {
     transform-box: fill-box;
     transform-origin: top right;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform var(--dur-slow) var(--ease-bounce);
   }
 
   .logo:hover .tr {
@@ -474,7 +562,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     width: 22px;
     height: 3px;
     background: var(--color-black);
-    transition: background 0.18s ease;
+    transition: background var(--dur-fast) ease;
   }
 
   .burger div::before,
@@ -486,9 +574,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     height: 100%;
     background: var(--color-black);
     transition:
-      transform 0.18s ease,
-      top 0.18s ease,
-      bottom 0.18s ease;
+      transform var(--dur-fast) ease,
+      top var(--dur-fast) ease,
+      bottom var(--dur-fast) ease;
     transform-origin: center;
   }
 
@@ -521,7 +609,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     padding: 84px 24px 40px;
     overflow-y: auto;
     transform: translateY(-100%);
-    transition: transform 0.35s ease;
+    transition: transform var(--dur-medium) ease;
   }
 
   .nav::-webkit-scrollbar {
@@ -560,14 +648,13 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     cursor: pointer;
     text-align: left;
     white-space: nowrap;
-    outline: none;
   }
 
   .chevron {
     width: 20px;
     height: 20px;
     flex-shrink: 0;
-    transition: transform 0.25s ease;
+    transition: transform var(--dur-quick) ease;
   }
 
   .header-extra.show .chevron {
@@ -631,7 +718,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
   .innerList-items li {
     border-radius: 8px;
     opacity: 0;
-    animation: fadeInRight 0.4s ease forwards;
+    animation: fadeInRight var(--dur-slow) ease forwards;
   }
 
   .innerList-items li:nth-of-type(1) {
@@ -676,7 +763,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     font-size: 16px;
 
     .svg-border {
-      transition: all 0.2s;
       display: none;
     }
   }
@@ -742,7 +828,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
   }
 
   .header-support-btn:hover .header-support-mouth {
-    animation: mouth-stretch 0.5s ease-in-out forwards;
+    animation: mouth-stretch var(--dur-slower) ease-in-out forwards;
   }
 
   @keyframes mouth-stretch {
@@ -808,7 +894,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     font-weight: 600;
     text-decoration: none;
     color: var(--color-black);
-    transition: border-color 0.3s;
+    transition: border-color var(--dur-base);
   }
 
   .header-support-contact:hover {
@@ -918,9 +1004,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       visibility: hidden;
       transform: translateY(-16px);
       transition:
-        opacity 0.35s ease,
-        transform 0.35s ease,
-        visibility 0.35s;
+        opacity var(--dur-medium) ease,
+        transform var(--dur-medium) ease,
+        visibility var(--dur-medium);
       padding: 0;
     }
 
@@ -1013,9 +1099,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       visibility: hidden;
       transform: translateY(-16px);
       transition:
-        opacity 0.35s ease,
-        transform 0.35s ease,
-        visibility 0.35s;
+        opacity var(--dur-medium) ease,
+        transform var(--dur-medium) ease,
+        visibility var(--dur-medium);
     }
 
     /* 
@@ -1034,6 +1120,24 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       opacity: 1;
       visibility: visible;
       transform: translateY(0);
+    }
+
+    /* Escape (or Enter on an open trigger) closes a dropdown even while it
+       still holds focus or the pointer — set and cleared from the script */
+    .header-extra.is-dismissed .innerList,
+    .header-support.is-dismissed .header-support-panel {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-16px);
+    }
+
+    /* keyboard users get the same chevron flip as on hover */
+    .header-extra:focus-within .list .chevron {
+      transform: rotate(180deg);
+    }
+
+    .header-extra.is-dismissed .list .chevron {
+      transform: none;
     }
   }
 

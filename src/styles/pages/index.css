@@ -239,6 +239,10 @@ h1 {
 }
 
 .choice-logo {
+  /* explicit height: with both sides auto (general.css sets height: auto)
+     the lazy logos have no size until they load and the ticker shifts;
+     the width then follows from the width/height attributes' ratio */
+  height: 100px;
   width: auto;
   display: block;
 }
@@ -291,7 +295,7 @@ h1 {
   font-family: var(--font-mono);
   margin-bottom: 80px;
   font-size: 14px;
-  color: var(--color-grey-light);
+  color: var(--color-grey-text);
 }
 
 .statistic-icon {
@@ -678,13 +682,13 @@ font-size: 20px;
   font-size: 13px;
   margin-bottom: 7px;
   transition:
-    border-color 0.4s,
-    background-color 0.4s,
-    box-shadow 0.4s;
+    border-color var(--dur-slow),
+    background-color var(--dur-slow),
+    box-shadow var(--dur-slow);
 }
 
 .reason-offline-list li .svg-border {
-  transition: opacity 0.4s;
+  transition: opacity var(--dur-slow);
 }
 
 .reason-offline-list li.is-done {
@@ -709,7 +713,7 @@ font-size: 20px;
   font-size: 12px;
   background: #ececec;
   white-space: nowrap;
-  transition: background-color 0.4s;
+  transition: background-color var(--dur-slow);
 }
 
 .reason-offline-list li.is-done .reasons-badge {
@@ -829,8 +833,8 @@ font-size: 22px;
   border: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
   transition:
-    border-color 0.8s,
-    box-shadow 0.8s;
+    border-color var(--dur-lazy),
+    box-shadow var(--dur-lazy);
 }
 
 .reason-companies li.is-active {
@@ -883,7 +887,7 @@ font-size: 22px;
   background: rgb(var(--color-accent-rgb));
   transform: scaleY(0);
   transform-origin: top;
-  transition: transform 0.5s ease;
+  transition: transform var(--dur-slower) ease;
 }
 
 .reason-timeline li.is-active::after,
@@ -903,14 +907,14 @@ font-size: 22px;
   background: var(--color-bg);
   border: 1px solid transparent;
   transition:
-    background-color 0.4s,
-    border-color 0.4s;
+    background-color var(--dur-slow),
+    border-color var(--dur-slow);
 }
 
 .reason-timeline-dot circle {
   transition:
-    fill 0.4s,
-    stroke 0.4s;
+    fill var(--dur-slow),
+    stroke var(--dur-slow);
 }
 
 .reason-timeline li.is-current {
@@ -951,7 +955,11 @@ font-size: 22px;
   padding: 12px 14px;
   border-radius: 8px;
   border: 1px solid transparent;
-  transition: all 0.4s;
+  transition:
+    border-color var(--dur-slow),
+    background-color var(--dur-slow),
+    box-shadow var(--dur-slow),
+    border-radius var(--dur-slow);
 }
 
 .reason-timeline li.is-current .reason-timeline-card {
@@ -1021,9 +1029,9 @@ font-size: 22px;
   border: 1px solid transparent;
   border-radius: 8px;
   transition:
-    border-color 0.4s,
-    background-color 0.4s,
-    box-shadow 0.4s;
+    border-color var(--dur-slow),
+    background-color var(--dur-slow),
+    box-shadow var(--dur-slow);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 500;
@@ -1057,7 +1065,7 @@ font-size: 22px;
   margin-top: 6px;
   padding: 4px 6px;
   border-radius: 4px;
-  transition: background-color 0.4s;
+  transition: background-color var(--dur-slow);
 }
 
 .reason-post-list li.is-done {
@@ -1092,7 +1100,7 @@ font-size: 22px;
   }
 }
 
-.reason-dark svg {
+.reason-dark-illustration {
   align-self: flex-end;
   margin-top: auto;
 }
@@ -1207,7 +1215,7 @@ font-size: 22px;
   flex-direction: column;
   padding: 6px;
   border-radius: 10px;
-  transition: border-color 0.25s;
+  transition: border-color var(--dur-quick);
   position: relative;
 }
 
@@ -1238,6 +1246,11 @@ font-size: 22px;
 
   strong {
     font-weight: 500;
+  }
+
+  /* secondary part of a value, e.g. "(з ПДВ)" after a price */
+  .muted {
+    color: var(--color-grey-text);
   }
 }
 
@@ -1456,8 +1469,8 @@ font-size: 22px;
   border: 2px solid var(--color-bg);
   background: #f3f1f3;
   transition:
-    border-color 0.4s,
-    box-shadow 0.4s;
+    border-color var(--dur-slow),
+    box-shadow var(--dur-slow);
   position: relative;
 }
 
@@ -1482,8 +1495,8 @@ font-size: 22px;
   border-radius: 2px;
   background: rgba(0, 0, 0, 0.08);
   transition:
-    background-color 0.4s,
-    color 0.4s;
+    background-color var(--dur-slow),
+    color var(--dur-slow);
 }
 
 .step-card.is-active .step-badge,
@@ -1538,7 +1551,7 @@ font-size: 22px;
   text-underline-offset: 3px;
 
   svg {
-    transition: transform 0.3s;
+    transition: transform var(--dur-base);
   }
 }
 
@@ -1569,8 +1582,8 @@ font-size: 22px;
   border: 1px solid transparent;
   border-radius: var(--radius-btn);
   transition:
-    border-color 0.4s,
-    background-color 0.4s;
+    border-color var(--dur-slow),
+    background-color var(--dur-slow);
 }
 
 .step-input-label {
@@ -1584,7 +1597,7 @@ font-size: 22px;
   line-height: 1;
   color: var(--color-black);
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity var(--dur-slow);
 }
 
 .step-input.is-filled {
@@ -1610,8 +1623,8 @@ font-size: 22px;
   background: rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition:
-    background-color 0.4s,
-    color 0.4s;
+    background-color var(--dur-slow),
+    color var(--dur-slow);
 }
 
 .step-submit.is-active {
@@ -1656,13 +1669,13 @@ font-size: 22px;
   border-radius: 6px;
   border: 1px solid transparent;
   transition:
-    border-color 0.4s,
-    background-color 0.4s;
+    border-color var(--dur-slow),
+    background-color var(--dur-slow);
 }
 
 .step-catalog-item > *:not(.svg-border) {
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity var(--dur-slow);
 }
 
 .step-catalog-item.is-filled {
@@ -1708,7 +1721,7 @@ font-size: 22px;
   border: 1px solid transparent;
   border-radius: 8px;
   padding: 0 12px;
-  transition: border-color 0.4s;
+  transition: border-color var(--dur-slow);
   position: relative;
   height: 150px;
 }
@@ -1732,7 +1745,7 @@ font-size: 22px;
   padding: 10px 0;
   background: var(--border-dotted-bottom);
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity var(--dur-slow);
 }
 
 .step-receipt-row:last-child {
@@ -1823,9 +1836,9 @@ font-size: 22px;
   white-space: nowrap;
   cursor: pointer;
   transition:
-    background-color 0.25s,
-    color 0.25s,
-    border-color 0.25s;
+    background-color var(--dur-quick),
+    color var(--dur-quick),
+    border-color var(--dur-quick);
   position: relative;
 }
 
@@ -1883,7 +1896,7 @@ font-size: 22px;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* transition: opacity 0.3s; */
+  /* transition: opacity var(--dur-base); */
 }
 
 .category-panel-quote {
@@ -1934,22 +1947,37 @@ font-size: 22px;
   left: 0;
   right: 0;
   bottom: 0;
+  --logos-gap: 10px;
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 35px;
+  gap: var(--logos-gap);
   padding: 20px;
+  font-size: 12px;
+  list-style: none;
+  font-weight: 500;
   border-radius: 8px;
   color: var(--color-white);
   font-family: var(--font-mono);
   letter-spacing: 0.02em;
   text-transform: uppercase;
-  li {
-    padding-left: 10px;
+  /* one line only — a wrapped row would start with a stray bullet */
+  white-space: nowrap;
+  overflow: hidden;
+
+  /* separator drawn as a pseudo-element so it sits centered in the gap */
+  li + li::before {
+    content: "•";
+    margin-right: var(--logos-gap);
   }
 
-  li:first-child {
-    list-style-type: none;
+  /* set from JS when the names don't fit: fade the cut-off edge */
+  &.is-overflowing {
+    mask-image: linear-gradient(90deg, #000 calc(100% - 64px), transparent);
+  }
+
+  @media (min-width: 768px) {
+    --logos-gap: 20px;
+    font-size: inherit;
   }
 }
 
@@ -2080,7 +2108,7 @@ font-size: 22px;
 
 .testimonials-role {
   display: block;
-  color: var(--color-grey-light);
+  color: var(--color-grey-text);
 }
 
 .testimonials-note {
@@ -2109,7 +2137,7 @@ font-size: 22px;
 .testimonials-link svg {
   width: 18px;
   height: 18px;
-  transition: transform 0.3s;
+  transition: transform var(--dur-base);
 }
 
 .testimonials-link:hover svg {
@@ -2276,7 +2304,7 @@ font-size: 22px;
   background-size:
     1px 0%,
     1px 5px;
-  transition: background-size 0.2s linear;
+  transition: background-size var(--dur-fast) linear;
 }
 
 .api-flow > .is-active::before {
@@ -2299,10 +2327,10 @@ font-size: 22px;
   color: var(--color-white);
   font-weight: 600;
   transition:
-    border-color 0.5s,
-    border-radius 0.5s,
-    box-shadow 0.5s,
-    background-color 0.5s;
+    border-color var(--dur-slower),
+    border-radius var(--dur-slower),
+    box-shadow var(--dur-slower),
+    background-color var(--dur-slower);
 }
 
 .api-ic {
@@ -2367,15 +2395,15 @@ font-size: 22px;
   opacity: 0;
   transform: translateX(-50%) scale(0.4);
   transition:
-    opacity 0.3s,
-    transform 0.3s;
+    opacity var(--dur-base),
+    transform var(--dur-base);
 }
 
 .api-node.is-active .api-badge--spark,
 .api-node.is-active .api-badge--check {
   opacity: 1;
   transform: translateX(-50%) scale(1);
-  transition-delay: 0.4s;
+  transition-delay: var(--dur-slow);
 }
 
 .api-card {
@@ -2385,7 +2413,7 @@ font-size: 22px;
 
 .api-node .svg-border,
 .api-card .svg-border {
-  transition: opacity 0.5s;
+  transition: opacity var(--dur-slower);
 }
 
 .api-card-body {
@@ -2441,8 +2469,8 @@ font-size: 22px;
   background: #2d2d2d;
   opacity: 0;
   transition:
-    opacity 0.3s,
-    transform 0.3s;
+    opacity var(--dur-base),
+    transform var(--dur-base);
 }
 
 .api-card.api-error.is-active {
@@ -2452,7 +2480,7 @@ font-size: 22px;
 .api-error.is-active::before {
   opacity: 1;
   transform: translate(-10px, -10px);
-  transition-delay: 0.4s;
+  transition-delay: var(--dur-slow);
 }
 
 .api-line {
@@ -2476,9 +2504,9 @@ font-size: 22px;
 
 .api-line-path {
   transition:
-    stroke-dasharray 0.3s linear,
-    stroke-opacity 0.3s linear;
-  transition-delay: 0.3s;
+    stroke-dasharray var(--dur-base) linear,
+    stroke-opacity var(--dur-base) linear;
+  transition-delay: var(--dur-base);
 }
 
 .api-error.is-active .api-line--to-error .api-line-path,
@@ -2520,7 +2548,7 @@ font-size: 22px;
 .api-logo {
   width: 64px;
   height: 64px;
-  transition: box-shadow 0.5s;
+  transition: box-shadow var(--dur-slower);
 }
 
 .api-node.is-active,
@@ -2529,17 +2557,17 @@ font-size: 22px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: #000;
   box-shadow: 0 0 16px 0 rgba(255, 255, 255, 0.32);
-  transition-delay: 0.4s;
+  transition-delay: var(--dur-slow);
 
   .svg-border {
     opacity: 0;
-    transition-delay: 0.4s;
+    transition-delay: var(--dur-slow);
   }
 }
 
 .api-logo.is-active {
   box-shadow: 0 0 36px rgb(255 255 255 / 0.55);
-  transition-delay: 0.4s;
+  transition-delay: var(--dur-slow);
 }
 
 @media (min-width: 768px) {
@@ -2656,7 +2684,7 @@ letter-spacing: -4%;
   width: min(100%, 294px);
 }
 
-.support-media svg {
+.support-media img {
   width: 100%;
   height: auto;
 }
@@ -2765,7 +2793,7 @@ letter-spacing: -4%;
   margin-top: 12px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-grey-light);
+  color: var(--color-grey-text);
 }
 
 .blog-read {
@@ -2870,7 +2898,7 @@ letter-spacing: -4%;
   margin-top: 12px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--color-grey-light);
+  color: var(--color-grey-text);
 }
 
 .news-read {
@@ -2913,6 +2941,13 @@ letter-spacing: -4%;
 
 /* --- FAQ --- */
 
+/* Chrome's scroll anchoring would pin something below an opened answer
+   (a later item, or the absolutely placed illustrations) and scroll the
+   page instead — pushing the clicked question off the top of the screen */
+.faq {
+  overflow-anchor: none;
+}
+
 .faq-inner {
   position: relative;
 }
@@ -2944,7 +2979,12 @@ letter-spacing: -4%;
   width: 100%;
 }
 
+/* the whole card row is the click target: summary spreads over the card's
+   padding with a matching negative margin, so the layout doesn't move */
 .faq-item summary {
+  margin: -24px;
+  padding: 24px;
+  border-radius: var(--radius-card);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2953,6 +2993,13 @@ letter-spacing: -4%;
   line-height: 1.3;
   cursor: pointer;
   list-style: none;
+}
+
+/* when open, stop the summary where the answer begins (16px gap) instead
+   of letting its padding run 8px over the answer text */
+.faq-item[open] summary {
+  padding-bottom: 16px;
+  margin-bottom: -16px;
 }
 
 .faq-item summary::-webkit-details-marker {
@@ -2965,7 +3012,7 @@ letter-spacing: -4%;
   height: 14px;
   flex-shrink: 0;
   color: var(--color-black);
-  transition: transform 0.3s ease;
+  transition: transform var(--dur-base) ease;
 }
 
 .faq-icon::before {
@@ -2989,8 +3036,8 @@ letter-spacing: -4%;
   background-color: currentColor;
   transform: translateX(-50%);
   transition:
-    transform 0.4s ease,
-    opacity 0.3s ease;
+    transform var(--dur-slow) ease,
+    opacity var(--dur-base) ease;
 }
 
 .faq-item.is-open .faq-icon {
@@ -3002,8 +3049,10 @@ letter-spacing: -4%;
   opacity: 0;
 }
 
-.faq-content {
-  margin-top: 16px;
+/* the spacing lives on the inner wrapper so the animated height of
+   .faq-content includes it — no separate margin jump at the end */
+.faq-content-inner {
+  padding-top: 16px;
 
   p {
     padding-right: 24px;

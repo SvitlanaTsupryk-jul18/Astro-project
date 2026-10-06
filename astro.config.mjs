@@ -35,7 +35,12 @@ export default defineConfig({
         // those elements fall back to the nearest loaded weight (300) and render
         // too thin compared to Figma
         weights: [300, 400, 500, 700],
+        styles: ["normal"],
         subsets: ["cyrillic", "latin"],
+        // a monospace fallback (metrics taken from Courier New) has the same
+        // advance width as JetBrains Mono, so the swap doesn't shift the text;
+        // the default sans-serif fallback is ~25% wider
+        fallbacks: ["monospace"],
       },
       {
         provider: fontProviders.local(),
