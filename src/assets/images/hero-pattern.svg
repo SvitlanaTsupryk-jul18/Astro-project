@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  class="hero-pattern"
+  width="952"
+  height="575"
+  viewBox="0 0 952 575"
+  fill="none"
+  aria-hidden="true"
+>
+  <g clip-path="url(#hero-pattern-clip)">
+    <path
+      d="M692.475 136.956H583.754L692.475 245.866V136.956Z"
+      fill="white"></path>
+    <rect x="117" y="137" width="466" height="438" fill="white"></rect>
+    <rect
+      x="117"
+      y="137"
+      width="466"
+      height="438"
+      fill="#9E278A"
+      fill-opacity="0.16"></rect>
+    <path
+      d="M583.752 136.956H475.031L583.752 245.866V136.956Z"
+      fill="white"></path>
+    <path
+      d="M475.03 245.866H366.309L475.03 354.776V245.866Z"
+      fill="white"
+      fill-opacity="0.64"></path>
+    <path
+      d="M473.721 466H365L473.721 574.91V466Z"
+      fill="white"
+      fill-opacity="0.64"></path>
+    <path
+      d="M475.03 136.956H366.309L475.03 245.866V136.956Z"
+      fill="white"
+      fill-opacity="0.64"></path>
+    <path
+      d="M368.721 137H260L368.721 245.91V137Z"
+      fill="white"
+      fill-opacity="0.32"></path>
+    <path
+      d="M366.721 246H258L366.721 354.91V246Z"
+      fill="white"
+      fill-opacity="0.32"></path>
+    <path
+      d="M252.721 246H144L252.721 354.91V246Z"
+      fill="white"
+      fill-opacity="0.24"></path>
+    <path
+      d="M583.752 245.866H475.031L583.752 354.776V245.866Z"
+      fill="white"></path>
+    <path
+      d="M692.475 245.866H583.754L692.475 354.776V245.866Z"
+      fill="white"></path>
+    <path
+      d="M692.475 354.775H583.754L692.475 463.685V354.775Z"
+      fill="white"></path>
+    <path d="M585 355H475L585 464V355Z" fill="white"></path>
+    <path d="M476 356H366L476 465V356Z" fill="white" fill-opacity="0.48"
+    ></path>
+    <g filter="url(#hero-pattern-blur)">
+      <path
+        class="hero-shadow"
+        d="M192 437H101L192 528V437Z"
+        fill="black"
+        fill-opacity="0.24"></path>
+    </g>
+    <path d="M170.721 411H62L170.721 519.91V411Z" fill="white"></path>
+    <path d="M695 464H585L695 573V464Z" fill="white"></path>
+    <path
+      d="M802.475 136.956H693.754L802.475 245.866V136.956Z"
+      fill="white"></path>
+    <path
+      d="M802.475 245.866H693.754L802.475 354.776V245.866Z"
+      fill="white"></path>
+    <path
+      d="M802.475 354.775H693.754L802.475 463.685V354.775Z"
+      fill="white"></path>
+    <path d="M803 464H693L803 573V464Z" fill="white"></path>
+    <path
+      d="M912.475 245.866H803.754L912.475 354.776V245.866Z"
+      fill="white"></path>
+    <path
+      d="M912.475 354.775H803.754L912.475 463.685V354.775Z"
+      fill="white"></path>
+    <path
+      d="M1022.47 245.866H913.754L1022.47 354.776V245.866Z"
+      fill="white"></path>
+    <path d="M585 464H475L585 573V464Z" fill="white"></path>
+  </g>
+  <defs>
+    <filter
+      id="hero-pattern-blur"
+      x="73"
+      y="409"
+      width="147"
+      height="147"
+      filterUnits="userSpaceOnUse"
+      color-interpolation-filters="sRGB"
+    >
+      <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+      <feBlend
+        mode="normal"
+        in="SourceGraphic"
+        in2="BackgroundImageFix"
+        result="shape"></feBlend>
+      <feGaussianBlur stdDeviation="14" result="effect1_foregroundBlur"
+      ></feGaussianBlur>
+    </filter>
+    <clipPath id="hero-pattern-clip">
+      <rect width="952" height="575" fill="white"></rect>
+    </clipPath>
+  </defs>
+</svg>

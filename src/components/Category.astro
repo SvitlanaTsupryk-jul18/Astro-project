@@ -1,0 +1,546 @@
+---
+import DottedBorder from "@components/DottedBorder.astro";
+import { getImage } from "astro:assets";
+import ArrowRightWhite from "@assets/icons/arrow-right-white.svg";
+import IconCategoryRetail from "@assets/icons/category-retail.svg";
+import IconCategoryNetwork from "@assets/icons/category-network.svg";
+import IconCategoryMarketplace from "@assets/icons/category-marketplace.svg";
+import IconCategoryEcommerce from "@assets/icons/category-ecommerce.svg";
+import IconCategoryHospitality from "@assets/icons/category-hospitality.svg";
+import IconCategoryMedical from "@assets/icons/category-medical.svg";
+import IconCategoryBeauty from "@assets/icons/category-beauty.svg";
+import IconCategorySport from "@assets/icons/category-sport.svg";
+import IconCategoryPawnshop from "@assets/icons/category-pawnshop.svg";
+import IconCategoryExchange from "@assets/icons/category-exchange.svg";
+import IconCategoryFranchise from "@assets/icons/category-franchise.svg";
+import IconCategoryVending from "@assets/icons/category-vending.svg";
+import IconCategoryMall from "@assets/icons/category-mall.svg";
+import IconCategoryCourier from "@assets/icons/category-courier.svg";
+import { $image } from "@utils/assets";
+import "@styles/components/category.css";
+
+// Category slider: left-hand tabs cycle automatically and the right-hand
+// panel (photo + quote + client logos) fades to match. Every category has
+// its own quote; the photos are shared placeholders for now (one per four
+// categories) until each vertical gets its own shot.
+const categoryPhotos = [
+  $image("/category-1.png"),
+  $image("/category-2.png"),
+  $image("/category-3.png"),
+  $image("/category-4.png"),
+];
+
+// The category panel swaps its <img> from data-* attributes via JS, which
+// bypasses <Image> — so pre-optimize the panel photos with getImage() here
+// and put the optimized URLs (webp + srcset) into those attributes instead.
+const categoryPanelSizes = "(min-width: 1024px) 50vw, 100vw";
+
+const optimizedCategoryPhotos = await Promise.all(
+  categoryPhotos.map((src) =>
+    getImage({
+      src,
+      format: "webp",
+      widths: [700, 1400],
+      sizes: categoryPanelSizes,
+    })
+  )
+);
+
+const categories = [
+  {
+    icon: IconCategoryRetail,
+    label: "Класичний рітейл",
+    quote:
+      "Перейшли з двох старих касових апаратів за один вечір. Більше ніяких опломбувань і сервісних центрів, а виручку бачу з телефона навіть у відпустці.",
+    author: "Олена",
+    role: "власниця, магазин «Комора»",
+    logos: ["Комора", "Лавка 24", "Господар", "Домівка"],
+  },
+  {
+    icon: IconCategoryNetwork,
+    label: "Мережам магазинам",
+    quote:
+      "У нас 37\u00a0точок по всій країні. Усі каси в одному кабінеті, а нову точку запускаємо за день, а не за тиждень, як раніше.",
+    author: "Андрій",
+    role: "операційний директор, мережа «Свіжа зелень»",
+    logos: ["Мамина кухня", "Еко-маркет", "Хлібний"],
+  },
+  {
+    icon: IconCategoryMarketplace,
+    label: "Торговцям на маркетплейсах",
+    quote:
+      "Чеки по замовленнях з маркетплейсів формуються автоматично. Більше не звіряю вручну сотні відправок наприкінці місяця.",
+    author: "Ірина",
+    role: "ФОП, продаж аксесуарів",
+    logos: ["Bloom Case", "Нитка", "Cozy Home", "Kidsy"],
+  },
+  {
+    icon: IconCategoryEcommerce,
+    label: "Інтернет-магазинам",
+    quote:
+      "Максимально зручна програма для роботи плюс мегакваліфіковані менеджери, які завжди допоможуть з вирішенням будь-якої проблеми.",
+    author: "Наталія",
+    role: "бухгалтер, MD Fashion",
+    logos: ["MD Fashion", "Rozetka", "Prom", "Хорошоп"],
+  },
+  {
+    icon: IconCategoryHospitality,
+    label: "Кафе, ресторанам і готелям",
+    quote:
+      "Інтеграція з нашою POS-системою запрацювала з першого дня. Офіціанти пробивають чек за секунди, навіть коли зникає інтернет.",
+    author: "Максим",
+    role: "керуючий, ресторан «Дров'яна піч»",
+    logos: ["Дров'яна піч", "Кава тут", "Смерека", "Бранч"],
+  },
+  {
+    icon: IconCategoryMedical,
+    label: "Медичним центрам",
+    quote:
+      "Пацієнти оплачують прийом карткою, а чек одразу приходить на пошту. Адміністратори нарешті займаються людьми, а не касою.",
+    author: "Тетяна",
+    role: "головна бухгалтерка, клініка «Віта-Мед»",
+    logos: ["Віта-Мед", "Dental Art", "Лабтест+", "Оптика 1"],
+  },
+  {
+    icon: IconCategoryBeauty,
+    label: "Салонам краси, перукарням",
+    quote:
+      "Майстри працюють з планшета, а чек видається автоматично після кожного візиту. Для салону на 12\u00a0крісел це реальна економія часу.",
+    author: "Юлія",
+    role: "власниця, студія краси «Lumi»",
+    logos: ["Lumi", "Barber Bros", "Nail Lab", "Локон"],
+  },
+  {
+    icon: IconCategorySport,
+    label: "Спортивним клубам",
+    quote:
+      "Продаємо абонементи онлайн і на рецепції, а всі чеки зібрані в одному місці. Перевірка податкової пройшла без жодного зауваження.",
+    author: "Дмитро",
+    role: "директор, фітнес-клуб «Пульс»",
+    logos: ["Пульс", "Aqua Fit", "Скеледром", "Йога"],
+  },
+  {
+    icon: IconCategoryPawnshop,
+    label: "Ломбардам",
+    quote:
+      "Для ломбарду важливо, щоб кожна операція була прозорою. Checkbox підтримує всі наші сценарії, а служба турботи відповідає за лічені хвилини.",
+    author: "Сергій",
+    role: "фінансовий директор, мережа «Гарант»",
+    logos: ["Гарант", "Золотий запас", "Капітал"],
+  },
+  {
+    icon: IconCategoryExchange,
+    label: "Обмінникам валют",
+    quote:
+      "Курс змінюється кілька разів на день, і каса встигає за ним. Чеки за обмінними операціями формуються без ручних виправлень.",
+    author: "Олександр",
+    role: "керівник відділення, «Обмін Плюс»",
+    logos: ["Обмін Плюс", "Валюта 24", "Курс", "Фінпункт"],
+  },
+  {
+    icon: IconCategoryFranchise,
+    label: "Франшизам",
+    quote:
+      "Кожен франчайзі підключається за одним стандартом: однакові налаштування, звіти й інтеграції. Продажі всієї мережі бачимо в реальному часі.",
+    author: "Вікторія",
+    role: "менеджерка з розвитку, «Кава поруч»",
+    logos: ["Кава поруч", "Pizza Point", "Donut Bar"],
+  },
+  {
+    icon: IconCategoryVending,
+    label: "Вендінгу",
+    quote:
+      "Сто двадцять кавових автоматів і жодного касира. Чеки фіскалізуються самі, а ми лише стежимо за статистикою в кабінеті.",
+    author: "Ігор",
+    role: "засновник, Vend Coffee",
+    logos: ["Vend Coffee", "Snack Box", "Fresh Juice"],
+  },
+  {
+    icon: IconCategoryMall,
+    label: "ТРЦ",
+    quote:
+      "Допомогли орендарям швидко перейти на програмні каси. Тепер обороти для розрахунку оренди бачимо без запитів і таблиць.",
+    author: "Роман",
+    role: "адміністратор, ТРЦ «Арена Сіті»",
+    logos: ["Арена Сіті", "Fashion Hall", "Фудкорт", "Кіноплекс"],
+  },
+  {
+    icon: IconCategoryCourier,
+    label: "Кур'єрам і водіям на платформах",
+    quote:
+      "Працюю з кількома службами доставки і видаю чек просто з телефона. Жодного додаткового обладнання, тільки застосунок.",
+    author: "Віталій",
+    role: "кур'єр, ФОП",
+    logos: ["Доставка 24", "Швидко", "Таксі Плюс", "Food Run"],
+  },
+].map(({ icon, label, ...content }, i) => ({
+  icon,
+  label,
+  content: {
+    ...content,
+    image: optimizedCategoryPhotos[i % optimizedCategoryPhotos.length],
+  },
+}));
+
+const activeCategoryIndex = 3; // "Інтернет-магазинам" — matches the design mock
+---
+
+<section class="category section-dark">
+  <div class="container category-inner">
+    <p class="subtitle">Касова дисципліна без зусиль</p>
+    <h2>
+      Чекбокс обирають<br /> бізнеси різного<br /> штибу та напрямку
+    </h2>
+
+    <div class="category-nav">
+      <button
+        type="button"
+        class="slider-btn slider-btn--prev"
+        aria-label="Попередня категорія"
+      >
+        <ArrowRightWhite />
+      </button>
+      <button
+        type="button"
+        class="slider-btn slider-btn--next"
+        aria-label="Наступна категорія"
+      >
+        <ArrowRightWhite />
+      </button>
+    </div>
+
+    <div class="category-slider">
+      <div
+        class="category-tabs"
+        role="tablist"
+        aria-label="Категорії бізнесу"
+      >
+        {
+          categories.map(({ icon: Icon, label, content }, i) => (
+            <button
+              type="button"
+              class:list={[
+                "category-tab",
+                { "is-active": i === activeCategoryIndex },
+              ]}
+              role="tab"
+              id={`category-tab-${i}`}
+              aria-controls="category-panel"
+              aria-selected={i === activeCategoryIndex}
+              tabindex={i === activeCategoryIndex ? 0 : -1}
+              data-index={i}
+              data-quote={content.quote}
+              data-author={content.author}
+              data-role={content.role}
+              data-image={content.image.src}
+              data-srcset={content.image.srcSet.attribute}
+              data-image-w={content.image.attributes.width}
+              data-image-h={content.image.attributes.height}
+              data-logos={content.logos.join("|")}
+            >
+              <DottedBorder color="#fff8" radius={12} />
+              <Icon class="category-tab-icon" aria-hidden="true" />
+              <span class="category-tab-label">{label}</span>
+            </button>
+          ))
+        }
+      </div>
+
+      <div
+        class="category-panel"
+        id="category-panel"
+        role="tabpanel"
+        aria-labelledby={`category-tab-${activeCategoryIndex}`}
+      >
+        <div class="category-panel-media">
+          <img
+            class="category-panel-image"
+            src={categories[activeCategoryIndex].content.image.src}
+            srcset={categories[activeCategoryIndex].content.image.srcSet
+              .attribute}
+            sizes={categoryPanelSizes}
+            width={categories[activeCategoryIndex].content.image.attributes
+              .width}
+            height={categories[activeCategoryIndex].content.image.attributes
+              .height}
+            alt=""
+            loading="lazy"
+          />
+          <div class="category-panel-quote">
+            <p class="category-panel-text">
+              {categories[activeCategoryIndex].content.quote}
+            </p>
+            <p class="category-panel-author">
+              <span class="category-panel-author-name">
+                {categories[activeCategoryIndex].content.author}
+              </span>
+              <span class="category-panel-role">
+                {categories[activeCategoryIndex].content.role}
+              </span>
+            </p>
+          </div>
+          <ul class="category-panel-logos">
+            {
+              categories[activeCategoryIndex].content.logos.map((logo) => (
+                <li>{logo}</li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import {
+    isLooping,
+    onResize,
+    playWhileVisible,
+    stopLoop,
+  } from "@scripts/motion";
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  // Category slider
+
+  const categorySection = document.querySelector<HTMLElement>(".category");
+  if (categorySection) {
+    const tabs = [
+      ...categorySection.querySelectorAll<HTMLButtonElement>(".category-tab"),
+    ];
+    const panelText = categorySection.querySelector<HTMLElement>(
+      ".category-panel-text"
+    )!;
+    const panelAuthorName = categorySection.querySelector<HTMLElement>(
+      ".category-panel-author-name"
+    )!;
+    const panelRole = categorySection.querySelector<HTMLElement>(
+      ".category-panel-role"
+    )!;
+    const panelLogos = categorySection.querySelector<HTMLElement>(
+      ".category-panel-logos"
+    )!;
+    const prevBtn =
+      categorySection.querySelector<HTMLButtonElement>(".slider-btn--prev")!;
+    const nextBtn =
+      categorySection.querySelector<HTMLButtonElement>(".slider-btn--next")!;
+
+    let index = Math.max(
+      0,
+      tabs.findIndex((tab) => tab.classList.contains("is-active"))
+    );
+    let categoryTl: gsap.core.Timeline | undefined;
+
+    const tabList = categorySection.querySelector<HTMLElement>(".category-tabs")!;
+    const panelCopy = [
+      categorySection.querySelector<HTMLElement>(".category-panel-quote")!,
+      panelLogos,
+    ];
+    let panelImage = categorySection.querySelector<HTMLImageElement>(
+      ".category-panel-image"
+    )!;
+    // bumped on every switch, so a slow image decode from an older click
+    // can't overwrite a newer one
+    let renderToken = 0;
+
+    // Builds a detached <img> for a tab and resolves once it is decoded,
+    // so it can be shown without a blank frame or a progressive paint
+    const loadImage = (tab: HTMLElement) => {
+      const { image, srcset, imageW, imageH } = tab.dataset;
+      const img = panelImage.cloneNode() as HTMLImageElement;
+      img.loading = "eager";
+      img.srcset = srcset ?? "";
+      img.src = image!;
+      img.width = Number(imageW);
+      img.height = Number(imageH);
+      return img.decode().then(
+        () => img,
+        () => img
+      );
+    };
+
+    const markLogoOverflow = () =>
+      panelLogos.classList.toggle(
+        "is-overflowing",
+        panelLogos.scrollWidth > panelLogos.clientWidth
+      );
+    markLogoOverflow();
+    onResize(markLogoOverflow);
+
+    const renderCopy = (tab: HTMLElement) => {
+      const { quote, author, role, logos } = tab.dataset;
+      panelText.textContent = quote!;
+      panelAuthorName.textContent = author!;
+      panelRole.textContent = role!;
+      panelLogos.replaceChildren(
+        ...logos!.split("|").map((label) => {
+          const li = document.createElement("li");
+          li.textContent = label;
+          return li;
+        })
+      );
+      markLogoOverflow();
+    };
+
+    // Scroll only the tab strip (mobile) — scrollIntoView would also scroll
+    // the window and yank the page while the autoplay runs
+    const centerTab = (tab: HTMLElement, smooth = !reducedMotion) => {
+      if (tabList.scrollWidth <= tabList.clientWidth) return;
+      const listBox = tabList.getBoundingClientRect();
+      const tabBox = tab.getBoundingClientRect();
+      tabList.scrollTo({
+        left:
+          tabList.scrollLeft +
+          (tabBox.left - listBox.left) -
+          (listBox.width - tabBox.width) / 2,
+        behavior: smooth ? "smooth" : "auto",
+      });
+    };
+
+    // the initially active tab sits off-screen in the mobile strip
+    centerTab(tabs[index], false);
+
+    const show = async (tab: HTMLElement) => {
+      const token = ++renderToken;
+      const nextImage = await loadImage(tab);
+      if (token !== renderToken) return;
+
+      if (reducedMotion) {
+        panelImage.replaceWith(nextImage);
+        panelImage = nextImage;
+        renderCopy(tab);
+        return;
+      }
+
+      // crossfade: the new photo rises and fades in on top of the old one,
+      // which is removed once covered — the panel never flashes to black
+      const prevImage = panelImage;
+      gsap.set(nextImage, { autoAlpha: 0, y: 10 });
+      prevImage.after(nextImage);
+      panelImage = nextImage;
+      gsap.to(nextImage, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "power2.out",
+        onComplete: () => prevImage.remove(),
+      });
+
+      gsap.to(panelCopy, {
+        autoAlpha: 0,
+        y: -8,
+        duration: 0.2,
+        ease: "power2.in",
+        overwrite: true,
+        onComplete: () => {
+          if (token !== renderToken) return;
+          renderCopy(tab);
+          gsap.fromTo(
+            panelCopy,
+            { autoAlpha: 0, y: 8 },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.4,
+              ease: "power2.out",
+              stagger: 0.06,
+              overwrite: true,
+            }
+          );
+        },
+      });
+    };
+
+    const panel = categorySection.querySelector<HTMLElement>(".category-panel")!;
+
+    const activate = (next: number, userTriggered = false) => {
+      index = (next + tabs.length) % tabs.length;
+      tabs.forEach((tab, k) => {
+        const active = k === index;
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", String(active));
+        // roving tabindex: only the selected tab is a Tab stop
+        tab.tabIndex = active ? 0 : -1;
+      });
+      panel.setAttribute("aria-labelledby", tabs[index].id);
+      // announce the new quote only when the visitor switched it — the
+      // autoplay changing it every few seconds would be noise
+      panel.setAttribute("aria-live", userTriggered ? "polite" : "off");
+      centerTab(tabs[index]);
+      show(tabs[index]);
+      // warm the cache for the autoplay's next slide
+      loadImage(tabs[(index + 1) % tabs.length]);
+
+      if (userTriggered) {
+        stopLoop(categorySection);
+      }
+    };
+
+    tabs.forEach((tab, i) =>
+      tab.addEventListener("click", () => activate(i, true))
+    );
+    prevBtn.addEventListener("click", () => activate(index - 1, true));
+    nextBtn.addEventListener("click", () => activate(index + 1, true));
+
+    // keyboard: arrows move between tabs (and select them), Home/End jump
+    // to the ends — the WAI-ARIA tabs pattern
+    tabList.addEventListener("keydown", (e) => {
+      const keys: Record<string, number> = {
+        ArrowRight: index + 1,
+        ArrowDown: index + 1,
+        ArrowLeft: index - 1,
+        ArrowUp: index - 1,
+        Home: 0,
+        End: tabs.length - 1,
+      };
+      if (!(e.key in keys)) return;
+      e.preventDefault();
+      activate(keys[e.key], true);
+      tabs[index].focus({ preventScroll: true });
+    });
+
+    // swipe the photo panel on touch screens, like the testimonials
+    let touchX = 0;
+    panel.addEventListener(
+      "touchstart",
+      (e) => (touchX = e.touches[0].clientX),
+      { passive: true }
+    );
+    panel.addEventListener(
+      "touchend",
+      (e) => {
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 40) activate(index + (dx < 0 ? 1 : -1), true);
+      },
+      { passive: true }
+    );
+
+    if (!reducedMotion) {
+      categoryTl = gsap.timeline({ repeat: -1, paused: true });
+      categoryTl.call(() => activate(index + 1), [], 4);
+      playWhileVisible(categoryTl, categorySection);
+
+      // hold the autoplay while the visitor points at or tabs into the
+      // slider, so a quote doesn't change mid-read (WCAG 2.2.2)
+      let hovered = false;
+      let focused = false;
+      const sync = () => {
+        if (!isLooping(categorySection)) return; // stopped for good
+        hovered || focused ? categoryTl!.pause() : categoryTl!.play();
+      };
+      const slider = categorySection.querySelector<HTMLElement>(".category-slider")!;
+      slider.addEventListener("mouseenter", () => ((hovered = true), sync()));
+      slider.addEventListener("mouseleave", () => ((hovered = false), sync()));
+      slider.addEventListener("focusin", () => ((focused = true), sync()));
+      slider.addEventListener("focusout", (e) => {
+        if (slider.contains(e.relatedTarget as Node)) return;
+        focused = false;
+        sync();
+      });
+    }
+  }
+</script>

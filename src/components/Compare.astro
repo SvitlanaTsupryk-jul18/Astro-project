@@ -1,0 +1,201 @@
+---
+import DottedBorder from "@components/DottedBorder.astro";
+import IconOk from "@assets/icons/ok-icon.svg";
+import IconHwTriangle from "@assets/icons/hw-triangle.svg";
+import IconNo from "@assets/icons/no-icon.svg";
+import LogoSquare from "@assets/icons/logo-square.svg";
+import "@styles/components/compare.css";
+
+// Comparison table: hardware register vs Checkbox digital register.
+// A cell is either { text } (may contain <strong>/<br>) or { rows } (sub-items).
+interface CompareListRow {
+  label?: string;
+  value: string;
+  ok: boolean;
+}
+
+interface CompareCell {
+  text?: string;
+  rows?: CompareListRow[];
+}
+
+interface CompareRow {
+  label: string;
+  hw: CompareCell;
+  cb: CompareCell;
+}
+
+const compareRows: CompareRow[] = [
+  {
+    label: "Початкова вартість каси",
+    hw: {
+      text: "15-50&nbsp;тисяч гривень на старті.<br>Потім стільки же кожні 7&nbsp;років.",
+    },
+    cb: { text: "0&nbsp;гривень на старті.<br>Перший місяць — безкоштовно" },
+  },
+  {
+    label: "Щомісячна вартість каси",
+    hw: { text: "400-500&nbsp;гривень / місяць" },
+    cb: { text: "249&nbsp;гривень / місяць <span class='muted'>(з ПДВ)</span>" },
+  },
+  {
+    label: "Швидкість старту",
+    hw: { text: "Щонайменше декілька днів" },
+    cb: { text: "Декілька хвилин" },
+  },
+  {
+    label: "Обсяг рутини",
+    hw: {
+      rows: [
+        { label: "Відкриття-закриття зміни", value: "Ручне", ok: false },
+        { label: "Облік товарів", value: "Паперовий/Ручний", ok: false },
+        { label: "Формування z-звітів", value: "Ручне", ok: false },
+      ],
+    },
+    cb: {
+      rows: [
+        { label: "Відкриття-закриття зміни", value: "Автоматичне", ok: true },
+        { label: "Облік товарів", value: "Автоматичний", ok: true },
+        { label: "Формування z-звітів", value: "Автоматичне", ok: true },
+      ],
+    },
+  },
+  {
+    label: "Обслуговування",
+    hw: {
+      rows: [
+        { value: "Регулярні поїздки у сервісний центр", ok: false },
+        { value: "Пломбування", ok: false },
+        { value: "Заміна паперу", ok: false },
+      ],
+    },
+    cb: {
+      text: "Каса просто працює — без поїздок, витратних матеріалів і сервісних центрів.",
+    },
+  },
+  {
+    label: "Контроль",
+    hw: { text: "Потрібно фізично їхати<br>на торгову точку, щоб перевірити." },
+    cb: {
+      text: "Всі продажі, чеки та звіти<br>в реальному часі <strong>в онлайн-кабінеті.</strong>",
+    },
+  },
+  {
+    label: "Доступність",
+    hw: { text: "Потрібно знаходитися фізично<br>на торговій точці." },
+    cb: {
+      text: "<strong>Працює</strong> на смартфоні,<br>комп'ютері чи планшеті.",
+    },
+  },
+  {
+    label: "Інтеграції",
+    hw: {
+      text: "Ви обмежені у виборі облікових систем і POS-обладнання, які ще й потребують складного підключення.",
+    },
+    cb: {
+      text: "З'єднуйте касу з улюбленою обліковою системою та POS-терміналом <strong>за лічені хвилини.</strong>",
+    },
+  },
+  {
+    label: "Масштабування",
+    hw: {
+      text: "Вартість та складність обслуговування <strong>зростає в прогресії</strong> з кожною новою касою.",
+    },
+    cb: {
+      text: "<strong>Легко адаптуйтеся</strong> під потреби бізнесу — додавайте та прибирайте каси <strong>за кілька кліків.</strong>",
+    },
+  },
+];
+---
+
+<section class="compare">
+  <div class="container">
+    <p class="subtitle">Чому нас обирають</p>
+    <h2>
+      Цифрова каса Чекбоксу<br />втричі дешевша, простіша<br />і зручніша за
+      апаратний РРО
+    </h2>
+
+    <div class="compare-table">
+      <div class="compare-row compare-row--head" aria-hidden="true">
+        <div class="compare-label"></div>
+        <div class="compare-cells">
+          <div class="compare-cell">
+            <span class="compare-cell-head">
+              <IconHwTriangle />
+              Апаратні касові апарати
+            </span>
+          </div>
+          <div class="compare-cell compare-cell--cb">
+            <span class="compare-cell-head">
+              <LogoSquare />
+              Цифрова каса Чекбоксу
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {
+        compareRows.map((row, i) => (
+          <div class="compare-row">
+            <div class="compare-label">
+              <span class="compare-num">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span class="compare-name">{row.label}</span>
+            </div>
+
+            <div class="compare-cells">
+              <DottedBorder />
+              <div class="compare-cell">
+                <span class="compare-cell-head">
+                  <IconHwTriangle />
+                  Апаратні касові апарати
+                </span>
+                {row.hw.text ? (
+                  <p class="compare-value" set:html={row.hw.text} />
+                ) : (
+                  <ul class="compare-list">
+                    {row.hw.rows?.map((r) => (
+                      <li>
+                        {r.label && (
+                          <span class="compare-list-label">{r.label}</span>
+                        )}
+                        <span class="compare-list-value">
+                          <IconNo class="compare-mark compare-mark--no" />
+                          {r.value}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              <div class="compare-cell compare-cell--cb">
+                <span class="compare-cell-head">
+                  <LogoSquare />
+                  Цифрова каса Чекбоксу
+                </span>
+                {row.cb.text ? (
+                  <p class="compare-value" set:html={row.cb.text} />
+                ) : (
+                  <ul class="compare-list">
+                    {row.cb.rows?.map((r) => (
+                      <li>
+                        {r.label && <span>{r.label}</span>}
+                        <span class="compare-list-value">
+                          <IconOk />
+                          {r.value}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

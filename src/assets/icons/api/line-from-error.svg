@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  class="api-line api-line--from-error"
+  width="167"
+  height="44"
+  viewBox="0 0 167 44"
+  fill="none"
+  ><path
+    class="api-line-path"
+    d="M166.5 0V31.5Q166.5 43.5 154.5 43.5H0"
+    stroke="white"
+    stroke-opacity="0.4"
+    stroke-dasharray="1 4"></path></svg>

@@ -14,7 +14,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 // blog opens Checkbox's real blog
 const blogUrl = "https://checkbox.ua/blog/";
 
-
 const socialLinks = [
   {
     href: base,
@@ -52,11 +51,6 @@ const contactLinks = [
   "Запишіться на демо",
 ];
 const contactPhone = "0\u00a0800\u00a0330\u00a0676";
-const legalLinks = [
-  "Політика конфіденційності",
-  "Публічна оферта",
-  "Посередництво",
-];
 
 // Nav groups in mobile (accordion) order; `column` places them in the desktop grid
 const navGroups = [
@@ -377,12 +371,9 @@ const columns = [1, 2, 3, 4];
 
     <div class="footer-bottom">
       <div class="footer-legal-info">
-        <span>Copyright © {year} Checkbox. Всі права захищені.</span>
-        <span>ТОВ «Чекбокс»</span>
-        <span>ЄДРПОУ 43721744</span>
-      </div>
-      <div class="footer-legal-links">
-        {legalLinks.map((label) => <a href={base}>{label}</a>)}
+        <span>Концепт оновленого сучасного сайту Checkbox — не офіційний.</span>
+        <span lang="en">Website concept, not affiliated with Checkbox.</span>
+        <span>Svitlana Tsupryk, {year}</span>
       </div>
     </div>
   </div>
@@ -596,23 +587,13 @@ const columns = [1, 2, 3, 4];
     color: var(--color-grey-light);
   }
 
-  .footer-legal-info,
-  .footer-legal-links {
+  .footer-legal-info {
     font-size: 14px;
     font-weight: 500;
     color: var(--color-grey-light);
     display: flex;
     flex-direction: column;
     gap: 32px;
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-  }
-
-  .footer-legal-links a:hover {
-    color: var(--color-white);
   }
 
   @media (max-width: 1023px) {
@@ -627,14 +608,6 @@ const columns = [1, 2, 3, 4];
 
     .footer-nav-content a {
       display: block;
-      padding-block: 11px;
-    }
-
-    .footer-legal-links {
-      gap: 10px;
-    }
-
-    .footer-legal-links a {
       padding-block: 11px;
     }
 
@@ -729,11 +702,6 @@ const columns = [1, 2, 3, 4];
     }
 
     .footer-legal-info {
-      flex-direction: row;
-      gap: 24px;
-    }
-
-    .footer-legal-links {
       flex-direction: row;
       gap: 24px;
     }

@@ -2,43 +2,17 @@
 import '../styles/general.css';
 import { Font } from 'astro:assets';
 
-const { title, description, ogImage, ogType = 'product', noindex = false } = Astro.props;
-const isNoindex = noindex || import.meta.env.DEV || import.meta.env.NOINDEX === 'true';
+const { title, description, ogImage, ogType = 'product' } = Astro.props;
 
 const canonicalURL = Astro.site
     ? new URL(Astro.url.pathname, Astro.site)
     : null;
 
-// Organization markup belongs on the homepage only (SEO spec)
 const basePath = import.meta.env.BASE_URL.replace(/\/+$/, '');
 
 // Social preview image: social networks need an absolute URL, base path
 // included. A page may pass its own image path (relative to the site root).
 const ogImageURL = new URL(`${basePath}${ogImage ?? '/static/images/og.jpg'}`, Astro.site);
-const isHome = Astro.url.pathname.replace(/\/+$/, '') === basePath;
-
-const logoURL = Astro.site
-    ? new URL(`${basePath}/static/images/logo.svg`, Astro.site)
-    : null;
-
-const organizationLd = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Чекбокс",
-    "url": "https://checkbox.ua/",
-    "logo": logoURL ? String(logoURL) : undefined,
-    "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "0800 330 676",
-        "contactType": "customer service",
-        "areaServed": "UA"
-    },
-    "sameAs": [
-        "https://www.facebook.com/CheckboxUkraine",
-        "https://www.instagram.com/checkbox.ua/",
-        "https://www.youtube.com/channel/UCTEkKa-Z2DreSefLoMl97JA"
-    ]
-};
 ---
 
 <meta charset="UTF-8">
@@ -57,10 +31,11 @@ const organizationLd = {
 <meta name="twitter:card" content="summary_large_image">
 {canonicalURL && <meta name="og:url" property="og:url" content={String(canonicalURL)}>}
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#3f18a0">
-<meta name="apple-mobile-web-app-status-bar-style" content="#3f18a0">
-{isNoindex && <meta name="robots" content="noindex, nofollow">}
-{isHome && <script type="application/ld+json" is:inline set:html={JSON.stringify(organizationLd)} />}
+<meta name="theme-color" content="#f1deed">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f1deed">
+{/* unreleased redesign of a real brand's site: kept out of search results so
+    it never competes with the official checkbox.ua */}
+<meta name="robots" content="noindex, nofollow">
 <link rel="icon" href={`${import.meta.env.BASE_URL}/favicon.ico`.replace("//", "/")} type="image/x-icon"/>
 <link rel="apple-touch-icon" href={`${import.meta.env.BASE_URL}/apple-touch-icon.png`.replace("//", "/")}/>
 {canonicalURL && <link rel="canonical" href={String(canonicalURL)}/>}

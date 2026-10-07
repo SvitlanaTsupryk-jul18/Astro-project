@@ -1,5 +1,2 @@
 User-agent: *
-Disallow:
-
-Sitemap: https://checkbox.ua/sitemap-index.xml
-Sitemap: https://checkbox.ua/blog/sitemap.xml
+Disallow: /

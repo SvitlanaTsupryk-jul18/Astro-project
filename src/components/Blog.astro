@@ -1,0 +1,80 @@
+---
+import { Image } from "astro:assets";
+import blog1Image from "@assets/images/blog-1.png";
+import blog2Image from "@assets/images/blog-2.png";
+import blog3Image from "@assets/images/blog-3.png";
+import blog4Image from "@assets/images/blog-4.png";
+import "@styles/components/blog.css";
+
+const blogUrl = "https://checkbox.ua/blog/";
+
+const blogPosts = [
+  {
+    image: blog1Image,
+    category: "Гайди",
+    title: "Кав'ярня з нуля: як запустити касу за один вечір",
+    author: "Ярослав Демидюк",
+    date: "24 вересня 2026",
+    readTime: "6\u00a0хвилин на читання",
+  },
+  {
+    image: blog2Image,
+    category: "Облік",
+    title: "Залишки та списання в пекарні: облік без таблиць",
+    author: "Максим Гнатюк",
+    date: "17 вересня 2026",
+    readTime: "7\u00a0хвилин на читання",
+  },
+  {
+    image: blog3Image,
+    category: "Фіскалізація",
+    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
+    author: "Олена Кравець",
+    date: "10 вересня 2026",
+    readTime: "5\u00a0хвилин на читання",
+  },
+  {
+    image: blog4Image,
+    category: "Поради",
+    title: "Святковий пік продажів: як підготувати каси до новорічного сезону",
+    author: "Ірина Бондар",
+    date: "3 вересня 2026",
+    readTime: "4\u00a0хвилини на читання",
+  },
+];
+---
+
+<section class="blog">
+  <div class="container">
+    <p class="subtitle">Корисне з цікавим</p>
+    <h2>Корисні статті в блозі</h2>
+    <ul class="blog-list">
+      {
+        blogPosts.map((post) => (
+          <li>
+            <a
+            class="blog-card"
+            href={blogUrl}
+            target="_blank"
+            rel="noopener"
+          >
+              <Image
+                class="blog-image"
+                src={post.image}
+                alt=""
+                loading="lazy"
+              />
+              <span class="blog-tag">{post.category}</span>
+              <h3 class="blog-card-title">{post.title}</h3>
+              <p class="blog-author">{post.author}</p>
+              <p class="blog-meta">
+                {post.date}
+                <span class="blog-read">{post.readTime}</span>
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

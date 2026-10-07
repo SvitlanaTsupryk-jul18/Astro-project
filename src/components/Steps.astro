@@ -1,0 +1,252 @@
+---
+import DottedBorder from "@components/DottedBorder.astro";
+import ArrowRight from "@assets/icons/arrow-right.svg";
+import "@styles/components/steps.css";
+
+// Portfolio piece: calls to action lead back to the landing page
+const home = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+// "How it works" — 4 onboarding steps; each card animates its own mini-UI,
+// and the cards play one after another (see the master timeline in <script>).
+const stepRegisterFields = [
+  { label: "Ім'я та прізвище", value: "Іваненко Олексій" },
+  { label: "Email", value: "info@mybusiness.ua" },
+];
+
+const stepSetupFields = [
+  { label: "Назва каси", value: "Каса №1" },
+  { label: "Торгова точка", value: "Пр. Миру, 14" },
+  { label: "Тип", value: "Програмний РРО" },
+];
+
+const stepCatalogItems = [
+  { name: "Кава", price: "75", dot: "#B2667C" },
+  { name: "Піца Маргарита", price: "180", dot: "#F79E1B" },
+  { name: "Вода 0.5л", price: "25", dot: "#315AFF" },
+  { name: "Круасан", price: "45", dot: "#05BC17" },
+];
+
+const stepReceiptItems = [
+  { name: "Кава", qty: "1\u00a0шт", price: "75" },
+  { name: "Круасан", qty: "2\u00a0шт", price: "90" },
+];
+---
+
+<section class="steps">
+  <div class="container">
+    <p class="subtitle">Касова дисципліна без зусиль</p>
+    <h2 class="steps-title">
+      Кілька хвилин —<br />і ви готові продавати<br />впевнено
+    </h2>
+    <div class="steps-grid">
+      <div class="step-card" data-card="1">
+        <DottedBorder />
+        <div class="step-head"><span class="step-badge">Крок 01</span></div>
+        <h3 class="step-card-title">
+          <a href={home}>Зареєструйтеся <ArrowRight /></a>
+        </h3>
+        <p class="step-card-text">
+          Заведіть кабінет у Чекбоксі за 2&nbsp;хвилини.
+        </p>
+        <div class="step-ui" aria-hidden="true" inert>
+          {
+            stepRegisterFields.map((f) => (
+              <label class="step-input" data-fill>
+                <DottedBorder gap={4} radius={4} />
+                <span class="step-input-label">{f.label}</span>
+                <span class="step-input-value">{f.value}</span>
+              </label>
+            ))
+          }
+          <button class="step-submit" data-activate>Зареєструватися</button>
+        </div>
+      </div>
+
+      <div class="step-card" data-card="2">
+        <DottedBorder />
+        <div class="step-head"><span class="step-badge">Крок 02</span></div>
+        <h3 class="step-card-title">Налаштуйте касу</h3>
+        <p class="step-card-text">
+          Додайте торгову точку, касу та касира. Підключіть свою облікову
+          систему або використовуйте веб-портал Чекбокса.
+        </p>
+        <div class="step-ui" aria-hidden="true" inert>
+          {
+            stepSetupFields.map((f) => (
+              <label class="step-input" data-fill>
+                <DottedBorder gap={4} radius={4} />
+                <span class="step-input-label">{f.label}</span>
+                <span class="step-input-value">{f.value}</span>
+              </label>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="step-card" data-card="3">
+        <DottedBorder />
+        <div class="step-head"><span class="step-badge">Крок 03</span></div>
+        <h3 class="step-card-title">Наповніть каталог</h3>
+        <p class="step-card-text">
+          Додайте товари чи послуги для продажу та спрощення видачі чеків. Або
+          одразу видавайте чеки, набиваючи товари вручну.
+        </p>
+        <div class="step-ui" aria-hidden="true" inert>
+          <span class="step-catalog-add">+ Додати</span>
+          <ul class="step-catalog">
+            {
+              stepCatalogItems.map((it) => (
+                <li class="step-catalog-item" data-fill>
+                  <DottedBorder gap={4} radius={4} />
+                  <span class="step-dot" style={`--dot: ${it.dot}`} />
+                  <span class="step-catalog-name">{it.name}</span>
+                  <span class="step-catalog-price">
+                    {it.price} <small>₴</small>
+                  </span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="step-card" data-card="4">
+        <DottedBorder />
+        <span class="step-badge">Крок 04</span>
+        <h3 class="step-card-title">Видавайте чеки</h3>
+        <p class="step-card-text">
+          Видавайте паперові, або відправляйте онлайн цифрові. Автоматично чи
+          вручну.
+        </p>
+        <div class="step-ui" aria-hidden="true" inert>
+          <p class="step-receipt-num">Чек #12547</p>
+          <div class="step-receipt">
+            <DottedBorder gap={4} radius={4} />
+            {
+              stepReceiptItems.map((it) => (
+                <div class="step-receipt-row" data-fill>
+                  <span class="step-receipt-name">
+                    {it.name}
+                    <small>{it.qty}</small>
+                  </span>
+                  <span class="step-receipt-price">
+                    {it.price} <small>₴</small>
+                  </span>
+                </div>
+              ))
+            }
+            <div class="step-receipt-row step-receipt-total" data-fill>
+              <span class="step-receipt-name">Разом</span>
+              <span class="step-receipt-price">165 <small>₴</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  // Same soft "pop" as the small rows in the reasons section
+  const POP = { duration: 0.35, ease: "back.out(2)" };
+
+  const stepsGrid = document.querySelector(".steps-grid");
+  if (stepsGrid) {
+    const cards = [...stepsGrid.querySelectorAll<HTMLElement>(".step-card")];
+    const fillsOf = (card: HTMLElement) => [
+      ...card.querySelectorAll<HTMLElement>("[data-fill], [data-activate]"),
+    ];
+    // Steps timing, in seconds
+    const timing = {
+      cycleDelay: 2.5, // pause before the loop starts over
+      cardStep: 0.6, // pause before the next card becomes active
+      fillStep: 0.25, // start-to-start gap between fields: pops overlap
+      receiptGlow: 0.2, // card 4: wait before its receipt frame lights up
+      finalHold: 0.35, // wait before the last card is marked done
+    };
+
+    const fillClass = (el: HTMLElement) =>
+      el.hasAttribute("data-activate") ? "is-active" : "is-filled";
+
+    const reset = () => {
+      cards.forEach((card) => {
+        card.classList.remove("is-active", "is-done", "is-filled-done");
+        fillsOf(card).forEach((el) => {
+          el.classList.remove("is-filled", "is-active");
+          gsap.set(el, { scale: 1 });
+        });
+      });
+    };
+
+    if (reducedMotion) {
+      cards.forEach((card) => {
+        card.classList.add("is-done", "is-filled-done");
+        fillsOf(card).forEach((el) => el.classList.add(fillClass(el)));
+      });
+    } else {
+      const stepsTl = gsap.timeline({
+        repeat: -1,
+        repeatDelay: timing.cycleDelay,
+        paused: true,
+      });
+
+      stepsTl.call(reset);
+
+      cards.forEach((card, i) => {
+        stepsTl.call(
+          () => {
+            cards.forEach((c, k) => {
+              c.classList.toggle("is-active", c === card);
+              c.classList.toggle("is-done", k < i);
+            });
+          },
+          [],
+          `+=${timing.cardStep}`
+        );
+
+        // "<" + gap = counted from the START of the previous pop, so the
+        // next field begins while the last one is still settling
+        fillsOf(card).forEach((el) => {
+          stepsTl.call(
+            () => el.classList.add(fillClass(el)),
+            [],
+            `<${timing.fillStep}`
+          );
+
+          stepsTl.fromTo(
+            el,
+            { scale: 0.92, transformOrigin: "left center" },
+            { scale: 1, ...POP },
+            "<"
+          );
+        });
+
+        if (card.dataset.card === "4") {
+          stepsTl.call(
+            () => card.classList.add("is-filled-done"),
+            [],
+            `+=${timing.receiptGlow}`
+          );
+        }
+      });
+
+      stepsTl.call(
+        () => cards[cards.length - 1].classList.add("is-done"),
+        [],
+        `+=${timing.finalHold}`
+      );
+
+      // play only while the grid is in the middle 80% of the screen
+      new IntersectionObserver(
+        ([entry]) => (entry.isIntersecting ? stepsTl.play() : stepsTl.pause()),
+        { rootMargin: "-10% 0px" }
+      ).observe(stepsGrid);
+    }
+  }
+</script>

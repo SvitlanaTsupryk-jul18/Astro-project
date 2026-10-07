@@ -1,0 +1,49 @@
+---
+import { Image } from "astro:assets";
+import { $image } from "@utils/assets";
+import "@styles/components/client-logos.css";
+
+// Client logos for the ticker — each paired with its company name (alt)
+const clientLogos = [
+  { src: $image("/choices/logo-1.svg"), alt: "Мережа аптек Подорожник" },
+  { src: $image("/choices/logo-2.svg"), alt: "Планета Кіно" },
+  { src: $image("/choices/logo-3.svg"), alt: "Сінево" },
+  { src: $image("/choices/logo-4.png"), alt: "Сільпо Resto" },
+  { src: $image("/choices/logo-5.svg"), alt: "Prostor" },
+  { src: $image("/choices/logo-6.svg"), alt: "Vatsak" },
+  { src: $image("/choices/logo-7.svg"), alt: "Фокстрот" },
+  { src: $image("/choices/logo-8.svg"), alt: "Планета Кіно" },
+  { src: $image("/choices/logo-9.svg"), alt: "Діла" },
+  { src: $image("/choices/logo-10.svg"), alt: "Фокстрот" },
+  { src: $image("/choices/logo-11.svg"), alt: "Сінево" },
+];
+---
+
+<section class="choice">
+  <div class="container">
+    <h2 class="subtitle">Провідні компанії обирають Чекбокс</h2>
+    <p>42+ Галузей • 220&nbsp;000+&nbsp;бізнесів</p>
+  </div>
+  <div class="choice-wrapper">
+    <div class="choice-content">
+      {
+        [...clientLogos, ...clientLogos].map((logo) => (
+          <span class="choice-item">
+            <Image
+              src={logo.src}
+              alt={logo.alt}
+              class="choice-logo"
+              {...(logo.src.format !== "svg" && {
+                // raster logos are stored at 2x — render them at the
+                // same 139x100 box as the SVG ones, with a 2x srcset
+                width: 139,
+                height: 100,
+                densities: [1, 2],
+              })}
+            />
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</section>

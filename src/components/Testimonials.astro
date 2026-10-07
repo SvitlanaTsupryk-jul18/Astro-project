@@ -1,0 +1,384 @@
+---
+import DottedBorder from "@components/DottedBorder.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import ArrowRightWhite from "@assets/icons/arrow-right-white.svg";
+import ArrowRight from "@assets/icons/arrow-right.svg";
+import Quotes from "@assets/icons/quotes.svg";
+import NoteCloud from "@assets/images/note-cloud.svg";
+import { $image } from "@utils/assets";
+import "@styles/components/testimonials.css";
+
+// Portfolio piece: calls to action lead back to the landing page
+const home = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+// Client cases testimonials. A slide is either a quote (author + role) or a
+// note — a short highlight in a dashed box (see the INTERTOP card).
+interface Slide {
+  image: ImageMetadata;
+  label: string;
+  text: string;
+  author?: string;
+  role?: string;
+  note?: boolean;
+}
+
+const testimonials: Slide[] = [
+  {
+    image: $image("/test-0.png"),
+    label: "Glovo",
+    text: "Поки процес внесення товарів в чек був неавтоматизованим, виникала маса розбіжностей між замовленням і товарами, які вносилися в фіскальний чек вручну. Система, побудована з Checkbox, забезпечує 100% відповідність замовлення і товарів, внесених в чек.",
+    author: "Катерина Нестеренко",
+    role: "Glovo Accounting Lead",
+  },
+  {
+    image: $image("/test-1.png"),
+    label: "Фокстрот",
+    text: "Важливо, що керування кількістю кас дуже зручне і швидке. Процес зняття з реєстрації та реєстрація нової каси займає кілька хвилин. Це нам дозволило вчасно реагувати на нові виклики, оскільки з початку війни дуже швидко змінювалась кількість працюючих магазинів.",
+    author: "Василь Гриб",
+    role: "Начальник відділу технічної підтримки продажів мережі Фокстрот",
+  },
+  {
+    image: $image("/test-2.png"),
+    label: "ЛЮКСОПТИКА",
+    text: "Ми дуже вдячні компанії Checkbox за крутий експірієнс, який зараз маємо. Ми завжди прагнемо надавати найкраще нашим клієнтам, завжди прагнемо інновацій. І коли можемо щось спростити для кінцевого споживача, для наших співробітників, ще й зекономивши гроші – це кайфово.",
+    author: "Дмитро Сергієнко",
+    role: "ІТ-директор (CIO) компанії Люксоптика",
+  },
+  {
+    image: $image("/test-3.png"),
+    label: "HappyTime",
+    text: "Вивчала, багато читала, дивилася на досвід колег-підприємців і вирішила спробувати Checkbox, адже було зрозуміло, що це найзручніша програма.",
+    author: "Тетяна Полікарпова",
+    role: "Власниця магазину HappyTime",
+  },
+  {
+    image: $image("/test-4.png"),
+    label: "INTERTOP",
+    text: "Мережа INTERTOP стала першим великим бізнесом України, який відмовився від усіх залізних кас і перейшов на ПРРО Checkbox.",
+    note: true,
+  },
+];
+---
+
+<section class="testimonials section-dark">
+  <div class="container testimonials-head">
+    <h2>
+      Вам буде зручно з нами
+      <span>незалежно від того, маєте 1&nbsp;касу чи 10&nbsp;000</span>
+    </h2>
+    <div class="testimonials-nav">
+      <button
+        class="slider-btn slider-btn--prev"
+        type="button"
+        aria-label="Попередній кейс"
+      >
+        <ArrowRightWhite />
+      </button>
+      <button
+        class="slider-btn slider-btn--next"
+        type="button"
+        aria-label="Наступний кейс"
+      >
+        <ArrowRightWhite />
+      </button>
+    </div>
+  </div>
+
+  <div class="container">
+    <ul class="testimonials-track">
+      {
+        testimonials.map((slide) => (
+          <li class="testimonials-card">
+            <DottedBorder color="white" />
+            <div class="testimonials-body">
+              {slide.note ? (
+                <div class="testimonials-note">
+                  <DottedBorder />
+                  <NoteCloud aria-hidden="true" />
+                  <p class="testimonials-text">{slide.text}</p>
+                </div>
+              ) : (
+                <>
+                  <Quotes />
+                  <p class="testimonials-text">{slide.text}</p>
+                  <p class="testimonials-author">
+                    {slide.author}
+                    <span class="testimonials-role">{slide.role}</span>
+                  </p>
+                </>
+              )}
+              <a href={home} class="testimonials-link">
+                Прочитайте кейс <ArrowRight />
+              </a>
+            </div>
+            <div class="testimonials-media">
+              <Image src={slide.image} alt={slide.label} loading="lazy" />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  const testimonialsSection =
+    document.querySelector<HTMLElement>(".testimonials");
+  if (testimonialsSection) {
+    const track = testimonialsSection.querySelector<HTMLElement>(
+      ".testimonials-track"
+    )!;
+
+    const realCards = [
+      ...track.querySelectorAll<HTMLElement>(".testimonials-card"),
+    ];
+
+    const dedupeIds = (root: HTMLElement) => {
+      const suffix = `-clone-${Math.random().toString(36).slice(2, 8)}`;
+      root.querySelectorAll<HTMLElement>("[id]").forEach((el) => {
+        const oldId = el.id;
+        const newId = oldId + suffix;
+        el.id = newId;
+        root
+          .querySelectorAll(`[fill="url(#${oldId})"]`)
+          .forEach((ref) => ref.setAttribute("fill", `url(#${newId})`));
+        root
+          .querySelectorAll(`[href="#${oldId}"]`)
+          .forEach((ref) => ref.setAttribute("href", `#${newId}`));
+      });
+    };
+
+    const hasLoop = realCards.length > 1;
+
+    if (hasLoop) {
+      const firstClone = realCards[0].cloneNode(true) as HTMLElement;
+      const lastClone = realCards[realCards.length - 1].cloneNode(
+        true
+      ) as HTMLElement;
+
+      [firstClone, lastClone].forEach((clone) => {
+        clone.classList.add("is-clone");
+        clone.setAttribute("aria-hidden", "true");
+        clone
+          .querySelectorAll<HTMLElement>("a, button")
+          .forEach((el) => el.setAttribute("tabindex", "-1"));
+        dedupeIds(clone);
+      });
+
+      track.insertBefore(lastClone, realCards[0]);
+      track.appendChild(firstClone);
+    }
+
+    const cards = [
+      ...track.querySelectorAll<HTMLElement>(".testimonials-card"),
+    ];
+    const bodies = cards.map(
+      (card) => card.querySelector<HTMLElement>(".testimonials-body")!
+    );
+    const prevBtn =
+      testimonialsSection.querySelector<HTMLButtonElement>(
+        ".slider-btn--prev"
+      )!;
+    const nextBtn =
+      testimonialsSection.querySelector<HTMLButtonElement>(
+        ".slider-btn--next"
+      )!;
+
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const PAD_ACTIVE = 16;
+    const BODY_MARGIN = { top: 24, right: 40, bottom: 24, left: 24 };
+    const ACTIVE_SHARE = 0.65;
+
+    const FIRST_REAL = hasLoop ? 1 : 0;
+    const LAST_REAL = hasLoop ? cards.length - 2 : cards.length - 1;
+
+    let index = FIRST_REAL;
+    let bodyW = 0;
+    let step = 0;
+    let isAnimating = false;
+    // the card that is currently open on screen (index changes first)
+    let shownIndex = index;
+
+    const cardProps = (active: boolean) => ({
+      padding: active ? PAD_ACTIVE : 16,
+      backgroundColor: active ? "#ffffff" : "rgba(255,255,255,0)",
+      borderColor: active ? "rgba(255,255,255,0)" : "rgba(255,255,255,0.35)",
+    });
+    const bodyProps = (active: boolean) => ({
+      width: active ? bodyW : 0,
+      marginTop: active ? BODY_MARGIN.top : 0,
+      marginRight: active ? BODY_MARGIN.right : 0,
+      marginBottom: active ? BODY_MARGIN.bottom : 0,
+      marginLeft: active ? BODY_MARGIN.left : 0,
+      autoAlpha: active ? 1 : 0,
+    });
+
+    const measure = () => {
+      if (!desktop.matches) return;
+      const mediaW = cards[0].querySelector<HTMLElement>(
+        ".testimonials-media"
+      )!.offsetWidth;
+      const containerW = track.parentElement!.clientWidth;
+      bodyW = Math.max(
+        240,
+        Math.round(containerW * ACTIVE_SHARE) -
+          (PAD_ACTIVE * 2 + BODY_MARGIN.left + BODY_MARGIN.right + mediaW)
+      );
+      testimonialsSection.style.setProperty("--body-w", `${bodyW}px`);
+      for (let k = 0; k < cards.length - 1; k++) {
+        if (k !== index && k + 1 !== index) {
+          step = cards[k + 1].offsetLeft - cards[k].offsetLeft;
+          break;
+        }
+      }
+    };
+
+    const apply = (animate: boolean, onDone?: () => void) => {
+      const instant = reducedMotion || !animate;
+      const tween: gsap.TweenVars = {
+        duration: 1,
+        ease: "expo.inOut",
+        overwrite: true,
+      };
+
+      if (desktop.matches) {
+        cards.forEach((card, k) => {
+          const active = k === index;
+          if (instant) {
+            gsap.set(card, cardProps(active));
+            gsap.set(bodies[k], bodyProps(active));
+          } else if (active || k === shownIndex) {
+            // only the card that opens and the one that closes change —
+            // tweening the rest would just restyle them every frame
+            gsap.to(card, { ...cardProps(active), ...tween });
+            gsap.to(bodies[k], { ...bodyProps(active), ...tween });
+          }
+        });
+        const x = -index * step;
+        if (instant) {
+          gsap.set(track, { x });
+        } else {
+          gsap.to(track, { x, ...tween, onComplete: onDone });
+        }
+      } else {
+        const x = -(cards[index].offsetLeft - cards[0].offsetLeft);
+        if (instant) {
+          gsap.set(track, { x });
+        } else {
+          gsap.to(track, { x, ...tween, onComplete: onDone });
+        }
+      }
+
+      cards.forEach((card, k) => {
+        const current = k === index;
+        card.classList.toggle("is-current", current);
+        // only the open card's link is reachable by Tab; collapsed and
+        // off-screen cards are hidden from assistive tech too
+        if (!card.classList.contains("is-clone")) {
+          card.toggleAttribute("aria-hidden", !current);
+          card
+            .querySelectorAll<HTMLElement>("a, button")
+            .forEach((el) => (el.tabIndex = current ? 0 : -1));
+        }
+      });
+      shownIndex = index;
+
+      if (instant) onDone?.();
+    };
+
+    const goTo = (i: number, animate = true) => {
+      if (isAnimating) return;
+      index = i;
+
+      const finalize = () => {
+        if (hasLoop && index === 0) {
+          index = LAST_REAL;
+          apply(false);
+        }
+        else if (hasLoop && index === cards.length - 1) {
+          index = FIRST_REAL;
+          apply(false);
+        }
+        isAnimating = false;
+      };
+
+      if (animate && !reducedMotion) isAnimating = true;
+      apply(animate, finalize);
+    };
+
+    const init = () => {
+      apply(false);
+      measure();
+      apply(false);
+    };
+
+    prevBtn.addEventListener("click", () => goTo(index - 1));
+    nextBtn.addEventListener("click", () => goTo(index + 1));
+
+    cards.forEach((card, k) =>
+      card.addEventListener("click", () => {
+        if (desktop.matches && k !== index && !isAnimating) goTo(k);
+      })
+    );
+
+    let touchX = 0;
+    track.addEventListener(
+      "touchstart",
+      (e) => (touchX = e.touches[0].clientX),
+      { passive: true }
+    );
+    track.addEventListener(
+      "touchend",
+      (e) => {
+        const dx = e.changedTouches[0].clientX - touchX;
+        if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
+      },
+      { passive: true }
+    );
+
+    // re-measure after the window stops resizing
+    let resizeTimer = 0;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        gsap.set([track, ...cards, ...bodies], { clearProps: "all" });
+        init();
+      }, 200);
+    });
+
+    init();
+
+    if (!reducedMotion) {
+      // opacity, not autoAlpha: visibility:hidden would make the card links
+      // unreachable by Tab until the section had been scrolled into view
+      gsap.set(cards, { y: 48, opacity: 0 });
+      const playIntro = () => {
+        introObserver.disconnect();
+        gsap.to(cards, {
+          y: 0,
+          opacity: 1,
+          duration: 0.9,
+          ease: "power3.out",
+          stagger: 0.12,
+        });
+      };
+      const introObserver = new IntersectionObserver(
+        (entries) => entries[0].isIntersecting && playIntro(),
+        { threshold: 0.2 }
+      );
+      // watch the track's container, not the track: the slider shifts the
+      // track sideways (on mobile almost all of its box sits off-screen to
+      // the left), so the track itself never looked 20% visible
+      introObserver.observe(track.parentElement!);
+      // tabbing straight into the slider also reveals it
+      track.addEventListener("focusin", playIntro, { once: true });
+    }
+  }
+</script>

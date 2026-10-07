@@ -1,0 +1,68 @@
+---
+import "@styles/components/news.css";
+
+
+const blogUrl = "https://checkbox.ua/blog/";
+
+// News section: sample company news (each card opens the real Checkbox blog)
+const newsPosts = [
+  {
+    category: "Продукт",
+    title: "Нова версія мобільного застосунку: швидший офлайн-режим і темна тема",
+    author: "Анна Мельник",
+    date: "30 вересня 2026",
+    readTime: "3\u00a0хвилини на читання",
+  },
+  {
+    category: "Продукт",
+    title:
+      "Як режим Aircheck допомагає бізнесам працювати швидше, спокійніше і без помилок",
+    author: "Ярослав Демидюк",
+    date: "22 вересня 2026",
+    readTime: "4\u00a0хвилини на читання",
+  },
+  {
+    category: "Фінанси",
+    title: "Кредит для бізнесу в Checkbox? Підприємці діляться досвідом",
+    author: "Тарас Ковальчук",
+    date: "15 вересня 2026",
+    readTime: "6\u00a0хвилин на читання",
+  },
+  {
+    category: "Екосистема",
+    title: "Posbox – зручна альтернатива 1С та BAS",
+    author: "Ірина Бондар",
+    date: "5 вересня 2026",
+    readTime: "5\u00a0хвилин на читання",
+  },
+];
+---
+
+<section class="news">
+  <div class="container">
+    <p class="subtitle">Актуальне</p>
+    <h2 class="news-title">Новини компанії</h2>
+    <ul class="news-list">
+      {
+        newsPosts.map((post) => (
+          <li>
+            <a
+            class="news-card"
+            href={blogUrl}
+            target="_blank"
+            rel="noopener"
+          >
+              <span class="news-tag">{post.category}</span>
+              <h3 class="news-card-title">{post.title}</h3>
+              <p class="news-author">{post.author}</p>
+              <p class="news-meta">
+                {post.date}
+                <span class="news-read">{post.readTime}</span>
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

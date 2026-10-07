@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+  class="api-line api-line--fork"
+  width="657"
+  height="24"
+  viewBox="0 0 657 24"
+  fill="none"
+  ><path
+    class="api-line-path"
+    d="M.5 24V12.5Q.5.5 12.5.5H644.5Q656.5.5 656.5 12.5V24"
+    stroke="white"
+    stroke-opacity="0.4"
+    stroke-dasharray="1 4"></path></svg>

@@ -1,0 +1,73 @@
+---
+import DottedBorder from "@components/DottedBorder.astro";
+import IconOk from "@assets/icons/ok-icon.svg";
+import SupportOperator from "@assets/icons/support-operator.svg";
+import IconTelegram from "@assets/icons/telegram.svg";
+import IconViber from "@assets/icons/viber.svg";
+import "@styles/components/support.css";
+
+// Support section: checkmark points; bold fragments are inline HTML,
+// so each item is rendered with set:html
+const supportPoints = [
+  "Працюємо <strong>з 7 до 23</strong> години",
+  "Відповідаємо в середньому <strong>за 2&nbsp;хвилини</strong>",
+  "Вирішуємо питання <strong>будь-якої</strong> складності",
+  "Обробляємо <strong>40+&nbsp;тисяч</strong> звернень щомісяця",
+  "<strong>99,7%</strong> звернень отримують позитивні відгуки",
+];
+---
+
+<section class="support">
+  <div class="container">
+    <p class="subtitle">Підтримка</p>
+    <h2>Наша служба турботи<br />завжди допоможе</h2>
+    <div class="support-card">
+      <DottedBorder radius={16} />
+      <div class="support-info">
+        <a class="support-phone" href="tel:0800330676">0&nbsp;800&nbsp;330&nbsp;676</a>
+        <div class="support-actions">
+          <a
+            class="btn btn--outline support-btn"
+            href="https://t.me/checkbox_help"
+            target="_blank"
+            rel="noopener"
+          >
+            <IconTelegram />
+            Зверніться у Telegram
+          </a>
+          <a
+            class="btn btn--outline support-btn"
+            href="viber://pa?chatURI=checkbox"
+            target="_blank"
+            rel="noopener"
+          >
+            <IconViber />
+            Зверніться у Viber
+          </a>
+        </div>
+
+        <ul class="support-list">
+          {
+            supportPoints.map((point) => (
+              <li>
+                <IconOk />
+                <span set:html={point} />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="support-media">
+        <img
+          src={SupportOperator.src}
+          width={SupportOperator.width}
+          height={SupportOperator.height}
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,615 @@
+---
+import DottedBorder from "@components/DottedBorder.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import IconApi from "@assets/icons/reason-api.svg";
+import IconBackup from "@assets/icons/reason-backup.svg";
+import IconFast from "@assets/icons/reason-fast.svg";
+import IconNovaPoshta from "@assets/icons/nova-poshta.svg";
+import IconPlatforms from "@assets/icons/reason-platforms.svg";
+import IconReliable from "@assets/icons/reason-reliable.svg";
+import IconTimelineDot from "@assets/icons/timeline-dot.svg";
+import IconUpdate from "@assets/icons/reason-update.svg";
+import IconWarningBadge from "@assets/icons/warning-badge.svg";
+import SupportIllustration from "@assets/icons/support-illustration.svg";
+import reason1Image from "@assets/images/reason-1.png";
+import "@styles/components/reasons.css";
+
+// "Why choose us" bento section
+const companiesNames = [
+  "SoloMono",
+  "Rozetka",
+  "Prom",
+  "Епіцентр",
+  "Servio",
+  "Хорошоп",
+  "Firemenu",
+  "Uspacy",
+  "BeautyPro",
+  "DentaPro",
+  "Shopify",
+  "WooCommerce",
+  "BubiBo",
+  "Hotelms",
+  "KeepinCRM",
+  "Друк",
+  "InstaSport",
+  "Sitniks",
+  "Sender",
+  "iPay.ua",
+  "KeyCRM",
+  "Perfectum",
+  "Odoo",
+  "Мед Інфо Сервіс",
+  "PawnShop",
+  "Posman",
+  "Ordg",
+  "Oddo",
+  "OpenCart",
+  "Poster",
+  "Quincefin",
+  "Integrica",
+  "RoApp",
+  "RCRM",
+  "ShopExpress",
+  "ClinicCards",
+  "WLaunch",
+  "Oppointer",
+  "Webasyst",
+  "SmartFin-UA",
+  "EasyWeek",
+  "Vortex",
+];
+
+// Grab every logo in the companies folder in one glob (the pattern must be a
+// literal string — Vite resolves it at build time), sort filenames numerically
+// so Cont-2 comes before Cont-10, then pair each image with a name for its alt.
+const companyLogoModules = import.meta.glob<ImageMetadata>(
+  "/src/assets/images/companies/*.{png,jpg,jpeg,svg,webp}",
+  { eager: true, import: "default" }
+);
+
+const companyLogos = Object.entries(companyLogoModules)
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+  .map(([, src], i) => ({ src, alt: companiesNames[i] ?? "" }));
+
+const courierStops = [
+  { address: "Шевченка, 12", time: "10:24" },
+  { address: "Личаківська, 48", time: "11:05" },
+  { address: "Стрийська, 88", time: "12:10" },
+  { address: "Зелена, 24", time: "13:30" },
+  { address: "Тичини, 12", time: "14:07" },
+];
+
+const postShipments = [
+  {
+    ttn: "TTN 720 4198 3221",
+    carrier: "Нова пошта",
+    amount: "1\u00a0240",
+    status: "Фіскалізовано",
+  },
+  {
+    ttn: "TTN 110 5521 2144",
+    carrier: "Нова пошта",
+    amount: "685",
+    status: "Фіскалізовано",
+  },
+  {
+    ttn: "TTN 7000 1021 6230",
+    carrier: "Нова пошта",
+    amount: "2\u00a0199",
+    status: "В дорозі",
+  },
+];
+---
+
+<section class="reasons">
+  <div class="reasons-head">
+    <div class="container">
+      <p class="subtitle">Чому нас обирають</p>
+      <h2>
+        Більше 200&nbsp;000 бізнесів<br />обрали Чекбокс<br />не випадково
+      </h2>
+    </div>
+  </div>
+
+  <div class="reasons-grid">
+    <div class="reason">
+      <p class="reason-text">
+        <strong>Масштабуємося разом із вашим бізнесом</strong> — легко працювати
+        як з 1&nbsp;касою, так і з 10&nbsp;000&nbsp;кас.
+      </p>
+      <div class="reason-wrapper" aria-hidden="true">
+        <div>
+          <div class="reason-scale">
+            <Image
+              src={reason1Image}
+              densities={[1, 2]}
+              alt="Pos terminal"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        {
+          [1.05, 1.1, 1.15].map((scale) => (
+            <div class="reason-scale-slot" style={`--scale: ${scale}`}>
+              <DottedBorder gap={4} />
+              <div class="reason-scale">
+                <Image
+                  src={reason1Image}
+                  densities={[1, 2]}
+                  alt="Pos terminal"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <!-- Row 1 · Col 2: offline mode -->
+    <div class="reason">
+      <p class="reason-text">
+        Каса працює навіть без світла чи інтернету. <strong
+          >Маємо офлайн-режим із синхронізацією при відновленні зв'язку.</strong
+        >
+      </p>
+      <div class="reason-offline">
+        <div class="reason-offline-head">
+          <span>
+            <IconWarningBadge />
+            Офлайн режим</span
+          >
+          <span>Локальна черга • 4</span>
+        </div>
+        <ul class="reason-offline-list">
+          {
+            /* Queue mock: JS moves is-done/is-syncing down the list on scroll */
+            [
+              { ttn: "01245789052", state: "is-done", badge: "Відправлено" },
+              {
+                ttn: "01245789053",
+                state: "is-syncing",
+                badge: "Синхронізація",
+              },
+              { ttn: "01245789053", state: "", badge: "У черзі" },
+              { ttn: "01245789053", state: "", badge: "У черзі" },
+            ].map((item) => (
+              <li class={item.state}>
+                <DottedBorder gap={4} radius={4} />
+                <span>#&nbsp;{item.ttn}</span>
+                <span class="reasons-badge">{item.badge}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Row 1 · Col 3: three short callouts -->
+    <div class="reason reason-3">
+      <div class="reason-mini">
+        <DottedBorder />
+        <IconReliable />
+        <p><strong>Працюємо надійно</strong> під час пікових навантажень.</p>
+      </div>
+      <div class="reason-mini">
+        <DottedBorder />
+        <IconFast />
+        <p>
+          <strong>Працюємо швидко.</strong> Реєструємо чеки в середньому за 300
+          мілісекунд.
+        </p>
+      </div>
+      <div class="reason-mini">
+        <DottedBorder />
+        <IconUpdate />
+        <p>
+          <strong>Миттєво оновлюємо продукт</strong> під зміни законів, щоб ви спали
+          спокійно.
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 2 · Col 1-2: integrations -->
+    <div class="reason reason-4">
+      <p class="reason-text">
+        200+ готових інтеграцій<strong>
+          з обліковими системами, терміналами та іншим POS-обладнанням.</strong
+        >
+      </p>
+      <ul class="reason-companies">
+        {
+          companyLogos.map((logo) => (
+            <li>
+              <Image src={logo.src} alt={logo.alt} loading="lazy" />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Row 2 · Col 3: courier timeline mode -->
+    <div class="reason">
+      <p class="reason-text">
+        Режим кур'єра.<strong>
+          Ваші кур'єри зможуть бачити тільки замовлення згідно свого
+          маршрутного листа та видавати чеки в момент їх доставки.</strong
+        >
+      </p>
+      <ul class="reason-timeline" aria-hidden="true">
+        {
+          courierStops.map((stop) => (
+            <li>
+              <DottedBorder gap={4} radius={4} />
+              <span class="reason-timeline-dot">
+                <IconTimelineDot />
+              </span>
+              <div class="reason-timeline-card">
+                <span class="reason-timeline-address">{stop.address}</span>
+                <time>{stop.time}</time>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Row 3 · Col 1: three short callouts -->
+    <div class="reason reason-3">
+      <div class="reason-mini">
+        <DottedBorder />
+        <IconPlatforms />
+        <p>
+          <strong>Працюємо у вебі</strong> та на інших платформах: iOS, Android,
+          Windows, Linux, macOS.
+        </p>
+      </div>
+      <div class="reason-mini">
+        <DottedBorder />
+        <IconBackup />
+        <p>
+          <strong>Безкоштовно назавжди</strong> зберігаємо всі ваші дані в безпеці
+          з резервним копіюванням.
+        </p>
+      </div>
+      <div class="reason-mini">
+        <DottedBorder />
+        <IconApi />
+        <p>
+          <strong>Потужне відкрите API</strong> для унікальних інтеграцій під ваш
+          бізнес-процеси.
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 3 · Col 2: post payments -->
+    <div class="reason">
+      <p class="reason-text">
+        Автоматично фіскалізуємо<strong>
+          проекти чеків після фактичної доставки товару за накладеним
+          платежем.</strong
+        > Нова Пошта, УкрПошта, Meest Пошта.
+      </p>
+      <div class="reason-post">
+        <div class="reason-post-tabs">
+          <span class="reason-post-label">Післяплата</span>
+          <span class="nova">
+            <IconNovaPoshta />
+            Нова пошта</span
+          >
+          <span>Укрпошта</span>
+          <span>Meest</span>
+        </div>
+        <ul class="reason-post-list" aria-hidden="true">
+          {
+            postShipments.map((item) => (
+              <li class:list={{ "is-done": item.status === "Доставлено" }}>
+                <DottedBorder gap={4} radius={4} />
+                <div>
+                  <p>{item.ttn}</p>
+                  <p class="reason-post-carrier">
+                    <IconNovaPoshta />
+                    {item.carrier}
+                  </p>
+                </div>
+                <div>
+                  <p class="reason-post-amount">
+                    {item.amount} <small>₴</small>
+                  </p>
+                  <span class="reason-post-status" data-status={item.status}>
+                    {item.status}
+                  </span>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- Row 3 · Col 3: support -->
+    <div class="reason">
+      <div class="reason-dark">
+        <p class="reason-text">
+          Служба турботи відповідає за декілька хвилин.<strong>
+            99,7%&nbsp;звернень до служби турботи отримують позитивний відгук від
+            клієнтів. Персональний менеджер, який завжди на зв'язку.</strong
+          >
+        </p>
+        <img
+          src={SupportIllustration.src}
+          width={SupportIllustration.width}
+          height={SupportIllustration.height}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          class="reason-dark-illustration"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { onResize, playWhileVisible } from "@scripts/motion";
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  // Shared "pop" for the small rows — offline queue, route cards and dots,
+  // parcels: they grow to full size with one soft overshoot
+  const POP = { duration: 0.35, ease: "back.out(2)" };
+
+  // 1-line animation in reasons section
+
+  const scaleBlock = document.querySelector(".reason-wrapper");
+  const queueItems = [...document.querySelectorAll(".reason-offline-list li")];
+
+  if (scaleBlock && queueItems.length) {
+    // Line 1 timing, in seconds
+    const timing = {
+      cycleDelay: 2, // pause before the loop starts over
+      terminalPop: 0.5, // one terminal popping into its slot
+      terminalGap: 0.5, // between terminals
+      queueStep: 0.5, // between queue rows turning "sent"
+    };
+
+    const setQueueState = (li: Element, state: string, badgeText: string) => {
+      li.classList.remove("is-syncing", "is-done");
+      if (state) li.classList.add(state);
+      li.querySelector(".reasons-badge")!.textContent = badgeText;
+    };
+
+    const resetQueue = () => {
+      setQueueState(queueItems[0], "is-done", "Відправлено");
+      setQueueState(queueItems[1], "is-syncing", "Синхронізація");
+      queueItems.slice(2).forEach((li) => setQueueState(li, "", "У черзі"));
+      gsap.set(queueItems, { scale: 1 });
+    };
+
+    if (reducedMotion) {
+      gsap.set(".reason-scale-slot .reason-scale", { scale: 1 });
+      queueItems.forEach((li) => setQueueState(li, "is-done", "Відправлено"));
+    } else {
+      const tl = gsap.timeline({
+        repeat: -1,
+        repeatDelay: timing.cycleDelay,
+        paused: true,
+      });
+
+      tl.call(resetQueue)
+        // 1. terminals pop into the slots one by one
+        .fromTo(
+          ".reason-scale-slot .reason-scale",
+          { scale: 0 },
+          {
+            scale: 1,
+            duration: timing.terminalPop,
+            ease: "back.out(1.2)",
+            stagger: timing.terminalGap,
+          }
+        );
+
+      // 2. then the queue advances one row at a time
+      queueItems.slice(1).forEach((li, idx) => {
+        tl.call(
+          () => {
+            setQueueState(li, "is-done", "Відправлено");
+            const next = queueItems[idx + 2];
+            if (next) setQueueState(next, "is-syncing", "Синхронізація");
+          },
+          [],
+          `+=${timing.queueStep}`
+        );
+
+        tl.fromTo(
+          li,
+          { scale: 0.92, transformOrigin: "left center" },
+          { scale: 1, ...POP },
+          "<"
+        );
+      });
+
+      // on mobile the terminals and the queue sit in different cards —
+      // keep playing while either of them is on screen
+      playWhileVisible(tl, scaleBlock, queueItems[0].parentElement!);
+    }
+  }
+
+  // 2-nd line of animation(grid and curier timeline)
+ 
+  const companiesGrid = document.querySelector(".reason-companies");
+  const routeList = document.querySelector(".reason-timeline");
+
+  if (companiesGrid && routeList) {
+    // Line 2 timing, in seconds
+    const timing = {
+      cycleDelay: 1.6, // pause before the loop starts over
+      columnStep: 0.35, // grid: the next column lights up
+      columnHold: 0.55, // grid: how long a column stays lit
+      firstStop: 0.45, // route: wait before the first stop
+      stopStep: 0.6, // route: between stops
+    };
+
+    const items = [...companiesGrid.querySelectorAll("li")];
+    const stops = [...routeList.querySelectorAll("li")];
+
+    const clearAll = () =>
+      items.forEach((li) => li.classList.remove("is-active"));
+
+    const setStep = (c: number) => {
+      stops.forEach((li, k) => {
+        li.classList.remove("is-current", "is-active", "is-done");
+        if (k === c) li.classList.add("is-current");
+        else if (k === c - 1) li.classList.add("is-active");
+        else if (k < c - 1) li.classList.add("is-done");
+      });
+    };
+
+    if (reducedMotion) {
+      stops.forEach((li) => li.classList.add("is-done"));
+    } else {
+      let comboTl: gsap.core.Timeline;
+
+      const build = () => {
+        if (comboTl) comboTl.kill();
+        clearAll();
+        gsap.set(stops, { scale: 1 });
+        gsap.set(
+          stops.map((li) => li.querySelector(".reason-timeline-dot")),
+          { scale: 1 }
+        );
+
+        const byLeft = new Map<number, Element[]>();
+        items.forEach((li) => {
+          const left = Math.round(li.getBoundingClientRect().left);
+          if (!byLeft.has(left)) byLeft.set(left, []);
+          byLeft.get(left)!.push(li);
+        });
+        const columns = [...byLeft.entries()]
+          .sort((a, b) => a[0] - b[0])
+          .map(([, cols]) => cols);
+
+        comboTl = gsap.timeline({
+          repeat: -1,
+          repeatDelay: timing.cycleDelay,
+          paused: true,
+        });
+
+        comboTl.call(() => setStep(-1), [], 0);
+
+        columns.forEach((col, i) => {
+          comboTl.call(
+            () => col.forEach((li) => li.classList.add("is-active")),
+            [],
+            i * timing.columnStep
+          );
+          comboTl.call(
+            () => col.forEach((li) => li.classList.remove("is-active")),
+            [],
+            i * timing.columnStep + timing.columnHold
+          );
+        });
+
+        for (let c = 0; c <= stops.length + 1; c++) {
+          comboTl.call(
+            () => setStep(c),
+            [],
+            `+=${c === 0 ? timing.firstStop : timing.stopStep}`
+          );
+
+          const target = stops[c - 1];
+          if (target) {
+            const card = target.querySelector(".reason-timeline-card");
+            const dot = target.querySelector(".reason-timeline-dot");
+
+            if (card) {
+              comboTl.fromTo(
+                card,
+                { scale: 0.85, transformOrigin: "left center" },
+                { scale: 1, ...POP, immediateRender: false },
+                "<"
+              );
+            }
+
+            // the dot starts smaller than its card: a 16px dot needs more
+            // travel for the same pop to read
+            if (dot) {
+              comboTl.fromTo(
+                dot,
+                { scale: 0.6, transformOrigin: "center center" },
+                { scale: 1, ...POP, immediateRender: false },
+                "<"
+              );
+            }
+          }
+        }
+
+        // grid and route are separate cards on mobile: watch both
+        playWhileVisible(comboTl, companiesGrid, routeList);
+      };
+
+      build();
+
+      onResize(() => {
+        build();
+        comboTl.play();
+      });
+    }
+  }
+
+  // Post list
+
+  const postList = document.querySelector(".reason-post-list");
+  if (postList) {
+    // Line 3 timing, in seconds
+    const timing = {
+      cycleDelay: 2, // pause before the loop starts over
+      rowStep: 0.5, // between parcels turning "delivered"
+    };
+
+    const rows = [...postList.querySelectorAll("li")];
+
+    const setPostState = (li: Element, done: boolean) => {
+      li.classList.toggle("is-done", done);
+      const status = li.querySelector(".reason-post-status")!;
+      status.textContent = done
+        ? "Доставлено"
+        : (status.getAttribute("data-status") ?? "");
+    };
+
+    const resetPost = () => {
+      rows.forEach((li) => setPostState(li, false));
+      gsap.set(rows, { scale: 1 });
+    };
+
+    if (reducedMotion) {
+      rows.forEach((li) => setPostState(li, true));
+    } else {
+      const postTl = gsap.timeline({
+        repeat: -1,
+        repeatDelay: timing.cycleDelay,
+        paused: true,
+      });
+
+      postTl.call(resetPost);
+
+      rows.forEach((li) => {
+        postTl.call(() => setPostState(li, true), [], `+=${timing.rowStep}`);
+
+        postTl.fromTo(
+          li,
+          { scale: 0.92, transformOrigin: "left center" },
+          { scale: 1, ...POP, immediateRender: false },
+          "<"
+        );
+      });
+
+      playWhileVisible(postTl, postList);
+    }
+  }
+</script>

@@ -1,0 +1,336 @@
+.steps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.step-card {
+  min-height: 470px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  border-radius: var(--radius-card);
+  border: 2px solid var(--color-bg);
+  background: #f3f1f3;
+  transition:
+    border-color var(--dur-slow),
+    box-shadow var(--dur-slow);
+  position: relative;
+}
+
+.step-card.is-active,
+.step-card.is-done {
+  background: var(--color-bg);
+  border-color: var(--color-black);
+
+  > .svg-border {
+    display: none;
+  }
+}
+
+.step-badge {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  border-radius: 2px;
+  padding: 0 4px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.08);
+  transition:
+    background-color var(--dur-slow),
+    color var(--dur-slow);
+}
+
+.step-card.is-active .step-badge,
+.step-card.is-done .step-badge {
+  background: var(--color-black);
+  color: white;
+}
+
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.step-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-black) 0 1px,
+    transparent 1px 8px
+  );
+  clip-path: inset(0 100% 0 0);
+  margin-right: -32px;
+}
+
+.step-card.is-active .step-head::after,
+.step-card.is-done .step-head::after {
+  clip-path: inset(0);
+  transition: clip-path 3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .step-card.is-active .step-head::after,
+  .step-card.is-done .step-head::after {
+    transition: none;
+  }
+}
+
+.step-card-title {
+  margin: 20px 0 16px;
+  font-size: 24px;
+  letter-spacing: -0.24px;
+}
+
+.step-card-title a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  svg {
+    transition: transform var(--dur-base);
+  }
+}
+
+.step-card-title a:hover svg {
+  transform: translateX(5px);
+}
+
+.step-card-text strong {
+  font-weight: 500;
+}
+
+.step-ui {
+  margin-top: auto;
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.step-input {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px 14px 10px;
+  min-height: 48px;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-btn);
+  transition:
+    border-color var(--dur-slow),
+    background-color var(--dur-slow);
+}
+
+.step-input-label {
+  font-size: 10px;
+  line-height: 1;
+  color: var(--color-grey-light);
+}
+
+.step-input-value {
+  font-size: 12px;
+  line-height: 1;
+  color: var(--color-black);
+  opacity: 0;
+  transition: opacity var(--dur-slow);
+}
+
+.step-input.is-filled {
+  border-style: solid;
+  border-color: rgb(var(--color-accent-rgb) / 0.32);
+  box-shadow: 0 0 12px 0 rgb(var(--color-accent-rgb) / 0.32);
+  background: var(--color-white);
+
+  .svg-border {
+    display: none;
+  }
+}
+
+.step-input.is-filled .step-input-value {
+  opacity: 1;
+}
+
+.step-submit {
+  padding: 11px;
+  border: none;
+  border-radius: var(--radius-btn);
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition:
+    background-color var(--dur-slow),
+    color var(--dur-slow);
+}
+
+.step-submit.is-active {
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+.step-card[data-card="2"] .step-ui {
+  gap: 12px;
+}
+
+.step-catalog-add {
+  align-self: flex-end;
+  padding: 4px;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.08);
+  font-size: 12px;
+  line-height: 130%;
+  letter-spacing: -0.12px;
+}
+
+.step-catalog {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.step-catalog-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition:
+    border-color var(--dur-slow),
+    background-color var(--dur-slow);
+}
+
+.step-catalog-item > *:not(.svg-border) {
+  opacity: 0;
+  transition: opacity var(--dur-slow);
+}
+
+.step-catalog-item.is-filled {
+  border-style: solid;
+  border-color: rgb(var(--color-accent-rgb) / 0.35);
+  box-shadow: 0 0 12px 0 rgb(var(--color-accent-rgb) / 0.32);
+  background: var(--color-white);
+}
+
+.step-catalog-item.is-filled > *:not(.svg-border) {
+  opacity: 1;
+}
+
+.step-catalog-item.is-filled > .svg-border {
+  display: none;
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--dot, #999);
+  flex-shrink: 0;
+}
+
+.step-catalog-name {
+  flex: 1;
+}
+
+.step-catalog-price {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.step-receipt-num {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: -6px;
+}
+
+.step-receipt {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0 12px;
+  transition: border-color var(--dur-slow);
+  position: relative;
+  height: 150px;
+}
+
+.step-card[data-card="4"].is-filled-done {
+  .step-receipt {
+    border-color: rgb(var(--color-accent-rgb) / 0.32);
+    box-shadow: 0 0 12px 0 rgb(var(--color-accent-rgb) / 0.32);
+    background: var(--color-white);
+  }
+  .svg-border {
+    display: none;
+  }
+}
+
+.step-receipt-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+  padding: 10px 0;
+  background: var(--border-dotted-bottom);
+  opacity: 0;
+  transition: opacity var(--dur-slow);
+}
+
+.step-receipt-row:last-child {
+  background: none;
+}
+
+.step-receipt-row.is-filled {
+  opacity: 1;
+}
+
+.step-receipt-name {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  line-height: 1;
+
+  small {
+    margin-top: 8px;
+    color: var(--color-grey-light);
+  }
+}
+
+.step-receipt-total {
+  font-weight: 500;
+}
+
+.step-receipt-price {
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+@media (min-width: 768px) {
+  .steps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .steps {
+    padding-bottom: 80px;
+  }
+
+  .steps h2 {
+    padding: 20px 0 80px;
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

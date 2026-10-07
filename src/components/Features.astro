@@ -1,0 +1,70 @@
+---
+import DottedBorder from "@components/DottedBorder.astro";
+import { Image } from "astro:assets";
+import { $image } from "@utils/assets";
+import "@styles/components/features.css";
+
+const features = [
+  {
+    image: $image("/feature-1@2x.png"),
+    width: 393,
+    height: 84,
+    theme: "light",
+    title: "Підвищуйте ефективність",
+    text: "Чекбокс <strong>легко вбудовується</strong> в бізнес-процеси: зменшить навантаження на співробітників та головний біль керівників.",
+  },
+  {
+    image: $image("/feature-2@2x.png"),
+    width: 309,
+    height: 76,
+    theme: "light",
+    title: "Приборкайте ризики",
+    text: "<strong>Чекбокс зареєструє кожен</strong> чек у податковій, відповідаючи усім вимогам держави.",
+  },
+  {
+    image: $image("/feature-3@2x.png"),
+    width: 399,
+    height: 76,
+    theme: "dark",
+    title: "Контролюйте",
+    text: "З Чекбоксом всі дані про каси та чеки завжди у вас на кінчиках пальців. У реальному часі, <strong>коли вам зручно та де вам зручно.</strong>",
+  },
+];
+---
+
+<section class="features">
+  <div class="features-track">
+    <div class="container features-inner">
+      <div class="features-left">
+        <p class="subtitle">Касова дисципліна без зусиль</p>
+        <h2>Касуйте<br />впевнено</h2>
+        <p class="features-text">
+          Тримайте каси під контролем і зосереджуйтесь на продажах, замість
+          бюрократії. З найбільшим провайдером цифрових кас (ПРРО) в Україні.
+        </p>
+      </div>
+      <div class="features-right" id="features-stack">
+        {
+          features.map((feature, i) => (
+            <div class={`feature feature--${feature.theme}`} data-card={i}>
+              <DottedBorder />
+              <Image
+                src={feature.image}
+                width={feature.width}
+                height={feature.height}
+                densities={[1, 2]}
+                alt={feature.title}
+                class="feature-image"
+                loading="lazy"
+              />
+              <div>
+                <h3 class="feature-title">{feature.title}</h3>
+                <p class="feature-text" set:html={feature.text} />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
