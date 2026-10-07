@@ -304,15 +304,6 @@ filter: invert(.1);
   stroke-linecap: butt;
 }
 
-.svg-border-4 {
-  --sb-gap: 4;
-}
-
-.svg-border-4-small-radius {
-  --sb-gap: 4;
-  --sb-radius: 4px;
-}
-
 @media (min-width: 1024px) {
   section {
     padding-bottom: 160px;

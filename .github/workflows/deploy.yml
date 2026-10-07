@@ -19,7 +19,28 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Type-check every page and component first: if it fails, nothing is
+  # built or deployed, so broken code never reaches the live site
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      # The checker is installed for this run only, package.json stays as is
+      - name: Install astro check
+        run: npm install --no-save @astrojs/check typescript
+      - name: Type-check Astro files
+        run: npx astro check
+
   build:
+    needs: check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

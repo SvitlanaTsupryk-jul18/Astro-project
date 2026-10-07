@@ -735,53 +735,6 @@ font-size: 22px;
   }
 }
 
-.reason-rotate {
-  transform-origin: 50% 50%;
-  animation: reason-rotate 4s ease infinite;
-  animation-delay: 4s;
-}
-
-@keyframes reason-rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  25%,
-  100% {
-    transform: rotate(-360deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reason-rotate {
-    animation: none;
-  }
-}
-.dot-reason {
-  opacity: 0;
-  animation: dot-fade 4s ease-in-out infinite;
-}
-
-@keyframes dot-fade {
-  0% {
-    opacity: 0;
-  }
-  12.5%,
-  62.5% {
-    opacity: 1;
-  }
-  75%,
-  100% {
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dot-reason {
-    animation: none;
-    opacity: 1;
-  }
-}
-
 .reason-companies {
   list-style: none;
   display: grid;
@@ -1110,10 +1063,6 @@ font-size: 22px;
 }
 
 @media (min-width: 1024px) {
-  .reasons-title {
-    font-size: 44px;
-  }
-
   .reasons-grid {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -1262,10 +1211,6 @@ font-size: 22px;
 
 .compare-mark--no {
   color: var(--color-black);
-}
-
-.compare-mark--ok {
-  color: rgb(var(--color-accent-rgb));
 }
 
 @media (min-width: 1024px) {
