@@ -1,10 +1,14 @@
 ---
-import { Image } from "astro:assets";
-import promoImage from "@assets/images/cont.png";
 import ArrowRight from "@assets/icons/arrow-right-white.svg";
 import IconTelegram from "@assets/icons/telegram.svg";
 import IconViber from "@assets/icons/viber.svg";
 import DottedBorder from "./DottedBorder.astro";
+
+// Prefix internal links with the configured base path (see astro.config.mjs).
+// Portfolio piece: menu items lead back to the landing page; only the blog
+// opens Checkbox's real blog
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const blogUrl = "https://checkbox.ua/blog/";
 
 interface ProductItem {
   title: string;
@@ -24,27 +28,27 @@ const productColumns: ProductColumn[] = [
       {
         title: "Цифрова каса",
         description: "Програмний РРО для фіскалізації",
-        href: "#",
+        href: base,
       },
       {
         title: "Веб-кабінет",
         description: "Управляйте касами з браузера",
-        href: "#",
+        href: base,
       },
       {
         title: "Мобільні застосунки",
         description: "Працюйте з касою на iOS та Android",
-        href: "#",
+        href: base,
       },
       {
         title: "Десктопні застосунки",
         description: "Рішення для Windows і macOS",
-        href: "#",
+        href: base,
       },
       {
         title: "Порівняння з аналогами",
         description: "Порівняйте Чекбокс із іншими РРО та ПРРО",
-        href: "#",
+        href: base,
       },
     ],
   },
@@ -54,32 +58,32 @@ const productColumns: ProductColumn[] = [
       {
         title: "Еквайринг",
         description: "Приймайте оплату картками онлайн та офлайн",
-        href: "#",
+        href: base,
       },
       {
         title: "POS-терміналами",
         description: "Використовуйте фізичні термінали",
-        href: "#",
+        href: base,
       },
       {
         title: "Платежі за смартфоном",
         description: "Перетворіть телефон на термінал",
-        href: "#",
+        href: base,
       },
       {
         title: "Інтернет-еквайринг",
         description: "Додавайте оплату на ваш сайт чи інтернет-магазин",
-        href: "#",
+        href: base,
       },
       {
         title: "Платежі за QR",
         description: "Приймайте платежі через сканування QR-коду",
-        href: "#",
+        href: base,
       },
       {
         title: "Термінал",
         description: "Замовляйте термінал з вбудованим принтером чеків",
-        href: "#",
+        href: base,
       },
     ],
   },
@@ -89,17 +93,17 @@ const productColumns: ProductColumn[] = [
       {
         title: "Ключ-підпис для касира",
         description: "Створіть електронний підпис касира безкоштовно",
-        href: "#",
+        href: base,
       },
       {
         title: "Кредитування для бізнесу",
         description: "Фінансування для підприємців від ПУМБ",
-        href: "#",
+        href: base,
       },
       {
         title: "Корисне обладнання",
         description: "Сумісні з Чекбоксом принтери, сканери та інше обладнання",
-        href: "#",
+        href: base,
       },
     ],
   },
@@ -109,80 +113,27 @@ const productColumns: ProductColumn[] = [
       {
         title: "Огляд продуктів",
         description: "Усі продукти Чекбокса в одному місці",
-        href: "#",
+        href: base,
       },
       {
         title: "Рішення для ФОП",
         description: "Зручна та надійна фіскалізація для підприємців",
-        href: "#",
+        href: base,
       },
       {
         title: "Рішення для ентерпрайзу",
         description: "Масштабована інтеграція для мереж і великого бізнесу",
-        href: "#",
+        href: base,
       },
       {
         title: "Рішення для різних сегментів",
         description: "Галузеві рішення: ритейл, HoReCa, послуги та інше",
-        href: "#",
+        href: base,
       },
     ],
   },
 ];
 
-const materialsItems = [
-  {
-    title: "API-документація",
-    description: "Технічна документація для інтеграції з Чекбоксом",
-    href: "#",
-  },
-  {
-    title: "Текстові інструкції",
-    description: "Покрокові гайди з налаштування та роботи з ПРРО",
-    href: "#",
-  },
-  {
-    title: "Відео-гайди",
-    description: "Відеоуроки для швидкого старту та вирішення задач",
-    href: "#",
-  },
-  {
-    title: "Блог",
-    description: "Новини, кейси та корисні матеріали для бізнесу",
-    href: "#",
-  },
-  {
-    title: "Історії клієнтів",
-    description: "Як бізнеси різних галузей працюють з Чекбоксом",
-    href: "#",
-  },
-];
-
-const blogPosts = [
-  {
-    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
-    date: "4 лютого 2026",
-    href: "#",
-  },
-  {
-    title: "Інтеграція Checkbox із monobank: як приймати продажі",
-    date: "4 лютого 2026",
-    href: "#",
-  },
-  {
-    title: "Продажі від компанії SSI пройшли сертифікацію Checkbox",
-    date: "21 березня 2026",
-    href: "#",
-  },
-  {
-    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
-    date: "2 квітня 2026",
-    href: "#",
-  },
-];
-
-// Prefix internal links with the configured base path (see astro.config.mjs)
-const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 ---
 
 <header class="header" id="header">
@@ -296,9 +247,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         </div>
 
         <a href={`${base}pricing`}>Ціни</a>
-        <a href={`${base}integrations`}>Інтеграції</a>
-        <a href={`${base}integrations`}>Блог</a>
-        <a href={`${base}partners`}>Партнерка</a>
+        <a href={base}>Інтеграції</a>
+        <a href={blogUrl} target="_blank" rel="noopener">Блог</a>
+        <a href={base}>Партнерка</a>
       </div>
 
       <div class="nav-actions">
@@ -340,7 +291,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
           </button>
           <div class="header-support-panel">
             <a href="tel:0800330676" class="header-support-phone"
-              >0 800 330 676</a
+              >0&nbsp;800&nbsp;330&nbsp;676</a
             >
             <div class="header-support-contacts">
               <a
@@ -363,7 +314,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
           </div>
         </div>
 
-        <a href="#" class="btn btn--outline">
+        <a href={base} class="btn btn--outline">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -376,7 +327,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
               fill="black"></path>
           </svg> В кабінет
         </a>
-        <a href="#" class="btn btn--solid">Зареєструватися<ArrowRight /></a>
+        <a href={base} class="btn btn--solid">Зареєструватися<ArrowRight /></a>
       </div>
     </nav>
   </div>
@@ -497,7 +448,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 </script>
 
 <style>
-  /* ── Bar ──────────────────────────── ────────────────── */
   .header {
     position: fixed;
     top: 0;
@@ -617,7 +567,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
   }
   .nav::-webkit-scrollbar-thumb {
     background: rgb(0, 0, 0);
-    /* border-radius: 2px; */
   }
   .nav::-webkit-scrollbar-track {
     background: transparent;
@@ -661,8 +610,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     transform: rotate(180deg);
   }
 
-  /* Mobile: the parent trigger word is hidden — the column labels
-     themselves are the accordions */
   .list {
     display: none;
   }
@@ -816,12 +763,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     white-space: nowrap;
   }
 
-  /* Cancel the .btn:hover svg slide (general.css) — support icons stay put */
   .header-support-btn:hover svg {
     transform: none;
   }
 
-  /* Headset mouth "talks" while the support button is hovered */
   .header-support-mouth {
     transform-box: fill-box;
     transform-origin: center;
@@ -883,30 +828,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     background: white;
   }
 
-  /* .header-support-contact { */
-  /* display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px 20px;
-    border: 1px solid rgb(0 0 0 / 0.2);
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--color-black);
-    transition: border-color var(--dur-base);
-  }
-
-  .header-support-contact:hover {
-    border-color: var(--color-black);
-  }
-
-  .header-support-contact svg {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-  } */
-
   .nav-actions .btn {
     width: 100%;
     max-width: 460px;
@@ -931,6 +852,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       align-items: center;
       gap: clamp(24px, 3vw, 48px);
       height: 80px;
+      background: repeating-linear-gradient(90deg, #000, #000 1px, transparent 0, transparent 8px) 0 100% / 8px 1px repeat-x;
+      background-origin: content-box;
+      background-clip: content-box;
     }
 
     .header-top {
@@ -965,7 +889,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       width: auto;
     }
 
-    /* the trigger word is back; column labels turn into static headings */
     .list {
       display: flex;
     }
@@ -1010,7 +933,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       padding: 0;
     }
 
-    /* Invisible bridge so hover survives the gap between bar and card */
     .innerList::before {
       content: "";
       position: absolute;
@@ -1083,7 +1005,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
     }
 
     .header-support-panel {
-      /* display: none; */
       position: absolute;
       top: calc(100% + 2px);
       right: 0;
@@ -1104,16 +1025,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
         visibility var(--dur-medium);
     }
 
-    /* 
-    .header-support-panel::before {
-      content: "";
-      position: absolute;
-      top: -14px;
-      left: 0;
-      right: 0;
-      height: 14px;
-    } */
-
     .header-support:hover .header-support-panel,
     .header-support:focus-within .header-support-panel {
       display: flex;
@@ -1122,8 +1033,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       transform: translateY(0);
     }
 
-    /* Escape (or Enter on an open trigger) closes a dropdown even while it
-       still holds focus or the pointer — set and cleared from the script */
     .header-extra.is-dismissed .innerList,
     .header-support.is-dismissed .header-support-panel {
       opacity: 0;
@@ -1131,7 +1040,6 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
       transform: translateY(-16px);
     }
 
-    /* keyboard users get the same chevron flip as on hover */
     .header-extra:focus-within .list .chevron {
       transform: rotate(180deg);
     }

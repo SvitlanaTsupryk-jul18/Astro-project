@@ -10,36 +10,39 @@ import LogoCheckboxGroup from "@assets/icons/brands/checkbox-group.svg";
 const year = new Date().getFullYear();
 // Prefix internal links with the configured base path (see astro.config.mjs)
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+// Portfolio piece: footer links lead back to the landing page; only the
+// blog opens Checkbox's real blog
+const blogUrl = "https://checkbox.ua/blog/";
 
 
 const socialLinks = [
   {
-    href: "#",
+    href: base,
     label: "Telegram",
     icon: `<svg xmlns="http://w3.org" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19.1756 6.01712C18.983 7.34107 17.6806 16.3363 17.2588 19.1594C17.2595 19.3708 17.2093 19.5788 17.1127 19.7637C17.0162 19.9485 16.8767 20.104 16.7074 20.2154C16.5382 20.3267 16.3448 20.3901 16.1459 20.3996C15.947 20.409 15.7491 20.3641 15.5711 20.2692C15.0172 20.0629 14.4949 19.7709 14.0211 19.4028C12.5628 18.3709 11.077 17.3876 9.70126 16.2389C9.0409 15.684 9.03174 15.168 9.70126 14.5547C11.3008 13.0064 12.8696 11.4225 14.4063 9.80407C14.6081 9.58986 15.0667 9.11286 14.8099 8.83053C14.5531 8.54824 14.0211 8.94735 13.7643 9.13235C11.6182 10.651 9.45363 12.1599 7.34412 13.7176C6.99246 13.999 6.58102 14.1844 6.14601 14.2573C5.71099 14.3303 5.26574 14.2887 4.84945 14.1361C3.84054 13.8149 2.84084 13.4644 1.8503 13.114C1.44673 12.9777 0.382796 12.5201 2.35473 11.6634C7.38999 9.44384 12.5262 7.21453 17.5797 5.00465C18.8088 4.50817 19.3224 4.94624 19.1756 6.01712Z" fill="currentColor"/></svg>`,
   },
   {
-    href: "#",
+    href: base,
     label: "Instagram",
     icon: `<svg xmlns="http://w3.org" width="24" height="24" viewBox="0 0 24 24" fill="none"><g clip-path="url(#clip0_instagram)"><path d="M12 15.375C13.864 15.375 15.375 13.864 15.375 12C15.375 10.136 13.864 8.625 12 8.625C10.136 8.625 8.625 10.136 8.625 12C8.625 13.864 10.136 15.375 12 15.375Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.5 3H7.5C5.01472 3 3 5.01472 3 7.5V16.5C3 18.9853 5.01472 21 7.5 21H16.5C18.9853 21 21 18.9853 21 16.5V7.5C21 5.01472 18.9853 3 16.5 3Z" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16.875 8.625C17.7034 8.625 18.375 7.95343 18.375 7.125C18.375 6.29657 17.7034 5.625 16.875 5.625C16.0466 5.625 15.375 6.29657 15.375 7.125C15.375 7.95343 16.0466 8.625 16.875 8.625Z" fill="currentColor"/></g><defs><clipPath id="clip0_instagram"><rect width="24" height="24" fill="white"/></clipPath></defs></svg>`,
   },
   {
-    href: "#",
+    href: base,
     label: "Facebook",
     icon: `<svg xmlns="http://w3.org" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M13.4964 21V12.8027H16.458L16.8982 9.59326H13.4964V7.54894C13.4964 6.6228 13.7727 5.9887 15.1962 5.9887H17V3.12727C16.1224 3.03875 15.2402 2.99634 14.3575 3.00025C11.7397 3.00025 9.94237 4.49248 9.94237 7.23189V9.58726H7V12.7967H9.9488V21H13.4964Z" fill="currentColor"/></svg>`,
   },
   {
-    href: "#",
+    href: base,
     label: "YouTube",
     icon: `<svg xmlns="http://w3.org" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9.8 15.4286L15.509 12L9.8 8.57143V15.4286ZM22.516 6.48C22.659 7.01714 22.758 7.73714 22.824 8.65143C22.901 9.56571 22.934 10.3543 22.934 11.04L23 12C23 14.5029 22.824 16.3429 22.516 17.52C22.241 18.5486 21.603 19.2114 20.613 19.4971C20.096 19.6457 19.15 19.7486 17.698 19.8171C16.268 19.8971 14.959 19.9314 13.749 19.9314L12 20C7.391 20 4.52 19.8171 3.387 19.4971C2.397 19.2114 1.759 18.5486 1.484 17.52C1.341 16.9829 1.242 16.2629 1.176 15.3486C1.099 14.4343 1.066 13.6457 1.066 12.96L1 12C1 9.49714 1.176 7.65714 1.484 6.48C1.759 5.45143 2.397 4.78857 3.387 4.50286C3.904 4.35429 4.85 4.25143 6.302 4.18286C7.732 4.10286 9.041 4.06857 10.251 4.06857L12 4C16.609 4 19.48 4.18286 20.613 4.50286C21.603 4.78857 22.241 5.45143 22.516 6.48Z" fill="currentColor"/></svg>`,
   },
 ];
 
 const groupBrands = [
-  { link: "https://checkbox.ua/", name: "Checkbox", logo: LogoCheckbox },
-  { link: "https://posbox.ai/", name: "Posbox", logo: LogoPosbox },
-  { link: "https://www.edibox.com.ua/", name: "Edibox", logo: LogoEdibox },
-  { link: "https://www.taxbox.com.ua/", name: "Taxbox", logo: LogoTaxbox },
+  { link: base, name: "Checkbox", logo: LogoCheckbox },
+  { link: base, name: "Posbox", logo: LogoPosbox },
+  { link: base, name: "Edibox", logo: LogoEdibox },
+  { link: base, name: "Taxbox", logo: LogoTaxbox },
 ];
 
 const contactLinks = [
@@ -48,7 +51,7 @@ const contactLinks = [
   "Ставайте партнером Чекбокса",
   "Запишіться на демо",
 ];
-const contactPhone = "0 800 330 676";
+const contactPhone = "0\u00a0800\u00a0330\u00a0676";
 const legalLinks = [
   "Політика конфіденційності",
   "Публічна оферта",
@@ -330,7 +333,13 @@ const columns = [1, 2, 3, 4];
                     <ul>
                       {group.items.map((item) => (
                         <li>
-                          <a href="#">{item}</a>
+                          {item === "Блог" ? (
+                            <a href={blogUrl} target="_blank" rel="noopener">
+                              {item}
+                            </a>
+                          ) : (
+                            <a href={base}>{item}</a>
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -373,7 +382,7 @@ const columns = [1, 2, 3, 4];
         <span>ЄДРПОУ 43721744</span>
       </div>
       <div class="footer-legal-links">
-        {legalLinks.map((label) => <a href="#">{label}</a>)}
+        {legalLinks.map((label) => <a href={base}>{label}</a>)}
       </div>
     </div>
   </div>
@@ -400,7 +409,7 @@ const columns = [1, 2, 3, 4];
   .footer-top {
     display: grid;
     grid-template-columns: 1fr;
-    /* gap: 48px; */
+
     padding-bottom: 24px;
   }
 
@@ -436,9 +445,6 @@ const columns = [1, 2, 3, 4];
     position: relative;
   }
 
-  /* the icons come in through set:html, so they don't carry Astro's scope
-     attribute — :global() is needed to reach them (the dashed frame is
-     excluded, only the icon scales) */
   .footer-social :global(svg:not(.svg-border)) {
     transition: transform var(--dur-base);
   }
@@ -579,7 +585,6 @@ const columns = [1, 2, 3, 4];
     letter-spacing: -0.16px;
   }
 
-  /* Bottom legal bar */
   .footer-bottom {
     display: flex;
     flex-direction: column;
@@ -615,13 +620,10 @@ const columns = [1, 2, 3, 4];
     color: var(--color-white);
   }
 
-  /* Touch: every footer link gets a ~44px tall hit area. Where possible the
-     extra padding is taken back from the surrounding gap/margin, so the
-     layout stays where it was. */
   @media (max-width: 1023px) {
     .footer-nav-toggle {
       min-height: 44px;
-      margin-bottom: 36px; /* 32px row + 48px gap = 44 + 36 */
+      margin-bottom: 36px;
     }
 
     .footer-nav-content ul {
@@ -634,7 +636,7 @@ const columns = [1, 2, 3, 4];
     }
 
     .footer-legal-links {
-      gap: 10px; /* 22px link + 32px gap = 44 + 10 */
+      gap: 10px;
     }
 
     .footer-legal-links a {

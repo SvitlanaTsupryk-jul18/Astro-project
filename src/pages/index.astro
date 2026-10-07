@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import DottedBorder from "@components/DottedBorder.astro";
+import Faq from "@components/Faq.astro";
 import { Image, getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import girlImage from "@assets/images/girl1@2x.png";
@@ -52,19 +53,25 @@ import blog4Image from "@assets/images/blog-4.png";
 import { $image } from "@utils/assets";
 import "@styles/pages/index.css";
 
+// Where links lead: it's a portfolio piece, so every call to action points
+// back to this landing page — except the blog, which opens Checkbox's real
+// blog in a new tab
+const home = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const blogUrl = "https://checkbox.ua/blog/";
+
 // Client logos for the ticker — each paired with its company name (alt)
 const clientLogos = [
-  { src: $image("/choices/logo-1.svg"), alt: "Компанія 1" },
-  { src: $image("/choices/logo-2.svg"), alt: "Компанія 2" },
-  { src: $image("/choices/logo-3.svg"), alt: "Компанія 3" },
-  { src: $image("/choices/logo-4.png"), alt: "Компанія 4" },
-  { src: $image("/choices/logo-5.svg"), alt: "Компанія 5" },
-  { src: $image("/choices/logo-6.svg"), alt: "Компанія 6" },
-  { src: $image("/choices/logo-7.svg"), alt: "Компанія 7" },
-  { src: $image("/choices/logo-8.svg"), alt: "Компанія 8" },
-  { src: $image("/choices/logo-9.svg"), alt: "Компанія 9" },
-  { src: $image("/choices/logo-10.svg"), alt: "Компанія 10" },
-  { src: $image("/choices/logo-11.svg"), alt: "Компанія 11" },
+  { src: $image("/choices/logo-1.svg"), alt: "Мережа аптек Подорожник" },
+  { src: $image("/choices/logo-2.svg"), alt: "Планета Кіно" },
+  { src: $image("/choices/logo-3.svg"), alt: "Сінево" },
+  { src: $image("/choices/logo-4.png"), alt: "Сільпо Resto" },
+  { src: $image("/choices/logo-5.svg"), alt: "Prostor" },
+  { src: $image("/choices/logo-6.svg"), alt: "Vatsak" },
+  { src: $image("/choices/logo-7.svg"), alt: "Фокстрот" },
+  { src: $image("/choices/logo-8.svg"), alt: "Планета Кіно" },
+  { src: $image("/choices/logo-9.svg"), alt: "Діла" },
+  { src: $image("/choices/logo-10.svg"), alt: "Фокстрот" },
+  { src: $image("/choices/logo-11.svg"), alt: "Сінево" },
 ];
 
 // Hero receipt counter: a known total at a fixed moment plus the average
@@ -173,7 +180,7 @@ const postShipments = [
   {
     ttn: "TTN 720 4198 3221",
     carrier: "Нова пошта",
-    amount: "1 240",
+    amount: "1\u00a0240",
     status: "Фіскалізовано",
   },
   {
@@ -185,7 +192,7 @@ const postShipments = [
   {
     ttn: "TTN 7000 1021 6230",
     carrier: "Нова пошта",
-    amount: "2 199",
+    amount: "2\u00a0199",
     status: "В дорозі",
   },
 ];
@@ -211,14 +218,14 @@ const compareRows: CompareRow[] = [
   {
     label: "Початкова вартість каси",
     hw: {
-      text: "15-50 тисяч гривень на старті.<br>Потім стільки же кожні 7 років.",
+      text: "15-50&nbsp;тисяч гривень на старті.<br>Потім стільки же кожні 7&nbsp;років.",
     },
-    cb: { text: "0 гривень на старті.<br>Перший місяць — безкоштовно" },
+    cb: { text: "0&nbsp;гривень на старті.<br>Перший місяць — безкоштовно" },
   },
   {
     label: "Щомісячна вартість каси",
-    hw: { text: "400-500 гривень / місяць" },
-    cb: { text: "249 гривень / місяць <span class='muted'>(з ПДВ)</span>" },
+    hw: { text: "400-500&nbsp;гривень / місяць" },
+    cb: { text: "249&nbsp;гривень / місяць <span class='muted'>(з ПДВ)</span>" },
   },
   {
     label: "Швидкість старту",
@@ -334,8 +341,8 @@ const stepCatalogItems = [
   { name: "Круасан", price: "45", dot: "#05BC17" },
 ];
 const stepReceiptItems = [
-  { name: "Кава", qty: "1 шт", price: "75" },
-  { name: "Круасан", qty: "2 шт", price: "90" },
+  { name: "Кава", qty: "1\u00a0шт", price: "75" },
+  { name: "Круасан", qty: "2\u00a0шт", price: "90" },
 ];
 
 // Client cases testimonials. A slide is either a quote (author + role) or a
@@ -426,7 +433,7 @@ const categories = [
     icon: IconCategoryNetwork,
     label: "Мережам магазинам",
     quote:
-      "У нас 37 точок по всій країні. Усі каси в одному кабінеті, а нову точку запускаємо за день, а не за тиждень, як раніше.",
+      "У нас 37\u00a0точок по всій країні. Усі каси в одному кабінеті, а нову точку запускаємо за день, а не за тиждень, як раніше.",
     author: "Андрій",
     role: "операційний директор, мережа «Свіжа зелень»",
     logos: ["Мамина кухня", "Еко-маркет", "Хлібний"],
@@ -471,7 +478,7 @@ const categories = [
     icon: IconCategoryBeauty,
     label: "Салонам краси, перукарням",
     quote:
-      "Майстри працюють з планшета, а чек видається автоматично після кожного візиту. Для салону на 12 крісел це реальна економія часу.",
+      "Майстри працюють з планшета, а чек видається автоматично після кожного візиту. Для салону на 12\u00a0крісел це реальна економія часу.",
     author: "Юлія",
     role: "власниця, студія краси «Lumi»",
     logos: ["Lumi", "Barber Bros", "Nail Lab", "Локон"],
@@ -558,7 +565,7 @@ const faqItems = [
   },
   {
     q: "Кому потрібен касовий апарат?",
-    a: `<p>До 01.01.2022 було не потрібно застосувати РРО (ПРРО) ФОП-єдинникам 1 групи у будь-якому випадку та II-IV групи, обсяг доходу яких протягом календарного року не перевищує 220 розмірів мінімальної заробітної плати (у 2021 році – 1 320 000 грн), * крім видів діяльності у сферах з істотними ризиками ухилення від оподаткування, для яких РРО (ПРРО) вже було обов'язковим:</p>
+    a: `<p>До 01.01.2022 було не потрібно застосувати РРО (ПРРО) ФОП-єдинникам 1 групи у будь-якому випадку та II-IV групи, обсяг доходу яких протягом календарного року не перевищує 220 розмірів мінімальної заробітної плати (у 2021 році – 1&nbsp;320&nbsp;000&nbsp;грн), * крім видів діяльності у сферах з істотними ризиками ухилення від оподаткування, для яких РРО (ПРРО) вже було обов'язковим:</p>
 <ul>
 <li>реалізація технічно складних побутових товарів, що підлягають гарантійному ремонту;</li>
 <li>реалізація лікарських засобів, виробів медичного призначення;</li>
@@ -577,11 +584,11 @@ const faqItems = [
   },
   {
     q: "Що краще для бізнесу: придбати класичний РРО (касовий апарат) чи купити програмний РРО (ПРРО)?",
-    a: `<p>Для більшості бізнесів вигідніший ПРРО. Класична каса коштує близько 15 000 грн і потребує обслуговування, опломбування та заміни щороку. ПРРО — це програма, яка встановлюється на будь-який смартфон, планшет чи комп'ютер: реєстрація займає один робочий день, щомісячна абонплата значно менша, а оновлення — безкоштовні. Крім того, ПРРО легко інтегрується з платіжними сервісами, CRM та іншими системами, видає електронні чеки й автоматично переходить в офлайн-режим під час відключення інтернету.</p>`,
+    a: `<p>Для більшості бізнесів вигідніший ПРРО. Класична каса коштує близько 15&nbsp;000&nbsp;грн і потребує обслуговування, опломбування та заміни щороку. ПРРО — це програма, яка встановлюється на будь-який смартфон, планшет чи комп'ютер: реєстрація займає один робочий день, щомісячна абонплата значно менша, а оновлення — безкоштовні. Крім того, ПРРО легко інтегрується з платіжними сервісами, CRM та іншими системами, видає електронні чеки й автоматично переходить в офлайн-режим під час відключення інтернету.</p>`,
   },
   {
     q: "Як правильно зняти з реєстрації РРО відповідно до чинного законодавства?",
-    a: `<p>Зняття з реєстрації РРО відбувається у три кроки. Спочатку потрібно звернутися до ЦСО, з яким укладено договір на обслуговування, — вони проведуть розпломбування та нададуть довідку за формою № 1-ЦСО. Після цього подається Заява про зняття з реєстрації за формою № 4-РРО в Електронному кабінеті разом із реєстраційним посвідченням. Протягом п'яти календарних днів ДПС надішле довідку про скасування реєстрації за формою № 6-РРО у спосіб, зазначений у заяві.</p>`,
+    a: `<p>Зняття з реєстрації РРО відбувається у три кроки. Спочатку потрібно звернутися до ЦСО, з яким укладено договір на обслуговування, — вони проведуть розпломбування та нададуть довідку за формою №&nbsp;1-ЦСО. Після цього подається Заява про зняття з реєстрації за формою №&nbsp;4-РРО в Електронному кабінеті разом із реєстраційним посвідченням. Протягом п'яти календарних днів ДПС надішле довідку про скасування реєстрації за формою №&nbsp;6-РРО у спосіб, зазначений у заяві.</p>`,
   },
   {
     q: "Як зареєструвати програмний РРО?",
@@ -610,48 +617,72 @@ const faqItems = [
   },
 ];
 
-// Blog section: placeholder posts until the real feed is wired up
-const blogPosts = [blog1Image, blog2Image, blog3Image, blog4Image].map(
-  (image) => ({
-    image,
-    category: "Фіскалізація",
-    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
-    author: "Ярослав Демидюк",
-    date: "4 лютого 2026",
-    readTime: "5 хвилин на читання",
-  })
-);
-
-// News section: placeholder posts until the real feed is wired up
-const newsPosts = [
+// Blog section: sample articles (each card opens the real Checkbox blog)
+const blogPosts = [
   {
-    category: "Фіскалізація",
-    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
+    image: blog1Image,
+    category: "Гайди",
+    title: "Кав'ярня з нуля: як запустити касу за один вечір",
     author: "Ярослав Демидюк",
-    date: "4 лютого 2026",
-    readTime: "5 хвилин на читання",
+    date: "24 вересня 2026",
+    readTime: "6\u00a0хвилин на читання",
   },
   {
+    image: blog2Image,
+    category: "Облік",
+    title: "Залишки та списання в пекарні: облік без таблиць",
+    author: "Максим Гнатюк",
+    date: "17 вересня 2026",
+    readTime: "7\u00a0хвилин на читання",
+  },
+  {
+    image: blog3Image,
     category: "Фіскалізація",
+    title: "РРО vs ПРРО: софт без апаратури чи фізична каса?",
+    author: "Олена Кравець",
+    date: "10 вересня 2026",
+    readTime: "5\u00a0хвилин на читання",
+  },
+  {
+    image: blog4Image,
+    category: "Поради",
+    title: "Святковий пік продажів: як підготувати каси до новорічного сезону",
+    author: "Ірина Бондар",
+    date: "3 вересня 2026",
+    readTime: "4\u00a0хвилини на читання",
+  },
+];
+
+// News section: sample company news (each card opens the real Checkbox blog)
+const newsPosts = [
+  {
+    category: "Продукт",
+    title: "Нова версія мобільного застосунку: швидший офлайн-режим і темна тема",
+    author: "Анна Мельник",
+    date: "30 вересня 2026",
+    readTime: "3\u00a0хвилини на читання",
+  },
+  {
+    category: "Продукт",
     title:
       "Як режим Aircheck допомагає бізнесам працювати швидше, спокійніше і без помилок",
     author: "Ярослав Демидюк",
-    date: "4 лютого 2026",
-    readTime: "5 хвилин на читання",
+    date: "22 вересня 2026",
+    readTime: "4\u00a0хвилини на читання",
   },
   {
-    category: "Фіскалізація",
+    category: "Фінанси",
     title: "Кредит для бізнесу в Checkbox? Підприємці діляться досвідом",
-    author: "Ярослав Демидюк",
-    date: "4 лютого 2026",
-    readTime: "5 хвилин на читання",
+    author: "Тарас Ковальчук",
+    date: "15 вересня 2026",
+    readTime: "6\u00a0хвилин на читання",
   },
   {
-    category: "Фіскалізація",
+    category: "Екосистема",
     title: "Posbox – зручна альтернатива 1С та BAS",
-    author: "Ярослав Демидюк",
-    date: "4 лютого 2026",
-    readTime: "5 хвилин на читання",
+    author: "Ірина Бондар",
+    date: "5 вересня 2026",
+    readTime: "5\u00a0хвилин на читання",
   },
 ];
 
@@ -659,9 +690,9 @@ const newsPosts = [
 // so each item is rendered with set:html
 const supportPoints = [
   "Працюємо <strong>з 7 до 23</strong> години",
-  "Відповідаємо в середньому <strong>за 2 хвилини</strong>",
+  "Відповідаємо в середньому <strong>за 2&nbsp;хвилини</strong>",
   "Вирішуємо питання <strong>будь-якої</strong> складності",
-  "Обробляємо <strong>40+ тисяч</strong> звернень щомісяця",
+  "Обробляємо <strong>40+&nbsp;тисяч</strong> звернень щомісяця",
   "<strong>99,7%</strong> звернень отримують позитивні відгуки",
 ];
 ---
@@ -669,7 +700,6 @@ const supportPoints = [
 <BaseLayout
   title="ПРРО Checkbox | Програмний РРО № 1 для бізнесу в Україні"
   description="Офіційний вебсайт Checkbox - програмного РРО для вашого бізнесу ✅ Безкоштовний 1 місяць користування ⏩ Швидка та зручна реєстрація через електронний кабінет."
-  ogImage="/static/images/mainPage/og.png"
   ogType="website"
 >
   <section class="hero">
@@ -692,11 +722,11 @@ const supportPoints = [
           >
         </p>
         <div class="hero-actions">
-          <a href="https://my.checkbox.ua/auth/registration" class="btn">
+          <a href={home} class="btn">
             Почніть безкоштовно
             <ArrowRightWhite />
           </a>
-          <a href="#" class="btn btn--outline">
+          <a href={home} class="btn btn--outline">
             <IconPlayDemo />
             Запишіться на демо
           </a>
@@ -833,7 +863,7 @@ const supportPoints = [
   <section class="choice">
     <div class="container">
       <h2 class="subtitle">Провідні компанії обирають Чекбокс</h2>
-      <p>42+ Галузей • 220 000+ бізнесів</p>
+      <p>42+ Галузей • 220&nbsp;000+&nbsp;бізнесів</p>
     </div>
     <div class="choice-wrapper">
       <div class="choice-content">
@@ -931,7 +961,7 @@ const supportPoints = [
       <div class="container">
         <p class="subtitle">Чому нас обирають</p>
         <h2>
-          Більше 200 000 бізнесів<br />обрали Чекбокс<br />не випадково
+          Більше 200&nbsp;000 бізнесів<br />обрали Чекбокс<br />не випадково
         </h2>
       </div>
     </div>
@@ -940,7 +970,7 @@ const supportPoints = [
       <div class="reason">
         <p class="reason-text">
           <strong>Масштабуємося разом із вашим бізнесом</strong> — легко працювати
-          як з 1 касою, так і з 10 000 кас.
+          як з 1&nbsp;касою, так і з 10&nbsp;000&nbsp;кас.
         </p>
         <div class="reason-wrapper" aria-hidden="true">
           <div>
@@ -1157,7 +1187,7 @@ const supportPoints = [
         <div class="reason-dark">
           <p class="reason-text">
             Служба турботи відповідає за декілька хвилин.<strong>
-              99,7% звернень до служби турботи отримують позитивний відгук від
+              99,7%&nbsp;звернень до служби турботи отримують позитивний відгук від
               клієнтів. Персональний менеджер, який завжди на зв'язку.</strong
             >
           </p>
@@ -1278,10 +1308,10 @@ const supportPoints = [
           <DottedBorder />
           <div class="step-head"><span class="step-badge">Крок 01</span></div>
           <h3 class="step-card-title">
-            <a href="#">Зареєструйтеся <ArrowRight /></a>
+            <a href={home}>Зареєструйтеся <ArrowRight /></a>
           </h3>
           <p class="step-card-text">
-            Заведіть кабінет у Чекбоксі за 2 хвилини.
+            Заведіть кабінет у Чекбоксі за 2&nbsp;хвилини.
           </p>
           <div class="step-ui" aria-hidden="true" inert>
             {
@@ -1504,7 +1534,7 @@ const supportPoints = [
     <div class="container testimonials-head">
       <h2>
         Вам буде зручно з нами
-        <span>незалежно від того, маєте 1 касу чи 10 000</span>
+        <span>незалежно від того, маєте 1&nbsp;касу чи 10&nbsp;000</span>
       </h2>
       <div class="testimonials-nav">
         <button
@@ -1547,7 +1577,7 @@ const supportPoints = [
                     </p>
                   </>
                 )}
-                <a href="#" class="testimonials-link">
+                <a href={home} class="testimonials-link">
                   Прочитайте кейс <ArrowRight />
                 </a>
               </div>
@@ -1572,7 +1602,7 @@ const supportPoints = [
         існує.<br />
         Ми допоможемо вашій команді вбудувати Чекбокс, щоб усе працювало як слід.
       </p>
-      <a href="#" class="api-link"
+      <a href={home} class="api-link"
         >Перегляньте документацію <ArrowRightWhite /></a
       >
       <img
@@ -1937,7 +1967,7 @@ const supportPoints = [
       <div class="support-card">
         <DottedBorder radius={16} />
         <div class="support-info">
-          <a class="support-phone" href="tel:0800330676">0 800 330 676</a>
+          <a class="support-phone" href="tel:0800330676">0&nbsp;800&nbsp;330&nbsp;676</a>
           <div class="support-actions">
             <a
               class="btn btn--outline support-btn"
@@ -1993,11 +2023,17 @@ const supportPoints = [
         {
           blogPosts.map((post) => (
             <li>
-              <a class="blog-card" href="/blog/">
+              <a
+              class="blog-card"
+              href={blogUrl}
+              target="_blank"
+              rel="noopener"
+            >
+                {/* decorative: the title right below already names the card */}
                 <Image
                   class="blog-image"
                   src={post.image}
-                  alt={post.title}
+                  alt=""
                   loading="lazy"
                 />
                 <span class="blog-tag">{post.category}</span>
@@ -2023,7 +2059,12 @@ const supportPoints = [
         {
           newsPosts.map((post) => (
             <li>
-              <a class="news-card" href="/blog/">
+              <a
+              class="news-card"
+              href={blogUrl}
+              target="_blank"
+              rel="noopener"
+            >
                 <span class="news-tag">{post.category}</span>
                 <h3 class="news-card-title">{post.title}</h3>
                 <p class="news-author">{post.author}</p>
@@ -2045,24 +2086,7 @@ const supportPoints = [
       <h2>Поширені запитання</h2>
       <FaqBoy class="faq-boy" aria-hidden="true" />
       <FaqCup class="faq-cup" aria-hidden="true" />
-      <div class="faq-list">
-        {
-          faqItems.map((item) => (
-            <div class="faq-item-wrap">
-              <DottedBorder />
-              <details class="faq-item">
-                <summary>
-                  {item.q}
-                  <span class="faq-icon" />
-                </summary>
-                <div class="faq-content">
-                  <div class="faq-content-inner" set:html={item.a} />
-                </div>
-              </details>
-            </div>
-          ))
-        }
-      </div>
+      <Faq items={faqItems} />
     </div>
   </section>
 </BaseLayout>
@@ -2730,7 +2754,7 @@ const supportPoints = [
       });
       apiTl.call(clearApi);
       apiNodes.forEach((n) => {
-        apiTl.call(() => n.classList.add("is-active"), [], "+=.7");
+        apiTl.call(() => n.classList.add("is-active"), [], "+=.5");
       });
 
       loops.set(apiFlow, apiTl);
@@ -3005,96 +3029,4 @@ const supportPoints = [
     );
     loops.forEach((_, el) => loopObserver.observe(el));
   }
-
-  // FAQ
-
-  // Height animates on .faq-content (the clip) with a slight bounce on open;
-  // the text inside fades and slides separately, slightly behind, so it
-  // never pops in at full height.
-  document
-    .querySelectorAll<HTMLDetailsElement>(".faq-item")
-    .forEach((details) => {
-      const summary = details.querySelector("summary")!;
-      const content = details.querySelector<HTMLElement>(".faq-content")!;
-      const inner = content.firstElementChild as HTMLElement;
-      const wrap = details.closest(".faq-item-wrap");
-
-      const setOpenState = (open: boolean) => {
-        wrap?.classList.toggle("is-open", open);
-        details.classList.toggle("is-open", open);
-      };
-
-      const open = () => {
-        setOpenState(true);
-        if (reducedMotion) {
-          details.open = true;
-          return;
-        }
-        if (!details.open) {
-          details.open = true;
-          gsap.set(content, { height: 0, overflow: "hidden" });
-          gsap.set(inner, { autoAlpha: 0, y: -6 });
-        }
-        gsap.to(content, {
-          height: "auto",
-          duration: 0.5,
-          ease: "back.out(1.2)",
-          overwrite: true,
-          clearProps: "height,overflow",
-        });
-        gsap.to(inner, {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.4,
-          delay: 0.08,
-          ease: "power2.out",
-          overwrite: true,
-        });
-      };
-
-      const close = () => {
-        setOpenState(false);
-        if (reducedMotion) {
-          details.open = false;
-          return;
-        }
-        gsap.to(inner, {
-          autoAlpha: 0,
-          y: -6,
-          duration: 0.2,
-          ease: "power1.in",
-          overwrite: true,
-        });
-        gsap.fromTo(
-          content,
-          { height: content.offsetHeight, overflow: "hidden" },
-          {
-            height: 0,
-            duration: 0.35,
-            ease: "power2.inOut",
-            overwrite: true,
-            onComplete: () => {
-              details.open = false;
-              gsap.set(content, { clearProps: "height,overflow" });
-              gsap.set(inner, { clearProps: "all" });
-            },
-          }
-        );
-      };
-
-      summary.addEventListener("click", (e) => {
-        e.preventDefault();
-        details.classList.contains("is-open") ? close() : open();
-      });
-
-      // the browser opens <details> by itself for find-in-page and
-      // #fragment matches — keep the icon and frame in sync with it
-      details.addEventListener("toggle", () => {
-        if (details.open && !details.classList.contains("is-open")) {
-          gsap.set(content, { clearProps: "height,overflow" });
-          gsap.set(inner, { clearProps: "all" });
-          setOpenState(true);
-        }
-      });
-    });
 </script>

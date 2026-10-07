@@ -1,0 +1,129 @@
+---
+// FAQ accordion: dashed cards that open with a short bouncy height
+// animation. Answers are HTML strings (paragraphs, lists).
+import DottedBorder from "@components/DottedBorder.astro";
+import "@styles/components/faq.css";
+
+interface Props {
+  items: { q: string; a: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="faq-list">
+  {
+    items.map((item) => (
+      <div class="faq-item-wrap">
+        <DottedBorder />
+        <details class="faq-item">
+          <summary>
+            {item.q}
+            <span class="faq-icon" />
+          </summary>
+          <div class="faq-content">
+            <div class="faq-content-inner" set:html={item.a} />
+          </div>
+        </details>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  import { gsap } from "gsap";
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  // Height animates on .faq-content (the clip) with a slight bounce on open;
+  // the text inside fades and slides separately, slightly behind, so it
+  // never pops in at full height.
+  document
+    .querySelectorAll<HTMLDetailsElement>(".faq-item")
+    .forEach((details) => {
+      const summary = details.querySelector("summary")!;
+      const content = details.querySelector<HTMLElement>(".faq-content")!;
+      const inner = content.firstElementChild as HTMLElement;
+      const wrap = details.closest(".faq-item-wrap");
+
+      const setOpenState = (open: boolean) => {
+        wrap?.classList.toggle("is-open", open);
+        details.classList.toggle("is-open", open);
+      };
+
+      const open = () => {
+        setOpenState(true);
+        if (reducedMotion) {
+          details.open = true;
+          return;
+        }
+        if (!details.open) {
+          details.open = true;
+          gsap.set(content, { height: 0, overflow: "hidden" });
+          gsap.set(inner, { autoAlpha: 0, y: -6 });
+        }
+        gsap.to(content, {
+          height: "auto",
+          duration: 0.5,
+          ease: "back.out(1.2)",
+          overwrite: true,
+          clearProps: "height,overflow",
+        });
+        gsap.to(inner, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.4,
+          delay: 0.08,
+          ease: "power2.out",
+          overwrite: true,
+        });
+      };
+
+      const close = () => {
+        setOpenState(false);
+        if (reducedMotion) {
+          details.open = false;
+          return;
+        }
+        gsap.to(inner, {
+          autoAlpha: 0,
+          y: -6,
+          duration: 0.2,
+          ease: "power1.in",
+          overwrite: true,
+        });
+        gsap.fromTo(
+          content,
+          { height: content.offsetHeight, overflow: "hidden" },
+          {
+            height: 0,
+            duration: 0.35,
+            ease: "power2.inOut",
+            overwrite: true,
+            onComplete: () => {
+              details.open = false;
+              gsap.set(content, { clearProps: "height,overflow" });
+              gsap.set(inner, { clearProps: "all" });
+            },
+          }
+        );
+      };
+
+      summary.addEventListener("click", (e) => {
+        e.preventDefault();
+        details.classList.contains("is-open") ? close() : open();
+      });
+
+      // the browser opens <details> by itself for find-in-page and
+      // #fragment matches — keep the icon and frame in sync with it
+      details.addEventListener("toggle", () => {
+        if (details.open && !details.classList.contains("is-open")) {
+          gsap.set(content, { clearProps: "height,overflow" });
+          gsap.set(inner, { clearProps: "all" });
+          setOpenState(true);
+        }
+      });
+    });
+</script>
