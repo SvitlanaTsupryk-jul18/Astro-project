@@ -148,6 +148,7 @@ const stepReceiptItems = [
 
 <script>
   import { gsap } from "gsap";
+  import { playWhileVisible } from "@scripts/motion";
 
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
@@ -242,11 +243,7 @@ const stepReceiptItems = [
         `+=${timing.finalHold}`
       );
 
-      // play only while the grid is in the middle 80% of the screen
-      new IntersectionObserver(
-        ([entry]) => (entry.isIntersecting ? stepsTl.play() : stepsTl.pause()),
-        { rootMargin: "-10% 0px" }
-      ).observe(stepsGrid);
+      playWhileVisible(stepsTl, stepsGrid);
     }
   }
 </script>

@@ -474,8 +474,10 @@ const postShipments = [
       stops.forEach((li) => li.classList.add("is-done"));
     } else {
       let comboTl: gsap.core.Timeline;
+      let stopComboLoop: (() => void) | undefined;
 
       const build = () => {
+        stopComboLoop?.();
         if (comboTl) comboTl.kill();
         clearAll();
         gsap.set(stops, { scale: 1 });
@@ -550,7 +552,7 @@ const postShipments = [
         }
 
         // grid and route are separate cards on mobile: watch both
-        playWhileVisible(comboTl, companiesGrid, routeList);
+        stopComboLoop = playWhileVisible(comboTl, companiesGrid, routeList);
       };
 
       build();

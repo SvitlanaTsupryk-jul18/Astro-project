@@ -124,6 +124,7 @@ const testimonials: Slide[] = [
 
 <script>
   import { gsap } from "gsap";
+  import { onResize } from "@scripts/motion";
 
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
@@ -344,13 +345,9 @@ const testimonials: Slide[] = [
     );
 
     // re-measure after the window stops resizing
-    let resizeTimer = 0;
-    window.addEventListener("resize", () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = window.setTimeout(() => {
-        gsap.set([track, ...cards, ...bodies], { clearProps: "all" });
-        init();
-      }, 200);
+    onResize(() => {
+      gsap.set([track, ...cards, ...bodies], { clearProps: "all" });
+      init();
     });
 
     init();

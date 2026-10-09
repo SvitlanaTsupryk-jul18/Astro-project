@@ -294,12 +294,7 @@ const activeCategoryIndex = 3; // "Інтернет-магазинам" — matc
 
 <script>
   import { gsap } from "gsap";
-  import {
-    isLooping,
-    onResize,
-    playWhileVisible,
-    stopLoop,
-  } from "@scripts/motion";
+  import { onResize, playWhileVisible } from "@scripts/motion";
 
   const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
@@ -334,6 +329,8 @@ const activeCategoryIndex = 3; // "Інтернет-магазинам" — matc
       tabs.findIndex((tab) => tab.classList.contains("is-active"))
     );
     let categoryTl: gsap.core.Timeline | undefined;
+    // set while the autoplay runs; cleared once the visitor takes over
+    let stopAutoplay: (() => void) | undefined;
 
     const tabList = categorySection.querySelector<HTMLElement>(".category-tabs")!;
     const panelCopy = [
@@ -476,7 +473,8 @@ const activeCategoryIndex = 3; // "Інтернет-магазинам" — matc
       loadImage(tabs[(index + 1) % tabs.length]);
 
       if (userTriggered) {
-        stopLoop(categorySection);
+        stopAutoplay?.();
+        stopAutoplay = undefined;
       }
     };
 
@@ -522,14 +520,14 @@ const activeCategoryIndex = 3; // "Інтернет-магазинам" — matc
     if (!reducedMotion) {
       categoryTl = gsap.timeline({ repeat: -1, paused: true });
       categoryTl.call(() => activate(index + 1), [], 4);
-      playWhileVisible(categoryTl, categorySection);
+      stopAutoplay = playWhileVisible(categoryTl, categorySection);
 
       // hold the autoplay while the visitor points at or tabs into the
       // slider, so a quote doesn't change mid-read (WCAG 2.2.2)
       let hovered = false;
       let focused = false;
       const sync = () => {
-        if (!isLooping(categorySection)) return; // stopped for good
+        if (!stopAutoplay) return; // stopped for good
         hovered || focused ? categoryTl!.pause() : categoryTl!.play();
       };
       const slider = categorySection.querySelector<HTMLElement>(".category-slider")!;
